@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
+require('dotenv').config()
 
 
 const registerRouter = require('./routes/LoginRegisterDashboard/registerRouter');
@@ -29,16 +30,21 @@ app.use('/register', registerRouter);
 app.use('/', authRoutes);
 app.use('/dashboard', authDashboard);
 
-app.get('/logout' , (req , res)=> {
+app.get('/logout', (req, res) => {
     res.clearCookie('token');
-    res.json({ Status : true })
+    res.json({ Status: true })
 })
 
 
 //Database connection
-mongoose.connect('mongodb+srv://it22560926:zFvYaiTGmAlDtdYV@cluster0.gnrjj5k.mongodb.net/signandregistration?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGODB_URL)
+    .then(() => {
+        //Server setup
+        app.listen(process.env.PORT, () => {
+            console.log('Connected to db and listening to port ', process.env.PORT)
+        })
+    })
+    .catch((error) => {
+        console.log(error)
+    })
 
-//Server setup
-app.listen(3001, () => {
-    console.log('Server is running')
-})
