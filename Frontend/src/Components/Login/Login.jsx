@@ -65,22 +65,22 @@ function Login() {
             {/* get boxicons icons
             <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel="stylesheet"/>
          */}
-        <div class={loginCss.wrapper}>
+        <div className={loginCss.wrapper}>
                 <form onSubmit={handleSubmit} >
                 
 
                     <h1>Login</h1>
 
                     {/* {loginCss.input-box} */}
-                    <div class={loginCss.inputBox}>
+                    <div className={loginCss.inputBox}>
                         <input type="text" placeholder="Username" id='email' required
                         onChange={(e) => setEmail(e.target.value)}/>
                         {/* <i class='bx bxs-user-circle'></i> */}
 
                     </div> 
 
-                    <div class={loginCss.inputBox}>
-                        <input type="text" placeholder="Password" id='pass'required
+                    <div className={loginCss.inputBox}>
+                        <input type="password" placeholder="Password" id='pass' required
                         onChange={(e) => setPass(e.target.value)}/>
                         {/* <i class='bx bxs-lock-alt'></i> */}
 

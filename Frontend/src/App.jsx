@@ -1,4 +1,4 @@
-import {BrowserRouter , Routes , Route} from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
@@ -13,26 +13,26 @@ import store from '../src/Components/ReduxTool/Store';
 function App() {
 
   return (
-   
+
 
     <Provider store={store}>
       <BrowserRouter>
-      
-            <Routes>
 
-                <Route path="/" element={<NavHome />} />
-                <Route path="/Register" element={<Register />} />
-                <Route path="/Login" element={<Login />} />
-                <Route path="/DashBoard" element={<DashBoard />} />
+        <Routes>
 
-            </Routes>
+          <Route path="/" element={<NavHome />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/DashBoard" element={<DashBoard />} />
 
-        </BrowserRouter>
+        </Routes>
+
+      </BrowserRouter>
 
     </Provider>
- 
-   
-  
+
+
+
 
   );
 }
