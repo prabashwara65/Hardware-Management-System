@@ -22,7 +22,7 @@ function Login() {
         //      logedin: true
         //     }))
 
-        axios.post('http://localhost:3001/login', { email, password })
+        axios.post('http://localhost:8000/login', { email, password })
             .then(res => {
                 console.log("login : " + res.data)
                 if (res.data.Status === "Success") {

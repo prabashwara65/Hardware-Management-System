@@ -17,7 +17,7 @@ function Signup() {
         e.preventDefault()
 
 
-        axios.post('http://localhost:3001/register/register', { name, email, phone, password })
+        axios.post('http://localhost:8000/register/register', { name, email, phone, password })
             .then(res => {
                 alert("creted");
                 navigate('/Login')
@@ -34,38 +34,38 @@ function Signup() {
             {/* get boxicons icons */}
             <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel="stylesheet" />
 
-            <div class={registerCss.wrapper}>
+            <div className={registerCss.wrapper}>
                 <form onSubmit={handleSubmit} >
 
                     <h1>Register</h1>
 
                     {/* {registerCss.input-box} */}
-                    <div class={registerCss.inputBox}>
+                    <div className={registerCss.inputBox}>
                         <input type="text" placeholder="Name" id='name' required
                             onChange={(e) => setName(e.target.value)} />
-                        {/* <i class='bx bxs-user-circle'></i> */}
+                        {/* <i className='bx bxs-user-circle'></i> */}
 
                     </div>
 
-                    <div class={registerCss.inputBox}>
+                    <div className={registerCss.inputBox}>
                         <input type="email" placeholder="Email" id='email' required
                             onChange={(e) => setEmail(e.target.value)} />
-                        {/* <i class='bx bxs-user-circle'></i> */}
+                        {/* <i className='bx bxs-user-circle'></i> */}
 
                     </div>
 
 
-                    <div class={registerCss.inputBox}>
+                    <div className={registerCss.inputBox}>
                         <input type="number" placeholder="Phone" id='phone' required
                             onChange={(e) => setPhone(e.target.value)} />
-                        {/* <i class='bx bxs-lock-alt'></i> */}
+                        {/* <i className='bx bxs-lock-alt'></i> */}
 
                     </div>
 
-                    <div class={registerCss.inputBox}>
+                    <div className={registerCss.inputBox}>
                         <input type="password" placeholder="Password" id='pass' required
                             onChange={(e) => setPass(e.target.value)} />
-                        {/* <i class='bx bxs-lock-alt'></i> */}
+                        {/* <i className='bx bxs-lock-alt'></i> */}
 
                     </div>
 
