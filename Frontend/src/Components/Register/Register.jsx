@@ -19,7 +19,7 @@ function Signup() {
 
         axios.post('http://localhost:8000/register/register', { name, email, phone, password })
             .then(res => {
-                alert("creted");
+                alert("created");
                 navigate('/Login')
 
             })
