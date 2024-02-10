@@ -35,7 +35,7 @@ function Sidebar (){
                 </li>
 
                 <li className="sidebar-list-item">
-                    <a href="" >
+                    <a href="/inventory" >
                     <BsFillGrid3X2GapFill className="icon"/> Inventory management
                         
                     </a>
