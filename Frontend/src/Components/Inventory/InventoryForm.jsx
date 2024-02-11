@@ -13,7 +13,7 @@ const InventoryHome = () => {
 
         const inventory = {name,category,price,quantity}
         
-        const response = await fetch('/api/inventory',{
+        const response = await fetch('http://localhost:8000/inventory',{
             method: 'POST',
             body: JSON.stringify(inventory),
             headers:{

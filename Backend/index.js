@@ -19,11 +19,11 @@ const app = express()
 
 //middleware
 app.use(express.json());
-// app.use(cors({
-//     origin: ['http://localhost:5173'],
-//     methods: ["GET", "POST"],
-//     credentials: true
-// }));
+app.use(cors({
+    origin: ['http://localhost:5173'],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    credentials: true
+}));
 app.use(cookieParser());
 
 
@@ -33,7 +33,7 @@ app.use('/', authRoutes);
 app.use('/dashboard', authDashboard);
 
 //Binura's Api
-app.use('/api/inventory', inventoryRoutes);
+app.use('/inventory', inventoryRoutes);
 
 app.get('/logout', (req, res) => {
     res.clearCookie('token');

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-//import ProductDetails from '../components/ProductDetails';
 import './inventory.css'
 import ProductDetails from './ProductDetails';
+import Sidebar from '../Dashboard/Dashboard_Sidebar';
 
 const  InventoryHome = () => {
     const [products, setProducts] = useState(null);
@@ -14,7 +14,7 @@ const  InventoryHome = () => {
     
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await fetch('/api/inventory');
+            const response = await fetch('http://localhost:8000/inventory');
             const json = await response.json();
 
             if(response.ok){
@@ -26,8 +26,10 @@ const  InventoryHome = () => {
     }, [])
 
     return ( 
+        
         <div className="home">
-
+            
+            
             <div className="searchbar">
                 <h2>Products</h2>
 
