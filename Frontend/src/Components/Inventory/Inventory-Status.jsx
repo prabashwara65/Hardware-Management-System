@@ -21,7 +21,7 @@ const Status = (props) => {
                             <h3>7</h3>
                         </div>
                         <div className="box3">
-                        <Link to='/lowStock'>
+                        <Link to='/supply-management/notifications'>
                             <h3>Out of Stock:</h3>
                             <h3>{totalOutOfproducts}</h3> 
                         </Link>                         

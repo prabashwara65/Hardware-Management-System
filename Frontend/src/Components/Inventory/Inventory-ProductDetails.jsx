@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const ProductDetails = ({Inventory}) => {
     return ( 
         <div className="productDetails">
-            <Link to={ `/selectedItem/${Inventory._id}`}>
+            <Link to={ `http://localhost:5173/selectedItem/${Inventory._id}`}>
             <ul>
                 <li className="productDetails-name">{Inventory.name}</li>
                 <li className="productDetails-category">{Inventory.category}</li>

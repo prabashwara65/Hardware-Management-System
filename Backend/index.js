@@ -12,7 +12,7 @@ const registerRouter = require('./routes/LoginRegisterDashboard/registerRouter')
 const authRoutes = require('./routes/LoginRegisterDashboard/authRoutes');
 const authDashboard = require('./routes/LoginRegisterDashboard/authDashboard');
 const inventoryRoutes = require('./routes/inventory');
-const lowStockRoutes = require('./routes/lowStock')
+
 
 const supplyManagementRoutes = require('./routes/SupplyManagementRoutes/SupplyManagementRoutes')
 const supplierManagementRoutes = require('./routes/SupplyManagementRoutes/SupplierManagementRoutes')
@@ -26,7 +26,7 @@ const app = express()
 app.use(express.json());
 app.use(cors({
     origin: ['http://localhost:5173'],
-    methods: ["GET", "POST", "PATCH", "DELETE"],
+    methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
     credentials: true
 }));
 app.use(cookieParser());
@@ -39,7 +39,7 @@ app.use('/dashboard', authDashboard);
 
 //Binura's Api
 app.use('/inventory', inventoryRoutes);
-app.use('/lowStock', lowStockRoutes);
+
 app.get('/logout', (req, res) => {
     res.clearCookie('token');
     res.json({ Status: true })
@@ -48,6 +48,30 @@ app.get('/logout', (req, res) => {
 //Supply Manager Api's
 app.use('/supply-management/suppliers', supplierManagementRoutes)
 app.use('/supply-management', supplyManagementRoutes)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//sanjuka - routes,models
+const itemsRouter = require('./routes/items');
+const lendedItemsRouter = require('./routes/lendedItems');
+const Item = require("./models/Item");
+const userItemListRouter = require('./routes/userItemList');
+
+// sanjuka - routes
+app.use('/items', itemsRouter); 
+app.use('/lendedItems', lendedItemsRouter);
+app.use('/userItemList', userItemListRouter);
 
 
 

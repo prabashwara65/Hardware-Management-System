@@ -8,8 +8,8 @@ const HomeSelectedItem = () => {
 
 
   useEffect(() => {
-    const Url = `/api/inventory/${id}`;
-
+    const Url = `http://localhost:8000/inventory/${id}`;
+  
     setLoading(true);
 
     // Fetch inventory details

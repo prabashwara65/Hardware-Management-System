@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import ProductDetails from '../components/Inventory-ProductDetails';
-import Status from '../components/Inventory-Status';
+import ProductDetails from './Inventory-ProductDetails';
+import Status from './Inventory-Status';
+import './InventoryStyles.css'
 
 const InventoryHome = () => {
     const [products, setProducts] = useState(null);
@@ -15,7 +16,7 @@ const InventoryHome = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await fetch('/api/inventory');
+            const response = await fetch('http://localhost:8000/inventory');
             const json = await response.json();
 
             if(response.ok){
@@ -67,7 +68,7 @@ const InventoryHome = () => {
                 if(product.quantity === 0){
                     outOfStock += 1;
                 } else if(product.quantity <= 5){
-                    lowStockProducts.push({ name: product.name, category: product.category });
+                    lowStockProducts.push({product:product._id ,name: product.name, category: product.category,quantity: product.quantity });
                 }
             }
         });
@@ -82,7 +83,7 @@ const InventoryHome = () => {
     //sendLowStocktoBackend function to accept low stock product data
     const sendLowStocktoBackend = async (lowStockProducts) => {
         try {
-            const response = await fetch('/api/lowStock', {
+            const response = await fetch('http://localhost:8000/lowStock', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

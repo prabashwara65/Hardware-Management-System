@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import BarCode from '../components/Inventory-Barcode';
+import BarCode from './Inventory-Barcode';
+import './InventoryStyles.css'
 
 const SelectedItem = () => {
   const { id } = useParams();
@@ -15,7 +16,7 @@ const SelectedItem = () => {
     const userConfirmedDelete = window.confirm("Are you sure to delete this item?");
 
     if (userConfirmedDelete) {
-      const response = await fetch(`/api/inventory/${id}`, {
+      const response = await fetch(`http://localhost:8000/inventory/${id}`, {
         method: 'DELETE'
       });
 
@@ -34,7 +35,7 @@ const SelectedItem = () => {
   }
 
   useEffect(() => {
-    const Url = `/api/inventory/${id}`;
+    const Url = `http://localhost:8000/inventory/${id}`;
 
     setLoading(true);
 
@@ -68,7 +69,7 @@ const SelectedItem = () => {
 
             <div>
               <p>Photo:</p>
-              <img src={`..upload/images/${product.img_URL}`} alt="Product" style={{ maxWidth: "300px" }} />
+              <img src={`...upload/images/${product.img_URL}`} alt="Product" style={{ maxWidth: "300px" }} />
             </div>
           </div>
 
