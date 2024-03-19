@@ -1,9 +1,9 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Register from './Components/Register/Register';
-import Login from './Components/Login/Login';
-import DashBoard from './Components/Dashboard//DashBoard';
-import NavHome from './Components/Home/NavHome';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Register from "./Components/Register/Register";
+import Login from "./Components/Login/Login";
+import DashBoard from "./Components/Dashboard//DashBoard";
+import NavHome from "./Components/Home/NavHome";
 
 import InventoryHome from './Components/Inventory/InventoryHome';
 import InventoryForm from './Components/Inventory/InventoryForm';
@@ -12,28 +12,25 @@ import EditInventoryItems from './Components/Inventory/EditInventoryItems';
 import CusHome from './Components/Home/Home-Products';
 import CusSelectedItem from'./Components/Home/Home-SelectedItem';
 import Report1 from './Components/Inventory/Inventory-report1';
+import InventoryHome from "./Components/Inventory/InventoryHome";
+import InventoryForm from "./Components/Inventory/InventoryForm";
+import SelectedItem from "./Components/Inventory/SelectedItem";
+import EditInventoryItems from "./Components/Inventory/EditInventoryItems";
 
-import { Provider } from 'react-redux';
-import store from '../src/Components/ReduxTool/Store';
+import { Provider } from "react-redux";
+import store from "../src/Components/ReduxTool/Store";
 
-import Layout from './pages/SupplyManager/components/Layout';
-import SupplyManagementHome from './pages/SupplyManager/home.page';
-import NotificationPage from './pages/SupplyManager/home.notifications';
-import NotificationDetails from './pages/SupplyManager/components/NotificationDetails';
-import SupplierList from './pages/SupplyManager/components/SupplierList';
-
-
+// sanjuka
+import RentalManagement from "./Components/RentalManagement/RentalManagement";
+import LendedItemsList from "./Components/RentalManagement/lendedItem/LendedItemList";
+import UserItemList from "./Components/RentalManagement/UserItemList/UserItemList";
+// import SearchBar from "./Components/RentalManagement/searchBar/searchBar";
 
 function App() {
-
   return (
-
-
     <Provider store={store}>
       <BrowserRouter>
-
         <Routes>
-
           <Route path="/" element={<NavHome />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Login" element={<Login />} />
@@ -43,6 +40,11 @@ function App() {
           <Route exact path="/addnewItem" element={<InventoryForm />} />
           <Route exact path="/selectedItem/:id" element={<SelectedItem />} />
           <Route exact path="/editItem/:id" element={<EditInventoryItems />} />
+
+          {/* sanjuka - routes */}
+          <Route path="/rentalService" element={<RentalManagement />} />
+          <Route path="/lendedItems" element={<LendedItemsList />} />
+          <Route path="/userItemList" element={<UserItemList />} />
           <Route exact path="/cusHome" element={<CusHome />} />
           <Route exact path="/cusSelectedItem/:id" element={<CusSelectedItem />} />
           <Route exact path="/report1" element={<Report1 />} />
@@ -64,15 +66,9 @@ function App() {
             }
           />
         </Routes>
-
       </BrowserRouter>
-
     </Provider>
-
-
-
-
   );
 }
 
-export default App
+export default App;
