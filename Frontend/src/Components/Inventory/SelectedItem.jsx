@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import BarCode from './Inventory-Barcode';
+import './InventoryStyles.css'
 
 const SelectedItem = () => {
   const { id } = useParams();
@@ -68,7 +69,7 @@ const SelectedItem = () => {
 
             <div>
               <p>Photo:</p>
-              <img src={`..upload/images/${product.img_URL}`} alt="Product" style={{ maxWidth: "300px" }} />
+              <img src={`...upload/images/${product.img_URL}`} alt="Product" style={{ maxWidth: "300px" }} />
             </div>
           </div>
 

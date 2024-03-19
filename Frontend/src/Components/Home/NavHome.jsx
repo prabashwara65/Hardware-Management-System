@@ -5,6 +5,7 @@ import axios from "axios"; // Import Axios
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { clearUser } from "../ReduxTool/userSlice";
+import HomeComponent from './Home-Products';
 
 import { BsPersonCircle } from "react-icons/bs";
 
@@ -78,7 +79,9 @@ function NavHome() {
             Check Rental Items Availability
           </button>
         </span>
+        
       </div>
+      <HomeComponent/>
     </div>
   );
 }

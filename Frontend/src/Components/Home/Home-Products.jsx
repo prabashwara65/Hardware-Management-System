@@ -14,7 +14,7 @@ const CustomerSideHome = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await fetch('/api/inventory');
+            const response = await fetch('http://localhost:8000/inventory');
             const json = await response.json();
 
             if(response.ok){

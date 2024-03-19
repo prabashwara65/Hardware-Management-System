@@ -12,10 +12,14 @@ import EditInventoryItems from './Components/Inventory/EditInventoryItems';
 import CusHome from './Components/Home/Home-Products';
 import CusSelectedItem from'./Components/Home/Home-SelectedItem';
 import Report1 from './Components/Inventory/Inventory-report1';
-import InventoryHome from "./Components/Inventory/InventoryHome";
-import InventoryForm from "./Components/Inventory/InventoryForm";
-import SelectedItem from "./Components/Inventory/SelectedItem";
-import EditInventoryItems from "./Components/Inventory/EditInventoryItems";
+
+import Layout from "./pages/SupplyManager/components/Layout";
+import SupplyManagementHome from "./pages/SupplyManager/home.page"
+import NotificationPage from "./pages/SupplyManager/home.notifications"
+import NotificationDetails from "./pages/SupplyManager/components/NotificationDetails"
+import SupplierList from "./pages/SupplyManager/components/SupplierList"
+
+
 
 import { Provider } from "react-redux";
 import store from "../src/Components/ReduxTool/Store";
@@ -40,14 +44,15 @@ function App() {
           <Route exact path="/addnewItem" element={<InventoryForm />} />
           <Route exact path="/selectedItem/:id" element={<SelectedItem />} />
           <Route exact path="/editItem/:id" element={<EditInventoryItems />} />
-
+          <Route exact path="/cusHome" element={<CusHome />} />
+          <Route exact path="/cusSelectedItem/:id" element={<CusSelectedItem />} />
+          <Route exact path="/report1" element={<Report1 />} />
+          
           {/* sanjuka - routes */}
           <Route path="/rentalService" element={<RentalManagement />} />
           <Route path="/lendedItems" element={<LendedItemsList />} />
           <Route path="/userItemList" element={<UserItemList />} />
-          <Route exact path="/cusHome" element={<CusHome />} />
-          <Route exact path="/cusSelectedItem/:id" element={<CusSelectedItem />} />
-          <Route exact path="/report1" element={<Report1 />} />
+          
 
           <Route
             path="/supply-management/*"

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ProductDetails from './Inventory-ProductDetails';
 import Status from './Inventory-Status';
+import './InventoryStyles.css'
 
 const InventoryHome = () => {
     const [products, setProducts] = useState(null);

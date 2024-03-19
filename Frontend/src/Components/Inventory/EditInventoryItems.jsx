@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import './InventoryStyles.css'
 
 const EditInventoryItems = () => {
   const { id } = useParams();

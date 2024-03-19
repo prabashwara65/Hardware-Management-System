@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './InventoryStyles.css'
 
 const InventoryHome = () => {
     const [name, setName] = useState('');
