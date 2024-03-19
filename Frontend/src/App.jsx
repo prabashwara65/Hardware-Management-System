@@ -9,10 +9,9 @@ import InventoryHome from './Components/Inventory/InventoryHome';
 import InventoryForm from './Components/Inventory/InventoryForm';
 import SelectedItem from './Components/Inventory/SelectedItem';
 import EditInventoryItems from './Components/Inventory/EditInventoryItems';
-import CusHome from './components/Home-Products';
-import CusSelectedItem from'./components/Home-SelectedItem';
-import LowStock from './components/LowStockProducts';
-import Report1 from './components/Inventory-report1';
+import CusHome from './Components/Home/Home-Products';
+import CusSelectedItem from'./Components/Home/Home-SelectedItem';
+import Report1 from './Components/Inventory/Inventory-report1';
 
 import { Provider } from 'react-redux';
 import store from '../src/Components/ReduxTool/Store';
@@ -46,7 +45,6 @@ function App() {
           <Route exact path="/editItem/:id" element={<EditInventoryItems />} />
           <Route exact path="/cusHome" element={<CusHome />} />
           <Route exact path="/cusSelectedItem/:id" element={<CusSelectedItem />} />
-          <Route exact path="/lowStock" element={<LowStock />} />
           <Route exact path="/report1" element={<Report1 />} />
 
           <Route

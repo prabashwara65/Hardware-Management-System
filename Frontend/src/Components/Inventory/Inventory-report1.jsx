@@ -8,7 +8,7 @@ const Report1 = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('/api/inventory');
+                const response = await fetch('http://localhost:8000/inventory');
                 const data = await response.json();
                 if (response.ok) {
                     setProducts(data);

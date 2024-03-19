@@ -5,7 +5,7 @@ const LowStockProductList = () => {
     
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await fetch('/api/lowStock')
+            const response = await fetch('http://localhost:8000/lowStock')
             const json = await response.json()
 
             if (response.ok){

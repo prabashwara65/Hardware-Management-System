@@ -19,7 +19,7 @@ const InventoryHome = () => {
         formData.append('image', image);
 
         try {
-            const response = await fetch('/api/inventory', {
+            const response = await fetch('http://localhost:8000/inventory', {
                 method: 'POST',
                 body: formData,
             });

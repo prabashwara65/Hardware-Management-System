@@ -18,7 +18,7 @@ const EditInventoryItems = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`/api/inventory/${id}`);
+        const response = await fetch(`http://localhost:8000/inventory/${id}`);
         const data = await response.json();
         setProduct(data);
         setName(data.name);
@@ -48,7 +48,7 @@ const EditInventoryItems = () => {
     };
 
     try {
-      const response = await fetch(`/api/inventory/${id}`, {
+      const response = await fetch(`http://localhost:8000/inventory/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
