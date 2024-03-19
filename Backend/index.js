@@ -12,6 +12,11 @@ const registerRouter = require('./routes/LoginRegisterDashboard/registerRouter')
 const authRoutes = require('./routes/LoginRegisterDashboard/authRoutes');
 const authDashboard = require('./routes/LoginRegisterDashboard/authDashboard');
 const inventoryRoutes = require('./routes/inventory');
+const lowStockRoutes = require('./routes/lowStock')
+
+const supplyManagementRoutes = require('./routes/SupplyManagementRoutes/SupplyManagementRoutes')
+const supplierManagementRoutes = require('./routes/SupplyManagementRoutes/SupplierManagementRoutes')
+
 
 
 const app = express()
@@ -34,11 +39,16 @@ app.use('/dashboard', authDashboard);
 
 //Binura's Api
 app.use('/inventory', inventoryRoutes);
-
+app.use('/lowStock', lowStockRoutes);
 app.get('/logout', (req, res) => {
     res.clearCookie('token');
     res.json({ Status: true })
 })
+
+//Supply Manager Api's
+app.use('/supply-management/suppliers', supplierManagementRoutes)
+app.use('/supply-management', supplyManagementRoutes)
+
 
 
 

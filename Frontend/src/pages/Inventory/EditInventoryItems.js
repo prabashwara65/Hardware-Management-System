@@ -11,21 +11,21 @@ const EditInventoryItems = () => {
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
-  
+  const [image, setImage] = useState(null); 
 
   const navigate = useNavigate();
 
   useEffect(() => {
-
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/inventory/${id}`);
+        const response = await fetch(`/api/inventory/${id}`);
         const data = await response.json();
         setProduct(data);
         setName(data.name);
         setCategory(data.category);
         setPrice(data.price);
         setQuantity(data.quantity);
+        setImage(data.img_URL);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching product details:", error);
@@ -44,10 +44,11 @@ const EditInventoryItems = () => {
       category: category,
       price: price,
       quantity: quantity,
+      image: image
     };
 
     try {
-      const response = await fetch(`http://localhost:8000/inventory/${id}`, {
+      const response = await fetch(`/api/inventory/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -56,7 +57,7 @@ const EditInventoryItems = () => {
       });
 
       if( response.ok ){
-        window.alert('Product Detail succssfully updated :-)');
+        window.alert('Product Detail successfully updated :-)');
         console.log('updated');
         navigate(`/selectedItem/${id}`);
 
@@ -72,50 +73,52 @@ const EditInventoryItems = () => {
   };
 
   return (
-    <div className = "selectedProduct">
+    <div className="selectedProduct">
       {loading && <p>Loading...</p>}
       {!loading && !product && <p>No product found</p>}
       {!loading && product && (
-
-        <form className = "editItem-form" onSubmit={ handleInventoryEdit }>
+        <form className="editItem-form" onSubmit={handleInventoryEdit}>
           <h2>Edit Item</h2>
           <hr />
 
           <div className="row1">
             <label>Item Name:</label>
-            <input type="text" onChange={(e) => setName(e.target.value)} value={ name } />
-            <br></br>
+            <input type="text" onChange={(e) => setName(e.target.value)} value={name} />
+            <br />
 
             <label>Item Category:</label>
-            <select onChange={(e) => setCategory(e.target.value)} value={ category }>
-            <option value="Hand Tools"> Hand Tools </option>
-                <option value="Power Tools"> Power Tools </option>
-                <option value="Building Materials"> Building Materials </option>
-                <option value="Paint and Painting Supplies"> Paint and Painting Supplies </option>
-                <option value="Plumbing Supplies"> Plumbing Supplies </option>
-                <option value="Electrical Supplies"> Electrical Supplies </option>
-                <option value="Other"> Other </option>
+            <select onChange={(e) => setCategory(e.target.value)} value={category}>
+              <option value="Hand Tools"> Hand Tools </option>
+              <option value="Power Tools"> Power Tools </option>
+              <option value="Building Materials"> Building Materials </option>
+              <option value="Paint and Painting Supplies"> Paint and Painting Supplies </option>
+              <option value="Plumbing Supplies"> Plumbing Supplies </option>
+              <option value="Electrical Supplies"> Electrical Supplies </option>
+              <option value="Other"> Other </option>
             </select>
-            <br></br>
+            <br />
           </div>
 
-          <br></br>
+          <br />
 
           <div className="row2">
             <label>Unit Price:</label>
-            <input type="number" onChange={(e) => setPrice(e.target.value)} value={ price } />
-            <br></br>
+            <input type="number" onChange={(e) => setPrice(e.target.value)} value={price} />
+            <br />
 
             <label>Quantity:</label>
-            <input type="number" onChange={(e) => setQuantity(e.target.value)} value={ quantity } />
-            <br></br>
+            <input type="number" onChange={(e) => setQuantity(e.target.value)} value={quantity} />
+            <br />
+
+            <label>Image:</label>
+            <input type="file" onChange={(e) => setImage(e.target.files[0])} />
           </div>
 
-          <br></br>
+          <br />
 
           <button>Save</button>
 
-          {error && <div className="error">{ error }</div>}
+          {error && <div className="error">{error}</div>}
         </form>
       )}
     </div>
