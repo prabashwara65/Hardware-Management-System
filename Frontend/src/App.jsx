@@ -13,6 +13,12 @@ import EditInventoryItems from './Components/Inventory/EditInventoryItems';
 import { Provider } from 'react-redux';
 import store from '../src/Components/ReduxTool/Store';
 
+import Layout from './pages/SupplyManager/components/Layout';
+import SupplyManagementHome from './pages/SupplyManager/home.page';
+import NotificationPage from './pages/SupplyManager/home.notifications';
+import NotificationDetails from './pages/SupplyManager/components/NotificationDetails';
+import SupplierList from './pages/SupplyManager/components/SupplierList';
+
 
 
 function App() {
@@ -25,16 +31,32 @@ function App() {
 
         <Routes>
 
-          <Route  path="/" element={<NavHome />} />
-          <Route  path="/Register" element={<Register />} />
-          <Route  path="/Login" element={<Login />} />
-          <Route  path="/DashBoard" element={<DashBoard />} />
+          <Route path="/" element={<NavHome />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/DashBoard" element={<DashBoard />} />
 
           <Route exact path="/inventory" element={<InventoryHome />} />
           <Route exact path="/addnewItem" element={<InventoryForm />} />
           <Route exact path="/selectedItem/:id" element={<SelectedItem />} />
           <Route exact path="/editItem/:id" element={<EditInventoryItems />} />
 
+          <Route
+            path="/supply-management/*"
+            element={
+              <Layout>
+                <Routes>
+                  <Route index element={<SupplyManagementHome />} />
+                  <Route path="notifications" element={<NotificationPage />} />
+                  <Route path="notifications/:id" element={<NotificationDetails />} />
+                  <Route path="supplier-management" element={ <SupplierList /> } />
+                  <Route path="purchase-orders" element={ <SupplierList /> } />
+                  <Route path="return-management" element={ <SupplierList /> } />
+                  <Route path="reports" element={ <SupplierList /> } />
+                </Routes>
+              </Layout>
+            }
+          />
         </Routes>
 
       </BrowserRouter>
