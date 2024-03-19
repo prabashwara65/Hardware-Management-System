@@ -14,7 +14,7 @@ const SelectedItem = () => {
     const userConfirmedDelete = window.confirm("Are you sure to delete this item?");
     
     if (userConfirmedDelete) {
-      const response = await fetch(`/api/inventory/${id}`, {
+      const response = await fetch(`http://localhost:8000/inventory/${id}`, {
         method: 'DELETE'
       });
   
@@ -33,7 +33,7 @@ const SelectedItem = () => {
   }
 
   useEffect(() => {
-    const Url = `/api/inventory/${id}`;
+    const Url = `http://localhost:8000/inventory/${id}`;
 
     setLoading(true);
 

@@ -34,6 +34,9 @@ header a {
 .pageview{
   display: flex;
 }
+.SidebarInventory{
+  display: flex;
+}
 /* .Sidebar{
   width: 350px;
   height: 960px;
