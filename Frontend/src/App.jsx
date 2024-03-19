@@ -10,6 +10,18 @@ import InventoryForm from './Components/Inventory/InventoryForm';
 import SelectedItem from './Components/Inventory/SelectedItem';
 import EditInventoryItems from './Components/Inventory/EditInventoryItems';
 
+import EmployeeHome from './Pages/EmployeeHome';
+import EmployeeForm from './Components/Employee/EmployeeForm';
+import UpdateEmployeeForm from './Components/Employee/UpdateEmployeeForm';
+
+
+import LeaveHome from './Pages/LeaveHome';
+import EmployeeReq from './Pages/EmployeeReq';
+import LeaveForm from './Components/Leave/LeaveForm';
+
+
+
+
 import { Provider } from 'react-redux';
 import store from '../src/Components/ReduxTool/Store';
 
@@ -34,6 +46,15 @@ function App() {
           <Route exact path="/addnewItem" element={<InventoryForm />} />
           <Route exact path="/selectedItem/:id" element={<SelectedItem />} />
           <Route exact path="/editItem/:id" element={<EditInventoryItems />} />
+
+          <Route exact path="/employee" element={<EmployeeHome />} />
+          <Route exact path="/addNewEmployee" element={<EmployeeForm />} />
+          <Route exact path="/updateEmployee/:id" element={<UpdateEmployeeForm />} />
+          <Route exact path="/leaveRequest" element={<LeaveHome />} />
+          <Route exact path="/employeereq" element={<EmployeeReq />} />
+          <Route exact path="/addNewLeave" element={<LeaveForm />} />
+         
+          
 
         </Routes>
 

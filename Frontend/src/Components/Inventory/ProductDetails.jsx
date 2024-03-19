@@ -9,6 +9,7 @@ const ProductDetails = ({Inventory}) => {
                 <li>{Inventory.category}</li>
                 <li className="price">{Inventory.price}</li>
                 <li className="quantity">{Inventory.quantity}</li>
+                
             </ul>
             </Link>
         </div>

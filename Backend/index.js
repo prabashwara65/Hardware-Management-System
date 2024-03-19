@@ -12,6 +12,8 @@ const registerRouter = require('./routes/LoginRegisterDashboard/registerRouter')
 const authRoutes = require('./routes/LoginRegisterDashboard/authRoutes');
 const authDashboard = require('./routes/LoginRegisterDashboard/authDashboard');
 const inventoryRoutes = require('./routes/inventory');
+const employeeRoutes = require('./routes/employees');
+const leaveRoutes = require('./routes/leaves');
 
 
 const app = express()
@@ -38,6 +40,15 @@ app.use('/inventory', inventoryRoutes);
 app.get('/logout', (req, res) => {
     res.clearCookie('token');
     res.json({ Status: true })
+})
+
+//Duvidu's Api
+app.use('/employees',employeeRoutes)
+app.use('/leaves',leaveRoutes)
+
+app.use((req, res, next)=> {
+    console.log(req.path, req.method)
+    next()
 })
 
 
