@@ -1,99 +1,300 @@
-import React, { useState, useEffect } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Close';
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridActionsCellItem,
+  GridRowEditStopReasons,
+  GridRowModes,
+} from '@mui/x-data-grid';
 
-function SupplierList() {
-  const url = "http://localhost:8000/supply-management/suppliers"; 
-  const [data, setData] = useState([]);
+const initialRows = [];
 
-  useEffect(() => {
-    getSuppliers();
-  }, []);
+function EditToolbar(props) {
+  const { setRows, setRowModesModel } = props;
 
-  const getSuppliers = () => {
-    fetch(url)
-      .then(resp => resp.json())
-      .then(resp => {
-        console.log(resp)
-        // Map over the response and transform each supplier object
-        const dataWithDetails = resp.map(supplier => ({
-          id: supplier._id, // Assuming _id is the unique identifier for each supplier
-          name: supplier.name,
-          phone: supplier.contact.phone,
-          email: supplier.contact.email,
-          address: supplier.contact.address,
-          productsSupplied: supplier.productsSupplied.map(product => `${product.name} (${product.category})`).join(', '), // Combine product names and categories
-          paymentTerms: supplier.paymentTerms,
-          notes: supplier.notes
-        }));
-        setData(dataWithDetails);
-      })
-      .catch(error => {
-        console.error('Error fetching suppliers:', error);
+  const handleClick = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/supply-management/suppliers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: ' ',
+          contact: { phone: '', email: '', address: '' },
+          productsSupplied: [],
+          paymentTerms: '',
+          notes: ''
+        }),
       });
+      if (response.ok) {
+        const newSupplier = await response.json();
+
+        newSupplier.id = newSupplier._id;
+
+        const productsSuppliedString = '';
+
+        setRows((oldRows) => [...oldRows, { ...newSupplier, productsSuppliedString }]);
+
+        setRowModesModel((oldModel) => ({
+          ...oldModel,
+          [newSupplier.id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+        }));
+      } else {
+        console.error('Failed to add supplier');
+      }
+    } catch (error) {
+      console.error('Error adding supplier:', error);
+    }
+  };
+
+  return (
+    <GridToolbarContainer sx={{ width: 180, height: 50 }}>
+      <Button
+        sx={{
+          color: 'primary.main',
+          '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+          },
+        }}
+        startIcon={<AddIcon />} onClick={handleClick} >
+        Add Supplier
+      </Button>
+    </GridToolbarContainer>
+  );
+}
+
+export default function SupplierList() {
+  const [rows, setRows] = React.useState(initialRows);
+  const [rowModesModel, setRowModesModel] = React.useState({});
+
+  const handleRowEditStop = (params, event) => {
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+      event.defaultMuiPrevented = true;
+      
+      const updatedRow = { ...params.props.row }; // Get the updated row data
+      const updatedRows = rows.map((row) =>
+        row.id === updatedRow.id ? updatedRow : row
+      );
+      setRows(updatedRows);
+    }
   };
   
-  
 
-  const handleRowUpdate = async (newData, oldData) => {
-    console.log('bla', newData, oldData)
+  const handleEditClick = (id) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+
+  const handleSaveClick = (id) => async () => {
     try {
-      const response = await fetch(`${url}/${oldData.id}`, {
-        method: "PATCH",
-        headers: { 'Content-type': "application/json" },
-        body: JSON.stringify(newData)
-      });
-      if (!response.ok) {
-        throw new Error('Failed to update supplier');
+      const updatedRow = rows.find((row) => row.id === id);
+
+      if (!updatedRow) {
+        console.error('No changes found for the row.');
+        return;
       }
-      getSuppliers();
+
+      updatedRow.productsSupplied = transformProductsSupplied(updatedRow.productsSupplied);
+
+
+      const response = await fetch(`http://localhost:8000/supply-management/suppliers/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedRow),
+      });
+      if (response.ok) {
+        const updatedSupplier = await response.json();
+        updatedSupplier.id = updatedSupplier._id;
+        setRows(rows.map((row) => (row.id === id ? updatedSupplier : row)));
+        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+      } else {
+        console.error('Failed to update supplier');
+      }
     } catch (error) {
       console.error('Error updating supplier:', error);
     }
   };
 
-  const handleRowDelete = async (oldData) => {
+  const handleDeleteClick = (id) => async () => {
     try {
-      const response = await fetch(`${url}/${oldData.id}`, {
+      const response = await fetch(`http://localhost:8000/supply-management/suppliers/${id}`, {
         method: "DELETE",
-        headers: { 'Content-type': "application/json" }
       });
-      if (!response.ok) {
-        throw new Error('Failed to delete supplier');
+      if (response.ok) {
+        setRows(rows.filter((row) => row.id !== id));
+      } else {
+        console.error('Failed to delete supplier');
       }
-      getSuppliers();
     } catch (error) {
       console.error('Error deleting supplier:', error);
     }
   };
 
+  const handleCancelClick = (id) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    });
+
+    const editedRow = rows.find((row) => row.id === id);
+    if (editedRow.isNew) {
+      setRows(rows.filter((row) => row.id !== id));
+    }
+  };
+
+  const processRowUpdate = (newRow) => {
+    const updatedRow = { ...newRow, isNew: false };
+    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    return updatedRow;
+  };
+
+  const handleRowModesModelChange = (newRowModesModel) => {
+    setRowModesModel(newRowModesModel);
+  };
+
+  const transformProductsSupplied = (productsSupplied) => {
+  if (Array.isArray(productsSupplied)) {
+    // If productsSupplied is already an array, return it directly
+    return productsSupplied;
+  } else if (typeof productsSupplied === 'string') {
+    // If productsSupplied is a string, split it and transform it into an array
+    return productsSupplied.split(', ').map((productString) => {
+      const [name, category] = productString.split(' (');
+     const formattedCategory = category ? category.substring(0, category.length - 1) : '';
+      return { name, category: formattedCategory };
+    });
+  } else {
+    // Handle other cases, such as undefined or unexpected types
+    console.error('Invalid productsSupplied format:', productsSupplied);
+    return [];
+  }
+};
+
+  
+
   const columns = [
-    { field: 'name', headerName: 'Name', editable: true, width:150 },
-    { field: 'phone', headerName: 'Contact Phone', editable: true, width:150 },
-    { field: 'email', headerName: 'Contact Email', editable: true, width:150 },
-    { field: 'address', headerName: 'Address', editable: true, width:250},
-    { field: 'productsSupplied', headerName: 'Products Supplied', editable: true, width:250 },
-    { field: 'paymentTerms', headerName: 'Payment Terms', editable: true, width:150 },
-    { field: 'notes', headerName: 'Notes', editable: true, width:450 }
+    { field: 'name', headerName: 'Name', width: 180, editable: true },
+    { field: 'contact.phone', headerName: 'Phone', width: 180, editable: true },
+    { field: 'contact.email', headerName: 'Email', width: 180, editable: true },
+    { field: 'contact.address', headerName: 'Address', width: 250, editable: true },
+    { field: 'productsSupplied', headerName: 'Products Supplied', width: 250, editable: true },
+    { field: 'paymentTerms', headerName: 'Payment Terms', width: 150, editable: true },
+    { field: 'notes', headerName: 'Notes', width: 250, editable: true },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 150,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        if (isInEditMode) {
+          return [
+            <GridActionsCellItem
+              icon={<SaveIcon />}
+              label="Save"
+              sx={{ color: 'primary.main', width: 50, height: 50 }}
+              onClick={handleSaveClick(id)}
+            />,
+            <GridActionsCellItem sx={{ width: 50, height: 50 }}
+              icon={<CancelIcon />}
+              label="Cancel"
+              className="textPrimary"
+              onClick={handleCancelClick(id)}
+              color="inherit"
+            />,
+          ];
+        }
+
+        return [
+          <GridActionsCellItem sx={{ width: 50, height: 50 }}
+            icon={<EditIcon />}
+            label="Edit"
+            className="textPrimary"
+            onClick={handleEditClick(id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem sx={{ width: 50, height: 50 }}
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />,
+        ];
+      },
+    },
   ];
 
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/supply-management/suppliers");
+        if (response.ok) {
+          const data = await response.json();
+          const transformedData = data.map(supplier => ({
+            id: supplier._id,
+            name: supplier.name,
+            contact: {
+              phone: supplier.contact.phone,
+              email: supplier.contact.email,
+              address: supplier.contact.address,
+            },
+            productsSupplied: supplier.productsSupplied.map(product => `${product.name} (${product.category})`).join(', '),
+            paymentTerms: supplier.paymentTerms,
+            notes: supplier.notes
+          }));
+          setRows(transformedData);
+        } else {
+          console.error('Failed to fetch data');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <div style={{ height: 500, maxWidth: '100%', width: '100%', marginTop: 64 }}>
+    <Box
+      sx={{
+        height: 500,
+        width: '100%',
+        '& .actions': {
+          color: 'text.secondary',
+        },
+        '& .textPrimary': {
+          color: 'text.primary',
+        },
+        marginTop: 10,
+      }}
+    >
       <DataGrid
-        rows={data}
-        columns={columns.map(column => ({
-          ...column,
-          editable: column.editable ? 'onUpdate' : undefined
-        }))}
-        pageSize={5}
-        checkboxSelection
-        disableSelectionOnClick
-        editable={{
-          onRowUpdate: handleRowUpdate,
-          onRowDelete: handleRowDelete
+        rows={rows}
+        columns={columns}
+        editMode="row"
+        rowModesModel={rowModesModel}
+        onRowModesModelChange={handleRowModesModelChange}
+        onRowEditStop={handleRowEditStop}
+        processRowUpdate={processRowUpdate}
+        slots={{
+          toolbar: EditToolbar,
+        }}
+        slotProps={{
+          toolbar: { setRows, setRowModesModel },
         }}
       />
-    </div>
+    </Box>
   );
 }
 
-export default SupplierList;

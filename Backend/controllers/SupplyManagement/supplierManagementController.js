@@ -46,7 +46,12 @@ const createSupplier = async (req, res) => {
 
 const updateSupplier = async (req, res) => {
     const { id } = req.params; 
-    const { name, contact, productsSupplied, paymentTerms, notes } = req.body; 
+    const { name, contact, productsSupplied, paymentTerms, notes } = req.body;
+    console.log(req.body)
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Cannot find the suppplier' });
+    }
 
     try {
         
