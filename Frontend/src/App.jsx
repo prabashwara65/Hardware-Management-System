@@ -19,6 +19,8 @@ import LeaveHome from './Pages/LeaveHome';
 import EmployeeReq from './Pages/EmployeeReq';
 import LeaveForm from './Components/Leave/LeaveForm';
 
+import EmpDashboard from './Pages/EmpDashboard';
+
 
 
 
@@ -53,6 +55,8 @@ function App() {
           <Route exact path="/leaveRequest" element={<LeaveHome />} />
           <Route exact path="/employeereq" element={<EmployeeReq />} />
           <Route exact path="/addNewLeave" element={<LeaveForm />} />
+
+          <Route exact path="/EmpDash" element={<EmpDashboard/>} />
          
           
 

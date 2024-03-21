@@ -14,11 +14,12 @@ ul {
 
   .employeeDetails{
     background: #fff;
-    border-radius: 4px;
-    margin: 20px auto;
-    padding: 20px;
     position: relative;
+    border-radius: 4px;
+    margin:5px auto;
+    padding: 5px;
     box-shadow: 2px 2px 5px rgb(0,0,0,0.05);
+    height: 60px;
 }
 
   .titles{
@@ -31,11 +32,19 @@ ul {
   }
 .addEmp{
   position:relative;
+  left: 1400px;
+  top: 35px;
   
+}
+.addBtn{
+  position:relative;
+  left: 1320px;
+  top: 65px;
+ 
 }
 .notify{
   position:relative;
-  left:1475px;
+  left:1450px;
   bottom: 30px;
 }
 .empDet{
@@ -44,4 +53,44 @@ ul {
   top:20px;
   font-family:Georgia, 'Times New Roman', Times, serif;
   
+}
+.editBtn{
+  position:relative;
+  height: 40px;
+  width: 100px;
+  left: 1200px;
+  bottom: 60px;
+  background-color: aqua;
+}
+.dltBtn{
+  position:relative;
+  left:1300px;
+  bottom: 133px;
+}
+.search{
+  position: relative;
+  width: 1200px;
+  left: 90px;
+}
+.addNew{
+  position:relative;
+  left:1370px;
+  top: 30px;
+}
+.fullbody{
+  background-color: aquamarine;
+}
+/* .photo{
+  margin: 0px;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+  background: url(Hr.jpg) no-repeat;
+  background-size: cover;
+  
+} */
+.sear{
+
+  position:relative;
+  left:55px;
+  top: 105px;
 }

@@ -1,3 +1,5 @@
+
+
 import './leave.css'
 
 const LeaveDetails = ({ leave }) => {

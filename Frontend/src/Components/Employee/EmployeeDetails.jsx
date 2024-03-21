@@ -1,5 +1,9 @@
 import './employee.css'
 import { Link } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton } from "@mui/material";
+import Badge from "@mui/material/Badge";
+
 
 const EmployeeDetails = ({ employee, onDelete  }) => {
 
@@ -21,6 +25,7 @@ const EmployeeDetails = ({ employee, onDelete  }) => {
     };
 
     return(
+       
         <div className="employeeDetails">
             <ul>
             <li>{employee.employeeid}</li>
@@ -28,11 +33,18 @@ const EmployeeDetails = ({ employee, onDelete  }) => {
             <li>{employee.email}</li>
             <li>{employee.jobPost}</li>
             <li>{employee.employmenttype}</li>
-            <li><Link to={`/updateEmployee/${employee._id}`}>Update</Link></li>
-            <li><button onClick={handleDelete}>Delete</button></li>
-                
+            <li><button className='editBtn'><Link to={`/updateEmployee/${employee._id}`}>Update</Link></button></li>
+
+        <div className='dltBtn'> <li>
+        <IconButton size="large"  color="inherit" onClick={handleDelete}>
+          <Badge  color="error">
+            <DeleteIcon/>
+          </Badge>
+        </IconButton></li></div>
+        
             </ul>
         </div>
+      
     )
 }
 

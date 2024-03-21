@@ -5,7 +5,12 @@ import '../Components/Employee/employee.css'
 
 import Navibar from "../Components/Employee/Navibar"
 import EmployeeDetails from "../Components/Employee/EmployeeDetails"
-// import Notification from '../Components/Employee/Notification';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import SearchIcon from '@mui/icons-material/Search';
+import { IconButton } from "@mui/material";
+import Badge from "@mui/material/Badge";
+
+
 
 
 
@@ -14,7 +19,7 @@ const EmployeeHome = () => {
 
     const [employees, setEmployees] = useState(null)
     const [searchQuery, setSearchQuery] = useState('');
-    // const [showNotification, setShowNotification] = useState(false);
+ 
    
 
     useEffect(() =>  {
@@ -38,24 +43,27 @@ const EmployeeHome = () => {
           };
 
 
-        //   const handleNotificationClick = () => {
-        //     setShowNotification(false);
-        //   };
-
-
+          
     return (
         <div className="fullbody">
             <Navibar/>
             <div>
-            <a href="/addNewEmployee" className="addEmp">Add Employee</a>
-            
-            {/* Adding the Search Box */}
+            <div >
+                <div className="sear"><SearchIcon/></div>
+        <IconButton size="large"  color="inherit" href="/addNewEmployee" className='addBtn'>
+          <Badge  color="error">
+          <AddBoxIcon/>
+          </Badge>
+        </IconButton></div>
+            <div className="addNew">Add New Employee</div>
+            <div className="search">
             <input
                     type="text"
                     placeholder="Search by Employee ID"
                     value={searchQuery}
                     onChange={handleSearchInputChange}
                 />
+            </div>
             <div className="titles">
                 <ul>
                     <li><strong>Employee id</strong></li>
@@ -67,13 +75,12 @@ const EmployeeHome = () => {
                 </ul>
                 
             </div>
-            {/* {showNotification && <p>New Leave Request Notification</p>}
-            <Notification onClick={handleNotificationClick} /> */}
+         
 
             
             </div>
             <div className="details">
-            {/* Rendering Filtered Employees */}
+        
             {employees &&
           employees
             .filter((employee) =>
@@ -84,8 +91,9 @@ const EmployeeHome = () => {
             ))}
               
             </div>
-        </div>
+            </div>
     )
+   
 }
 
 
