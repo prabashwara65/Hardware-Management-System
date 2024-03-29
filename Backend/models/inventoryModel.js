@@ -19,10 +19,14 @@ const inventorySchema = new Schema({
         type: Number,
         required: true 
     },
+    quantityLimit: {
+        type: Number,
+        required: true 
+    },
     img_URL: {
         type: String,
         required: true 
     }
 },{ timestamps: true })
 
-module.exports = mongoose.model('InventoryModelNew', inventorySchema);
+module.exports = mongoose.model('InventoryModelNew1', inventorySchema);

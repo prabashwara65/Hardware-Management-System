@@ -12,6 +12,7 @@ const EditInventoryItems = () => {
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
+  const [quantityLimit, setQuantityLimit] = useState('');
   const [image, setImage] = useState(null); 
 
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const EditInventoryItems = () => {
         setCategory(data.category);
         setPrice(data.price);
         setQuantity(data.quantity);
+        setQuantityLimit(data.quantityLimit);
         setImage(data.img_URL);
         setLoading(false);
       } catch (error) {
@@ -45,6 +47,7 @@ const EditInventoryItems = () => {
       category: category,
       price: price,
       quantity: quantity,
+      quantityLimit: quantityLimit,
       image: image
     };
 
@@ -109,6 +112,10 @@ const EditInventoryItems = () => {
 
             <label>Quantity:</label>
             <input type="number" onChange={(e) => setQuantity(e.target.value)} value={quantity} />
+            <br />
+
+            <label>Quantity Limit:</label>
+            <input type="number" onChange={(e) => setQuantityLimit(e.target.value)} value={quantityLimit} />
             <br />
 
             <label>Image:</label>

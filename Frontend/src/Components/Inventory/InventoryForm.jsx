@@ -1,11 +1,13 @@
 import { useState } from "react";
-import './InventoryStyles.css'
+import { TextField, Button, Grid, MenuItem } from "@mui/material";
+import './InventoryStyles.css';
 
 const InventoryHome = () => {
     const [name, setName] = useState('');
     const [category, setCategory] = useState('Hand Tools');
     const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
+    const [quantityLimit, setQuantityLimit] = useState('');
     const [image, setImage] = useState(null);
     const [error, setError] = useState(null);
 
@@ -17,6 +19,7 @@ const InventoryHome = () => {
         formData.append('category', category);
         formData.append('price', price);
         formData.append('quantity', quantity);
+        formData.append('quantityLimit',quantityLimit);
         formData.append('image', image);
 
         try {
@@ -34,6 +37,7 @@ const InventoryHome = () => {
             setCategory('Hand Tools');
             setPrice('');
             setQuantity('');
+            setQuantityLimit('');
             setImage(null);
             setError(null);
             console.log('new product added', data);
@@ -44,41 +48,77 @@ const InventoryHome = () => {
 
     return (
         <form className="newItem-form" onSubmit={handleInventoryFrom}>
-            <h2>Add new product</h2>
+            <h2>Add New Product</h2>
             <hr/>
 
-            <div className="row1">
-                <label>Item Name:</label>
-                <input type="text" onChange={(e) => setName(e.target.value)} value={name}/> 
-                <br/>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <TextField
+                        label="Item Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        fullWidth
+                        required
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        select
+                        label="Item Category"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        fullWidth
+                        required
+                    >
+                        {['Hand Tools', 'Power Tools', 'Building Materials', 'Paint and Painting Supplies', 'Plumbing Supplies', 'Electrical Supplies', 'Other'].map((option) => (
+                            <MenuItem key={option} value={option}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        type="number"
+                        label="Unit Price"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        fullWidth
+                        required
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        type="number"
+                        label="Quantity"
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
+                        fullWidth
+                        required
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        type="number"
+                        label="Minimum Quantity"
+                        value={quantityLimit}
+                        onChange={(e) => setQuantityLimit(e.target.value)}
+                        fullWidth
+                        required
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <input
+                        type="file"
+                        onChange={(e) => setImage(e.target.files[0])}
+                        accept="image/*"
+                    />
+                </Grid>
+            </Grid>
 
-                <label>Item Category:</label>
-                <select onChange={(e) => setCategory(e.target.value)} value={category}>
-                    <option value="Hand Tools"> Hand Tools </option>
-                    <option value="Power Tools"> Power Tools </option>
-                    <option value="Building Materials"> Building Materials </option>
-                    <option value="Paint and Painting Supplies"> Paint and Painting Supplies </option>
-                    <option value="Plumbing Supplies"> Plumbing Supplies </option>
-                    <option value="Electrical Supplies"> Electrical Supplies </option>
-                    <option value="Other"> Other </option>
-                </select>
-                <br/>
-            </div>
-
-            <div className="row2">
-                <label>Unit Price:</label>
-                <input type="number" onChange={(e) => setPrice(e.target.value)} value={price}/> 
-                <br/>
-
-                <label>Quantity:</label>
-                <input type="number" onChange={(e) => setQuantity(e.target.value)} value={quantity}/> 
-                <br/>
-
-                <label>Image:</label>
-                <input type="file" onChange={(e) => setImage(e.target.files[0])}/>
-            </div>
-
-            <button>Add Item</button>
+            <Button variant="contained" color="primary" type="submit">
+                Add Item
+            </Button>
             {error && <div className="error">{error}</div>}
         </form>
     );

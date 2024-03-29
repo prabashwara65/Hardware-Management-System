@@ -48,11 +48,11 @@ const addProduct = async (req, res) => {
             return res.status(400).json({ error: err.message });
         }
 
-        const { name, category, price, quantity } = req.body;
+        const { name, category, price, quantity, quantityLimit } = req.body;
         const img_URL = req.uploadedFileName; 
 
         try {
-            const inventorydata = await Inventory.create({ name, category, price, quantity, img_URL });
+            const inventorydata = await Inventory.create({ name, category, price, quantity, quantityLimit, img_URL });
             res.status(200).json(inventorydata);
         } catch (error) {
             res.status(400).json({ error: error.message });

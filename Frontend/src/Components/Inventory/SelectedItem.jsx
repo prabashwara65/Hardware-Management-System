@@ -54,7 +54,8 @@ const SelectedItem = () => {
 
   return (
     <div className="selectedProduct">
-      <div className="s1">
+      <div>
+     
         {loading && <p>Loading...</p>}
         {!loading && !product && <p>No product found</p>}
         {!loading && product && (
@@ -65,24 +66,18 @@ const SelectedItem = () => {
             <p>Product Category : {product.category}</p>
             <p>Unit Price : {product.price}</p>
             <p>Available Amount : {product.quantity}</p>
+            <p>Quantity Limit : {product.quantityLimit}</p>
             <p>Total Value of product : {product.price * product.quantity} </p>
-
-            <div>
-              <p>Photo:</p>
-              <img src={`...upload/images/${product.img_URL}`} alt="Product" style={{ maxWidth: "300px" }} />
-            </div>
+            <p>Photo:</p>
+            <img src={product.img_URL} alt="Product" style={{ maxWidth: "300px" }} />
           </div>
-
         )}
-
+        <BarCode id={id} />
         <button onClick={handleEdit}>Edit</button>
         <button onClick={handleDelete}>Delete</button>
-
-      </div>
-      <div className="s2">
-        <BarCode id={id} />
       </div>
     </div>
+    
   );
 };
 
