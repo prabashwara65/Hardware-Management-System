@@ -97,37 +97,60 @@ const updateProduct = async (req, res) => {
         return res.status(404).json({ error: 'Cannot find the product' });
     }
 
-    try {
-        let updateData = { ...req.body };
+    const storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, './upload/images');
+        },
+        filename: function (req, file, cb) {
+            const img_URL = `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`;
+            req.uploadedFileName = img_URL; // Save the renamed file name to the request object
+            cb(null, img_URL);
+        }
+    });
 
-        // Check if a file is uploaded
-        if (req.file) {
-            const img_URL = `${req.file.fieldname}_${Date.now()}${path.extname(req.file.originalname)}`;
-            // Save the renamed file name 
-            req.uploadedFileName = img_URL;
+    const upload = multer({ storage: storage }).single('image');
 
-            // Save the file to the uploads/images folder
-            await fs.promises.rename(req.file.path, path.join('upload/images', img_URL));
-
-            // Update the image URL in the database
-            updateData.img_URL = img_URL;
-        } else {
-            // If no file is uploaded, remove the img_URL field from the update data
-            delete updateData.img_URL;
+    upload(req, res, async function (err) {
+        if (err) {
+            return res.status(400).json({ error: err.message });
         }
 
-        // Update the product
-        const product = await Inventory.findByIdAndUpdate(id, updateData, { new: true });
+        try {
+            let updateData = { ...req.body };
 
-        if (!product) {
-            return res.status(404).json({ error: 'Cannot find the product' });
+            // Check if a file is uploaded
+            if (req.file) {
+                // Update the image URL in the update data
+                updateData.img_URL = req.uploadedFileName;
+
+                // Update the image URL in the database
+                const product = await Inventory.findById(id);
+                if (product) {
+                    const imagePath = path.join(__dirname, '..', 'upload', 'images', product.img_URL);
+                    fs.unlink(imagePath, (err) => {
+                        if (err) {
+                            console.error('Error deleting image ', err);
+                        }
+                    });
+                }
+            } else {
+                // If no file is uploaded, remove the img_URL from the update data
+                delete updateData.img_URL;
+            }
+
+            // Update the product
+            const product = await Inventory.findByIdAndUpdate(id, updateData, { new: true });
+
+            if (!product) {
+                return res.status(404).json({ error: 'Cannot find the product' });
+            }
+
+            return res.status(200).json(product);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Internal server error' });
         }
-
-        return res.status(200).json(product);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
+    });
 };
 
 

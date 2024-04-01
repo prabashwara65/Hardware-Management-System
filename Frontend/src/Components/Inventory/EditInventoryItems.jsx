@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import './InventoryStyles.css'
+import './InventoryStyles.css';
 
 const EditInventoryItems = () => {
   const { id } = useParams();
@@ -28,7 +28,6 @@ const EditInventoryItems = () => {
         setPrice(data.price);
         setQuantity(data.quantity);
         setQuantityLimit(data.quantityLimit);
-        setImage(data.img_URL);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching product details:", error);
@@ -42,35 +41,32 @@ const EditInventoryItems = () => {
   const handleInventoryEdit = async (e) => {
     e.preventDefault();
 
-    const updatedProduct = {
-      name: name,
-      category: category,
-      price: price,
-      quantity: quantity,
-      quantityLimit: quantityLimit,
-      image: image
-    };
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('category', category);
+    formData.append('price', price);
+    formData.append('quantity', quantity);
+    formData.append('quantityLimit', quantityLimit);
+    if (image) {
+      formData.append('image', image);
+    }
 
     try {
       const response = await fetch(`http://localhost:8000/inventory/${id}`, {
         method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedProduct), 
+        body: formData,
       });
 
-      if( response.ok ){
+      if (response.ok) {
         window.alert('Product Detail successfully updated :-)');
         console.log('updated');
         navigate(`/selectedItem/${id}`);
-
       } else {
         window.alert('Product Detail not updated :-(');
         console.log('Data not updated');
         navigate(`/inventory`);
       }
-    } catch ( error ) {
+    } catch (error) {
       console.error("Error updating product:", error);
       setError("Error updating product. Please try again.");
     }

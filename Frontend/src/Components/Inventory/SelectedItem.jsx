@@ -44,6 +44,7 @@ const SelectedItem = () => {
       .then((response) => response.json())
       .then((data) => {
         setProduct(data);
+        console.log(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -69,7 +70,9 @@ const SelectedItem = () => {
             <p>Quantity Limit : {product.quantityLimit}</p>
             <p>Total Value of product : {product.price * product.quantity} </p>
             <p>Photo:</p>
-            <img src={product.img_URL} alt="Product" style={{ maxWidth: "300px" }} />
+            <div >
+            <img src={`http://localhost:8000/images/`+product.img_URL} alt="Product" style={{ maxWidth: "300px" ,height:"200px"}}/>
+            </div>
           </div>
         )}
         <BarCode id={id} />

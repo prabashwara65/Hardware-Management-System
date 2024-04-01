@@ -161,7 +161,12 @@ header a {
 .productDetails {
   border-bottom: #0e33a2 2px solid;
 }
-.productDetails-name, 
+
+.productDetails-image{
+  margin: 5px 10px 5px 30px;
+  width: 30px;
+}
+.productDetails-name,
 .productDetails-category{
   text-align: left;
   margin: 5px 10px 10px 30px;

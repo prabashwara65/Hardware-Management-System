@@ -70,7 +70,6 @@ const InventoryHome = () => {
                     outOfStock += 1;
                 } else if (product.quantity < product.quantityLimit) {
                     lowStockProducts.push({ product: product._id, name: product.name, category: product.category, quantity: product.quantity });
-                    console.log(lowStockProducts);
                 }
             }
         });

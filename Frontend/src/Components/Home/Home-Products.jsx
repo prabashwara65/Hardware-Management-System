@@ -5,7 +5,7 @@ const CustomerSideHome = () => {
     const [products, setProducts] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [curPage, setCurPage] = useState(1);
-    const recordsPerPage = 15;
+    const recordsPerPage = 18;
 
     const handleCategory = (e) => {
         setSelectedCategory(e.target.value);
@@ -70,9 +70,9 @@ const CustomerSideHome = () => {
             </div>
             <hr/>
 
-            {Array.from({ length: Math.ceil(records.length / 5) }).map((_id, index) => (
+            {Array.from({ length: Math.ceil(records.length / 6) }).map((_id, index) => (
               <div className="rowView" key={index}>
-                {records.slice(index * 5, (index + 1) * 5).map((Inventory) => (
+                {records.slice(index * 6, (index + 1) * 6).map((Inventory) => (
                   <ProductDetails key={Inventory._id} Inventory={Inventory} />
                 ))}
               </div>
