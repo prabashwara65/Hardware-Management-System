@@ -15,6 +15,14 @@ const inventorySchema = new Schema({
         type: Number,
         required: true
     },
+    buyingPrice: { 
+        type: Number,
+        required: true
+    },
+    discount: { 
+        type: Number,
+        required: true
+    },
     quantity: {
         type: Number,
         required: true 
@@ -23,10 +31,18 @@ const inventorySchema = new Schema({
         type: Number,
         required: true 
     },
+    description: {
+        type: String,
+        required: true 
+    },
     img_URL: {
         type: String,
         required: true 
-    }
+    },
+    displayItem: {
+        type: Boolean,
+        required: true 
+    },
 },{ timestamps: true })
 
-module.exports = mongoose.model('InventoryModelNew1', inventorySchema);
+module.exports = mongoose.model('newInventory', inventorySchema);
