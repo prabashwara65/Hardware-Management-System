@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import{useReactToPrint} from 'react-to-print';
+import { useReactToPrint } from 'react-to-print';
+import { Grid, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
 const Report1 = () => {
     const componentPDF = useRef();
@@ -44,48 +45,54 @@ const Report1 = () => {
     const groupedProducts = groupProductsByCategory();
 
     const generateReport = useReactToPrint({
-        content: ()=> componentPDF.current,
-        documentTitle:"Inventory data list",
-        onAfterPrint:()=>alert("Inventory list downloaded")
-    })
+        content: () => componentPDF.current,
+        documentTitle: "Inventory data list",
+        onAfterPrint: () => alert("Inventory list downloaded")
+    });
 
     return (
-        <div className='printableArea'>
-            <div ref={componentPDF} style={{width:'100%'}}>
-                <h2>Inventory Report</h2>
+        <div style={{ textAlign: 'center', margin: '20px 60px', display: 'flex', flexDirection: 'column' }}>
+            <div ref={componentPDF} style={{ width: '60%', padding: '10px', alignSelf: 'center' }}>
+                <Typography variant="h4" gutterBottom>
+                    Inventory Report
+                </Typography>
                 {Object.keys(groupedProducts).map((category) => (
-                    <div key={category}>
-                        <h3>{category}</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Price (Rs)</th>
-                                    <th>Quantity</th>
-                                    <th>Total value</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {groupedProducts[category].products.map((product) => (
-                                    <tr key={product._id}>
-                                        <td>{product.name}</td>
-                                        <td>{product.price}</td>
-                                        <td>{product.quantity}</td>
-                                        <td>{product.price * product.quantity}</td>
-                                    </tr>
-                                ))}
-                                <tr>
-                                    <td colSpan="2"></td>
-                                    <td>{groupedProducts[category].itemCount}</td>
-                                    <td>{groupedProducts[category].totalValue}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div key={category} style={{ marginBottom: '20px' }}>
+                        <Typography variant="h5" gutterBottom>
+                            {category}
+                        </Typography>
+                        <TableContainer component={Paper}>
+                            <Table  style={{ border: '2px solid #ccc'}}>
+                                <TableHead>
+                                    <TableRow style={{ border: '2px solid #ccc'}}>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell style={{ textAlign: 'right' }}>Price (Rs)</TableCell>
+                                        <TableCell style={{ textAlign: 'right' }}>Quantity</TableCell>
+                                        <TableCell style={{ textAlign: 'right' }}>Total value</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {groupedProducts[category].products.map((product) => (
+                                        <TableRow key={product._id}>
+                                            <TableCell>{product.name}</TableCell>
+                                            <TableCell style={{ textAlign: 'right' }}>{product.price}</TableCell>
+                                            <TableCell style={{ textAlign: 'right' }}>{product.quantity}</TableCell>
+                                            <TableCell style={{ textAlign: 'right' }}>{product.price * product.quantity}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                    <TableRow style={{ border: '2px solid #ccc'}}>
+                                        <TableCell colSpan="2"></TableCell>
+                                        <TableCell style={{ textAlign: 'right' }}>{groupedProducts[category].itemCount}</TableCell>
+                                        <TableCell style={{ textAlign: 'right' }}>{groupedProducts[category].totalValue}</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </div>
                 ))}
-                </div>
-            <div>
-                <button onClick={ generateReport }>Print</button>
+            </div>
+            <div style={{ alignSelf: 'center', margin: '20px' }}>
+                <Button variant="contained" onClick={generateReport}>Print</Button>
             </div>
         </div>
     );

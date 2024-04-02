@@ -53,7 +53,8 @@ function NavHome() {
         </ul>
       </div>
 
-      <div className={homeCss.navIcons}>
+      <div style={{display:"flex"}}>
+      <div className={homeCss.navIcons} >
         <BsPersonCircle className="iconHeader" />
         <span className={homeCss.span}>Welcome {user.name}</span>
 
@@ -79,9 +80,13 @@ function NavHome() {
             Check Rental Items Availability
           </button>
         </span>
+      </div>
         
       </div>
-      <HomeComponent/>
+      <div>
+        <HomeComponent/>
+      </div>
+      
     </div>
   );
 }

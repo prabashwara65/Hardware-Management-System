@@ -25,11 +25,9 @@ const CustomerSideHome = () => {
         fetchProducts();
     }, []);
 
-    
-
     const lastIndex = curPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
-    const filteredProducts = products ? products.filter(product => !selectedCategory || product.category === selectedCategory) : [];
+    const filteredProducts = products ? products.filter(product => (product.displayItem === true && !selectedCategory || product.category === selectedCategory)) : [];
     const records = filteredProducts.slice(firstIndex, lastIndex);
     const noOfPage = Math.ceil(filteredProducts.length / recordsPerPage);
     const numbers = [...Array(noOfPage + 1).keys()].slice(1);

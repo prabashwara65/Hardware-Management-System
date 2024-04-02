@@ -154,7 +154,7 @@ export default function MuiDrawer() {
                 height:50
               }}
             >
-              <Badge color="error">
+              <Badge color="error" batchcontent={17}>
                 <NotificationsIcon />
               </Badge>
             </IconButton>

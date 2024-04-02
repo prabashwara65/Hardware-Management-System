@@ -42,7 +42,7 @@ function Sidebar() {
         </li>
 
         <li className="sidebar-list-item">
-          <a href="">
+          <a href="/supply-management">
             <BsPeopleFill className="icon" /> Supply management
           </a>
         </li>

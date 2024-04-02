@@ -30,7 +30,7 @@ app.use(cors({
     credentials: true
 }));
 app.use(cookieParser());
-
+app.use(express.static('upload'))
 
 //Prabashwara's Apis
 app.use('/register', registerRouter);
