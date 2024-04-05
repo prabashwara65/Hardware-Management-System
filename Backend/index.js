@@ -62,17 +62,18 @@ app.use('/supply-management', supplyManagementRoutes)
 
 
 
-//sanjuka - routes,models
-const itemsRouter = require('./routes/items');
-const lendedItemsRouter = require('./routes/lendedItems');
-const Item = require("./models/Item");
-const userItemListRouter = require('./routes/userItemList');
+//Rental - routes
+const itemsRouter = require('./routes/RentalManagementRoutes/items');
+const lendedItemsRouter = require('./routes/RentalManagementRoutes/lendedItems');
+const userItemListRouter = require('./routes/RentalManagementRoutes/userItemList');
+const reservedItemsRouter = require("./routes/RentalManagementRoutes/reservedItems");
+const rentalReportRoutes = require('./routes/RentalManagementRoutes/rentalReports');
 
-// sanjuka - routes
 app.use('/items', itemsRouter); 
 app.use('/lendedItems', lendedItemsRouter);
 app.use('/userItemList', userItemListRouter);
-
+app.use("/reservedItems", reservedItemsRouter);
+app.use('/rentalReport', rentalReportRoutes); 
 
 
 //Database connection

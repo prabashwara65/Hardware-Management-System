@@ -32,13 +32,13 @@ const UpdateItemForm = ({ isOpen, onClose, selectedItem }) => {
     e.preventDefault();
     console.log("Updated Item Data:", updatedItemData);
     try {
-      // Send a PUT request to update the item data
+      // update item data
       await axios.put(
         `http://localhost:8000/items/${selectedItem._id}`,
         updatedItemData
       );
       console.log("Item updated successfully");
-      onClose(); // Close the form modal after updating the item
+      onClose();
     } catch (error) {
       console.error("Error updating item:", error);
     }

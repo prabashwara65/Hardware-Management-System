@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./searchBar.css";
 import { InputBase, IconButton, Paper } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search"; // or SearchOutlined
-// Import other necessary components and libraries
+import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,7 +16,7 @@ const SearchBar = ({ onSearch }) => {
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      event.preventDefault(); // Prevent default form submission
+      event.preventDefault();
       handleSearch();
     }
   };
@@ -32,7 +31,6 @@ const SearchBar = ({ onSearch }) => {
               p: "2px 40px",
               display: "flex",
               alignItems: "center",
-              // width: 400,
             }}
           >
             <span>
