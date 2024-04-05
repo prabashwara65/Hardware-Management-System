@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const lendedItemSchema = new mongoose.Schema({
+const rentalReportSchema = new mongoose.Schema({
   itemId: String,
   itemName: String,
   lenderName: String,
@@ -9,6 +9,6 @@ const lendedItemSchema = new mongoose.Schema({
   totalPay: Number,
 });
 
-const LendedItem = mongoose.model('Rented-items', lendedItemSchema);
+const RentalReport = mongoose.model('Rental-Report', rentalReportSchema);
 
-module.exports = LendedItem;
+module.exports = RentalReport;

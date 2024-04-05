@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  Link,
-  useNavigate,
-} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import SearchBar from "./searchBar/searchBar";
 import ProductList from "./ProductList/ProductList";
@@ -25,11 +19,8 @@ Modal.setAppElement(document.body);
 function RentalManagement() {
   const navigate = useNavigate();
 
-  // function handleSearch(searchTerm) {
-  //   console.log("Searching for:", searchTerm);
-  // }
-  const [searchTerm, setSearchTerm] = useState(""); // State for storing search term
-  const [filteredItems, setFilteredItems] = useState([]); // State for storing filtered items
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
   const [isLendFormOpen, setLendFormOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [selectedItemName, setSelectedItemName] = useState(null);
@@ -43,7 +34,7 @@ function RentalManagement() {
     try {
       const response = await axios.get(`http://localhost:8000/items`);
       setItems(response.data);
-      setFilteredItems(response.data); // Initialize filtered items with all items
+      setFilteredItems(response.data);
     } catch (error) {
       console.error("Error fetching items:", error);
     }
@@ -90,10 +81,9 @@ function RentalManagement() {
     setAddNewItemFormOpen(false);
   };
 
-  // Function to handle search
+  // handle search
   const handleSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
-    // Filter items based on search term
     const filtered = items.filter((item) =>
       item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -106,36 +96,12 @@ function RentalManagement() {
         <Sidebar />
       </div>
       <div className="content">
-        {/* Content goes here */}
         <div>
           <h1>Item List (hardware side)</h1>
           <br />
           <div style={{ display: "flex", justifyContent: "center" }}>
             <SearchBar onSearch={handleSearch} />
           </div>
-          {/* <Routes>
-            <Route path="/" element={<SearchBar onSearch={handleSearch} />} /> */}
-          {/* <Route
-          path="/products"
-          element={
-            <ProductList
-              items={items}
-              onLendClick={handleLendClick}
-              onUpdateItemClick={onUpdateItemClick}
-            />
-          }
-        /> */}
-          {/* <Route
-              path="/lendedItems"
-              element={
-                <LendedItemsList
-                  lendedItems={items}
-                  onExtendTime={() => {}}
-                  onItemReceived={() => {}}
-                />
-              }
-            /> */}
-          {/* </Routes> */}
 
           <div className="button-container">
             <Link to="/lendedItems" style={{ marginLeft: "0", margin: "10px" }}>
@@ -154,13 +120,19 @@ function RentalManagement() {
               </Button>
             </Link>
 
-            <Link style={{ marginLeft: "0", margin: "10px" }}>
+            <Link
+              style={{ marginLeft: "0", margin: "10px" }}
+              to="/reserved-items"
+            >
               <Button variant="contained" color="primary">
                 View reserved
               </Button>
             </Link>
 
-            <Link style={{ marginLeft: "0", margin: "10px" }}>
+            <Link
+              style={{ marginLeft: "0", margin: "10px" }}
+              to="/rentalReport"
+            >
               <Button variant="contained" color="primary">
                 Invoice
               </Button>
@@ -174,14 +146,6 @@ function RentalManagement() {
             searchTerm={searchTerm}
           />
 
-          {/* {items.map((item) => (
-        <ItemCard
-          key={item._id}
-          item={item}
-          onLendClick={handleLendClick}
-          onUpdateItemClick={onUpdateItemClick}
-        />
-      ))} */}
           <Modal
             isOpen={isLendFormOpen}
             onRequestClose={handleCloseModal}
