@@ -12,6 +12,7 @@ const registerRouter = require('./routes/LoginRegisterDashboard/registerRouter')
 const authRoutes = require('./routes/LoginRegisterDashboard/authRoutes');
 const authDashboard = require('./routes/LoginRegisterDashboard/authDashboard');
 const inventoryRoutes = require('./routes/inventory');
+const feedbackRoutes = require('./routes/productFeedback');
 
 
 const supplyManagementRoutes = require('./routes/SupplyManagementRoutes/SupplyManagementRoutes')
@@ -39,6 +40,7 @@ app.use('/dashboard', authDashboard);
 
 //Binura's Api
 app.use('/inventory', inventoryRoutes);
+app.use('/feedback',feedbackRoutes);
 
 app.get('/logout', (req, res) => {
     res.clearCookie('token');
