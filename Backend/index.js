@@ -12,6 +12,7 @@ const registerRouter = require('./routes/LoginRegisterDashboard/registerRouter')
 const authRoutes = require('./routes/LoginRegisterDashboard/authRoutes');
 const authDashboard = require('./routes/LoginRegisterDashboard/authDashboard');
 const inventoryRoutes = require('./routes/inventory');
+const feedbackRoutes = require('./routes/productFeedback');
 
 
 const supplyManagementRoutes = require('./routes/SupplyManagementRoutes/SupplyManagementRoutes')
@@ -39,6 +40,7 @@ app.use('/dashboard', authDashboard);
 
 //Binura's Api
 app.use('/inventory', inventoryRoutes);
+app.use('/feedback',feedbackRoutes);
 
 app.get('/logout', (req, res) => {
     res.clearCookie('token');
@@ -62,17 +64,18 @@ app.use('/supply-management', supplyManagementRoutes)
 
 
 
-//sanjuka - routes,models
-const itemsRouter = require('./routes/items');
-const lendedItemsRouter = require('./routes/lendedItems');
-const Item = require("./models/Item");
-const userItemListRouter = require('./routes/userItemList');
+//Rental - routes
+const itemsRouter = require('./routes/RentalManagementRoutes/items');
+const lendedItemsRouter = require('./routes/RentalManagementRoutes/lendedItems');
+const userItemListRouter = require('./routes/RentalManagementRoutes/userItemList');
+const reservedItemsRouter = require("./routes/RentalManagementRoutes/reservedItems");
+const rentalReportRoutes = require('./routes/RentalManagementRoutes/rentalReports');
 
-// sanjuka - routes
 app.use('/items', itemsRouter); 
 app.use('/lendedItems', lendedItemsRouter);
 app.use('/userItemList', userItemListRouter);
-
+app.use("/reservedItems", reservedItemsRouter);
+app.use('/rentalReport', rentalReportRoutes); 
 
 
 //Database connection

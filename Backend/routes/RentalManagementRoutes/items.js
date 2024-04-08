@@ -1,15 +1,13 @@
-// backend/routes/items.js
-
 const express = require('express');
 const router = express.Router();
-const Item = require('../models/Item');
+const Item = require('../../models/RentalManagementModels/Item'); 
 
 
-// Function to add default items
+//add default items
 const addDefaultItems = async () => {
   try {
     const count = await Item.countDocuments();
-    if (count === 0) {
+    if (count === 0) { 
       const defaultItems = [
         {
           imageUrl: "https://asirihardware.lk/wp-content/uploads/2020/12/angel_grinder_prescott.jpg",
@@ -85,14 +83,12 @@ const addDefaultItems = async () => {
   }
 };
 
-
-// Add default items when the server starts
 addDefaultItems(); 
 
 
 
 
-// API endpoint to get all items
+// API endpoint - get all items
 router.get('/', async (req, res) => {
   try {
     const items = await Item.find();
@@ -103,7 +99,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// API endpoint to add a new item
+// API endpoint - add a new item
 router.post('/', async (req, res) => {
   try {
     const newItem = await Item.create(req.body);
@@ -114,14 +110,14 @@ router.post('/', async (req, res) => {
   }
 });
 
-// API endpoint to update an existing item
+// API endpoint - update an existing item
 router.put('/:id', async (req, res) => {
   const itemId = req.params.id;
   try { 
 
     const updatedItem = await Item.findByIdAndUpdate(itemId, req.body, {
-      new: true, // Return the updated item
-      runValidators: true, // Run validation checks on the updated item
+      new: true, 
+      runValidators: true, 
     });
     if (!updatedItem) {
       return res.status(404).json({ message: 'Item not found' });
@@ -134,7 +130,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// API endpoint to delete an existing item
+// API endpoint - delete an existing item
 router.delete('/:id', async (req, res) => {
   const itemId = req.params.id;
   try {
@@ -149,20 +145,18 @@ router.delete('/:id', async (req, res) => {
   }
 });
   
-// API endpoint to update an existing item
+// API endpoint - update an existing item
 router.put('/:itemName/markReceived', async (req, res) => {
   const itemName = req.params.itemName;
   try { 
-    // Find the item by itemName
     const item = await Item.findOne({ itemName });
     if (!item) {
       return res.status(404).json({ message: 'Item not found' });
     }
     
-    // Increase the quantity by 1
+    // Increase quantity by 1
     item.quantity += 1;
 
-    // Save the updated item
     const updatedItem = await item.save();
 
     res.json(updatedItem); 

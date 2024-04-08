@@ -7,20 +7,20 @@ function ProductList({ onLendClick, onUpdateItemClick, searchTerm }) {
   const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {
-    // Fetch items from the server when the component mounts
+    // get items
     axios
       .get(`http://localhost:8000/items`)
       .then((response) => {
-        setItems(response.data); // Update the component state with fetched items
-        setFilteredItems(response.data); // Initialize filtered items with all items
+        setItems(response.data);
+        setFilteredItems(response.data);
       })
       .catch((error) => {
         console.error("Error fetching items:", error);
       });
-  }, []); // The empty dependency array ensures the effect runs once on mount
+  }, []);
 
   useEffect(() => {
-    // Filter items based on search term
+    // Filter items based on search
     if (searchTerm.trim() === "") {
       setFilteredItems(items);
     } else {
@@ -29,7 +29,7 @@ function ProductList({ onLendClick, onUpdateItemClick, searchTerm }) {
       );
       setFilteredItems(filtered);
     }
-  }, [searchTerm, items]); // Update filtered items when search term or items change
+  }, [searchTerm, items]);
 
   return (
     <div

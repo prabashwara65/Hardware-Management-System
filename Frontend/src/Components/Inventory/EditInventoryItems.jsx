@@ -183,7 +183,7 @@ const EditInventoryItems = () => {
             <Grid item xs={6}>
               <FormControlLabel
                 control={<Checkbox checked={displayItem} onChange={(e) => setDisplayItem(e.target.checked)} />}
-                label="Display Item"
+                label="Display Item on Homepage"
               />
             </Grid>
             <Grid item xs={12}>

@@ -107,13 +107,14 @@ header a {
 
 .functionBar{
   display: flex;
-  margin: 10px 0;
+  margin: 10px;
+  padding-bottom: 10px;
   border-bottom: #333 solid;
 }
 
 .categoryBox{
   margin: auto;
-  width: 200px;
+  width: 250px;
 }
 .addButton{
   display: inline-block;
@@ -135,14 +136,14 @@ header a {
 
 /* home page */
 
-.topicline ul{
+.topicline td{
   border-radius: 4px;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-.productDetails ul {
+.productDetails td {
   background: #fff;
   border-radius: 4px;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);

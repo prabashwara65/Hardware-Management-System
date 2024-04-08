@@ -19,10 +19,10 @@ const AddNewItemForm = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Send a POST request to add the new item
+      // add new item
       await axios.post(`http://localhost:8000/items`, formData);
       console.log("New item added successfully");
-      onClose(); // Close the form modal after adding the item
+      onClose();
     } catch (error) {
       console.error("Error adding new item:", error);
     }

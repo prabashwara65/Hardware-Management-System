@@ -1,10 +1,8 @@
-// backend/routes/userItemList.js
-
 const express = require('express');
 const router = express.Router();
-const Item = require('../models/Item');
+const Item = require('../../models/RentalManagementModels/Item');
 
-// API endpoint to get all items for user item list
+// API endpoint - get all items 
 router.get('/', async (req, res) => {
   try {
     const items = await Item.find();
@@ -15,4 +13,4 @@ router.get('/', async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = router; 

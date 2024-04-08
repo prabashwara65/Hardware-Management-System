@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ProductDetails from './Inventory-ProductDetails';
 import Status from './Inventory-Status';
 import Sidebar from "../Dashboard/Dashboard_Sidebar";
-import { TextField, Select, MenuItem, Button } from '@mui/material';
+import { TextField, Select, MenuItem, Button, FormControl, InputLabel } from '@mui/material';
 
 const InventoryHome = () => {
     const [products, setProducts] = useState(null);
@@ -148,18 +148,23 @@ const InventoryHome = () => {
             <br></br>
             <Status totalvalue={calculateTotalValue()} totalProducts={calculateTotalProducts()} outOfStock={calculateOutOfStock()}/>
             <div className="functionBar">
-                <div><TextField label="Search by Name" value={searchQuery} onChange={handleSearch} fullWidth /></div>
-                <div className="categoryBox" label="Select Category">
-                    <Select value={selectedCategory} onChange={handleCategory} fullWidth>
-                        <MenuItem value="">All</MenuItem>
-                        <MenuItem value="Hand Tools">Hand Tools</MenuItem>
-                        <MenuItem value="Power Tools">Power Tools</MenuItem>
-                        <MenuItem value="Building Materials">Building Materials</MenuItem>
-                        <MenuItem value="Paint and Painting Supplies">Paint and Painting Supplies</MenuItem>
-                        <MenuItem value="Plumbing Supplies">Plumbing Supplies</MenuItem>
-                        <MenuItem value="Electrical Supplies">Electrical Supplies</MenuItem>
-                        <MenuItem value="Other">Other</MenuItem>
-                    </Select>
+                <div>
+                    <TextField label="Search by Name" value={searchQuery} onChange={handleSearch} fullWidth />
+                </div>
+                <div className="categoryBox">
+                    <FormControl fullWidth>
+                        <InputLabel id="category-select-label">Select Category</InputLabel>
+                        <Select labelId="category-select-label" value={selectedCategory} onChange={handleCategory} fullWidth >
+                            <MenuItem value="">All</MenuItem>
+                            <MenuItem value="Hand Tools">Hand Tools</MenuItem>
+                            <MenuItem value="Power Tools">Power Tools</MenuItem>
+                            <MenuItem value="Building Materials">Building Materials</MenuItem>
+                            <MenuItem value="Paint and Painting Supplies">Paint and Painting Supplies</MenuItem>
+                            <MenuItem value="Plumbing Supplies">Plumbing Supplies</MenuItem>
+                            <MenuItem value="Electrical Supplies">Electrical Supplies</MenuItem>
+                            <MenuItem value="Other">Other</MenuItem>                             
+                        </Select>
+                    </FormControl>
                 </div>
                 <Button href="/addnewItem" variant="contained" color="primary">Add New Product</Button>
             </div>
