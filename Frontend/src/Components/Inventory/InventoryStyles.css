@@ -1,14 +1,7 @@
 /* google font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
-/* layout */
-/* :root {
-  --primary: #1aac83;
-  --error: #e7195a;
-} */
 body {
-  /* background: #f1f1f1; */
-  /* margin: 0; */
   font-family: "Poppins";
 }
 header {
@@ -33,16 +26,6 @@ header a {
 }
 .pageview{
   display: flex;
-}
-.Sidebar{
-  width: 350px;
-  height: 744px;
-  /* padding: 30px;
-  margin: 0px 20px; */
-  border-width: 2px; 
-  border-color: #333;
-  border-style: solid;
-  background: #0e33a2;
 }
 
 /* ststus boxes */
