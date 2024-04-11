@@ -5,6 +5,7 @@ const Status = (props) => {
     const totalValue = props.totalvalue;
     const totalproducts = props.totalProducts;
     const totalOutOfproducts = props.outOfStock;
+    const totalCategories = props.totalCategories;
 
     return ( 
         <header>
@@ -18,7 +19,7 @@ const Status = (props) => {
                     <div className="box2" style={{ width:'250px', height:'130px'}}>
                         <Category /> 
                         <h3>All Categories:</h3>
-                        <h3>7</h3>
+                        <h3>{totalCategories}</h3>
                     </div>
                     <div className="box3" style={{ width:'250px', height:'130px'}}>
                         <Link to='/supply-management/notifications'>

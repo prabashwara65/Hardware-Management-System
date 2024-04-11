@@ -98,8 +98,9 @@ header a {
 .categoryBox{
   margin: auto;
   width: 250px;
+  display: inline;
 }
-.addButton{
+/* .addButton{
   display: inline-block;
   width: 80px;
   height: 30px;
@@ -115,7 +116,7 @@ header a {
 .addButton:hover {
   background-color: #3172ae; 
   color: #fff; 
-}
+} */
 
 /* home page */
 
@@ -151,7 +152,7 @@ header a {
 }
 
 .productDetails table {
-  width: calc(100% - 20px); /* Adjust the width as needed */
+  width: calc(100% - 20px); 
   border-collapse: collapse;
 }
 
@@ -207,7 +208,9 @@ header a {
 
 /* InventoryForm page */
 
-.newItem-form,.editItem-form {
+.newItem-form,
+.editItem-form,
+.newCategory-form {
   width: 1000px;
   margin: 20px 250px;
   padding: 20px;

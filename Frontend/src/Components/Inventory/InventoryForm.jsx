@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Grid, MenuItem, Checkbox, FormControlLabel, TextareaAutosize } from "@mui/material";
 import './InventoryStyles.css';
 
 const InventoryHome = () => {
     const [name, setName] = useState('');
-    const [category, setCategory] = useState('Hand Tools');
+    const [category, setCategory] = useState('');
     const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
     const [quantityLimit, setQuantityLimit] = useState('');
@@ -14,7 +14,22 @@ const InventoryHome = () => {
     const [displayItem, setDisplayItem] = useState(true);
     const [image, setImage] = useState(null);
     const [error, setError] = useState(null);
-    
+    const [categories, setCategories] = useState([]);
+
+    // Fetch categories from the backend API
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/categories');
+                const data = await response.json();
+                setCategories(data);
+            } catch (error) {
+                setError(error.message);
+            }
+        };
+        fetchCategories();
+    }, []); // Add an empty dependency array to run this effect only once
+
     const handleInventoryFrom = async (e) => {
         e.preventDefault();
 
@@ -42,7 +57,7 @@ const InventoryHome = () => {
             }
 
             setName('');
-            setCategory('Hand Tools');
+            setCategory(''); 
             setPrice('');
             setQuantity('');
             setQuantityLimit('');
@@ -52,7 +67,7 @@ const InventoryHome = () => {
             setDiscount('');
             setDescription('');
             setDisplayItem(true);
-            console.log('new product added', data);
+            console.log('New product added', data);
         } catch (error) {
             setError(error.message);
         }
@@ -82,9 +97,9 @@ const InventoryHome = () => {
                         fullWidth
                         required
                     >
-                        {['Hand Tools', 'Power Tools', 'Building Materials', 'Paint and Painting Supplies', 'Plumbing Supplies', 'Electrical Supplies', 'Other'].map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option}
+                        {categories.map((option) => (
+                            <MenuItem key={option._id} value={option.name}>
+                                {option.name}
                             </MenuItem>
                         ))}
                     </TextField>
@@ -92,7 +107,7 @@ const InventoryHome = () => {
                 <Grid item xs={6}>
                     <TextField
                         type="number"
-                        label="selling Price"
+                        label="Selling Price"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                         fullWidth

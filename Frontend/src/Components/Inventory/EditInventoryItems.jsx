@@ -17,8 +17,9 @@ const EditInventoryItems = () => {
   const [buyingPrice, setBuyingPrice] = useState('');
   const [discount, setDiscount] = useState('');
   const [description, setDescription] = useState('');
-  const [displayItem, setDisplayItem] = useState(false); // Initial value set to false
+  const [displayItem, setDisplayItem] = useState(false);
   const [image, setImage] = useState(null); 
+  const [categories, setCategories] = useState([]);
 
   const navigate = useNavigate();
 
@@ -46,6 +47,20 @@ const EditInventoryItems = () => {
 
     fetchProduct();
   }, [id]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/categories');
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleInventoryEdit = async (e) => {
     e.preventDefault();
@@ -113,9 +128,9 @@ const EditInventoryItems = () => {
                 fullWidth
                 required
               >
-                {['Hand Tools', 'Power Tools', 'Building Materials', 'Paint and Painting Supplies', 'Plumbing Supplies', 'Electrical Supplies', 'Other'].map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
+                {categories.map((option) => (
+                  <MenuItem key={option._id} value={option.name}>
+                    {option.name}
                   </MenuItem>
                 ))}
               </TextField>

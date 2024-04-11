@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductDetails from './Inventory-ProductDetails';
 import Status from './Inventory-Status';
 import Sidebar from "../Dashboard/Dashboard_Sidebar";
@@ -6,6 +6,7 @@ import { TextField, Select, MenuItem, Button, FormControl, InputLabel } from '@m
 
 const InventoryHome = () => {
     const [products, setProducts] = useState(null);
+    const [categories, setCategories] = useState([]); 
     const [selectedCategory, setSelectedCategory] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [curPage, setCurPage] = useState(1);
@@ -33,6 +34,29 @@ const InventoryHome = () => {
 
         fetchProducts();
     }, []);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/categories');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch categories');
+                }
+                const data = await response.json();
+                setCategories(data);
+            } catch (error) {
+                console.error('Error fetching categories:', error.message);
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
+    // Function to count product categories
+    const calculateCategories = () =>{
+        let totalCategories = categories.length;  
+        return totalCategories;
+    };
 
     // Function to calculate total value
     const calculateTotalValue = () => {
@@ -146,7 +170,7 @@ const InventoryHome = () => {
         <div style={{ width: '70%',margin: '5px 60px'}} >
             <h2>Inventory</h2>
             <br></br>
-            <Status totalvalue={calculateTotalValue()} totalProducts={calculateTotalProducts()} outOfStock={calculateOutOfStock()}/>
+            <Status totalCategories={calculateCategories()} totalvalue={calculateTotalValue()} totalProducts={calculateTotalProducts()} outOfStock={calculateOutOfStock()}/>
             <div className="functionBar">
                 <div>
                     <TextField label="Search by Name" value={searchQuery} onChange={handleSearch} fullWidth />
@@ -156,16 +180,13 @@ const InventoryHome = () => {
                         <InputLabel id="category-select-label">Select Category</InputLabel>
                         <Select labelId="category-select-label" value={selectedCategory} onChange={handleCategory} fullWidth >
                             <MenuItem value="">All</MenuItem>
-                            <MenuItem value="Hand Tools">Hand Tools</MenuItem>
-                            <MenuItem value="Power Tools">Power Tools</MenuItem>
-                            <MenuItem value="Building Materials">Building Materials</MenuItem>
-                            <MenuItem value="Paint and Painting Supplies">Paint and Painting Supplies</MenuItem>
-                            <MenuItem value="Plumbing Supplies">Plumbing Supplies</MenuItem>
-                            <MenuItem value="Electrical Supplies">Electrical Supplies</MenuItem>
-                            <MenuItem value="Other">Other</MenuItem>                             
+                                {categories.map(category => (
+                                    <MenuItem key={category._id} value={category.name}>{category.name}</MenuItem>
+                                ))}                            
                         </Select>
                     </FormControl>
                 </div>
+                <Button href="/addNewCategory" variant="contained" color="primary">Add New Category</Button>
                 <Button href="/addnewItem" variant="contained" color="primary">Add New Product</Button>
             </div>
             <div className="topicline">
