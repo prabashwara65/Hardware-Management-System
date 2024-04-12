@@ -12,7 +12,7 @@ function CreateVehicle() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3001/CreateVehicle', { name, model, millage , availability })
+        axios.post('http://localhost:8000/CreateVehicle/CreateVehicle', { name, model, millage , availability })
             .then(res => {
                 alert("Vehicle created successfully!");
                 // Redirect to a different route after successful submission

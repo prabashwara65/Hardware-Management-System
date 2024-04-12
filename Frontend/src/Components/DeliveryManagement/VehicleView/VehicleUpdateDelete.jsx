@@ -14,7 +14,7 @@ function VehicleUpdateDelete() {
     const [availability, setAvailability] = useState('available');
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/getVehicle/${id}`)
+        axios.get(`http://localhost:8000/getVehicle/getVehicle/${id}`)
             .then(result => {
                 setName(result.data.name);
                 setModel(result.data.model);
@@ -31,13 +31,13 @@ function VehicleUpdateDelete() {
     const handleSubmit = (e) => {
         
             e.preventDefault();
-            axios.put(`http://localhost:3001/VehicleUpdateDelete/${id}` , {name, model, millage, availability})
+            axios.put(`http://localhost:8000/VehicleUpdateDelete/VehicleUpdateDelete/${id}` , {name, model, millage, availability})
             .then(result => {
                 console.log(result)
                 return <Navigate to="/" />;
     
             }) 
-            .catch(err=> console.log(err))
+            .catch(err=> console.log(err , id))
           
     };
 

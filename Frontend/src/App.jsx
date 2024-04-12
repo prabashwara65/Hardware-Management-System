@@ -67,6 +67,16 @@ function App() {
           <Route path="/reserved-items" element={<ReservedItemsList />} />
           <Route path="/rentalReport" element={<RentalReport />} />
 
+
+          {/* Prabashwara's routes */}
+          <Route path="/MapView" element={<MapView />} />
+          <Route path="/CreateVehicle" element={<CreateVehicle />} />
+          <Route path="/VehicleView" element={<VehicleView />} />
+          <Route path="/VehicleUpdateDelete/:id" element={<VehicleUpdateDelete />} />
+          <Route path="/DeliveryView" element={<DeliveryView />} />
+          <Route path="/CreateDelivery" element={<CreateDelivery />} />
+          <Route path="/DeliveryUpdateDelete/:id" element={< DeliveryUpdateDelete />} />
+
           <Route
             path="/supply-management/*"
             element={
@@ -90,14 +100,7 @@ function App() {
             }
           />
 
-          {/* Prabashwara's routes */}
-          <Route path="/MapView" element={<MapView />} />
-          <Route path="/CreateVehicle" element={<CreateVehicle />} />
-          <Route path="/VehicleView" element={<VehicleView />} />
-          <Route path="/VehicleUpdateDelete/:id" element={<VehicleUpdateDelete />} />
-          <Route path="/DeliveryView" element={<DeliveryView />} />
-          <Route path="/CreateDelivery" element={<CreateDelivery />} />
-          <Route path="/DeliveryUpdateDelete/:id" element={< DeliveryUpdateDelete />} />
+          
 
 
         </Routes>

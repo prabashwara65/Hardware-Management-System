@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link  , useParams} from "react-router-dom";
 import { Table, TableHead, TableBody, TableRow, TableCell, Paper, Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from "@mui/material";
 import jsPDF from 'jspdf';
 
 import VihicleViewCss from './VehicleView.module.css';
 
 function VehicleDetails() {
+
+    const { id } = useParams();
+
     const [vehicles, setVehicles] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedVehicle, setSelectedVehicle] = useState(null); // Track the selected delivery
     const [openDialog, setOpenDialog] = useState(false); // State to control dialog visibility
 
     useEffect(() => {
-        axios.get("http://localhost:3001/VehicleView")
+        axios.get("http://localhost:8000/VehicleView/VehicleView")
             .then(res => {
                 setVehicles(res.data);
             })
@@ -57,15 +60,15 @@ function VehicleDetails() {
 
     const handleDelete = (id) => {
 
-        axios.delete(`http://localhost:3001/VehicleDelete/${selectedVehicle}`)
+        axios.delete(`http://localhost:8000/VehicleDelete/VehicleDelete/${selectedVehicle}`)
             .then(() => {
                 setVehicles(vehicles.filter(vehicles => vehicles._id !== id));
-                console.log(selectedVehicle)
-                //setOpenDialog(false); // Close the dialog after deletion
-                //window.location.reload(); // Reload the page
+                //console.log(selectedVehicle)
+                setOpenDialog(false); // Close the dialog after deletion
+                window.location.reload(); // Reload the page
 
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err   ));
 
     };
 
