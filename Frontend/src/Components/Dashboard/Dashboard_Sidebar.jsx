@@ -36,6 +36,12 @@ function Sidebar() {
         </li>
 
         <li className="sidebar-list-item">
+          <a href="/MapView">
+            <BsFillArchiveFill className="icon" /> Delivery Management
+          </a>
+        </li>
+
+        <li className="sidebar-list-item">
           <a href="/inventory">
             <BsFillGrid3X2GapFill className="icon" /> Inventory management
           </a>
