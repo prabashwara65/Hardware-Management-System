@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 import {
     BsCart3,
-    BsGrid1X2Fill,
     BsFillArchiveFill,
     BsFillGrid3X2GapFill,
     BsPeopleFill,
