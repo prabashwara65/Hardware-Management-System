@@ -10,13 +10,13 @@ function App() {
 
     <Box  className={MapViewCss.body} >
       {/* <NavBar/> */}
-      <Stack direction="row-reverse"  justifyContent={"flex-end"}  > 
+      <Stack direction="row-reverse"  justifyContent={"inherit"}  > 
         {/* <Sidebar/> */}
         <DeliveryForm/>
         <MapView/>
         
       </Stack>
-      <Footer/>
+      {/* <Footer/> */}
     </Box>
        
   )

@@ -100,8 +100,8 @@ function VehicleDetails() {
                                 <TableCell>{vehicle.model}</TableCell>
                                 <TableCell>{vehicle.millage}</TableCell>
                                 <TableCell>{vehicle.availability}</TableCell>
-                                <TableCell>
-                                    <Link to={`/VehicleUpdateDelete/${vehicle._id}`} style={{ textDecoration: 'none', marginRight: '10px' }}>
+                                <TableCell style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Link to={`/VehicleUpdateDelete/${vehicle._id}`} style={{ textDecoration: 'none', marginRight: '10px'  }}>
                                         <Button variant="contained" color="primary">Update</Button>
                                     </Link>
                                     <Button
