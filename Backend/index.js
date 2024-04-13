@@ -22,6 +22,10 @@ const CreatevehicleRoutes = require('./routes/DeliveryManagementRoutes/VehicleRo
 const VehicleViewRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/VehicleViewRoute');
 const GetVehicleRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/GetVehicleRoutes');
 const VehicleUpdateDeleteRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/UpdateAndDeleteRoutes');
+const VehicleAvailabilityRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/VehicleAvailabilityRoutes');
+const ViewDeliveryRoute = require('./routes/DeliveryManagementRoutes/DeliveryRoutes/ViewDeliveryRoute');
+const CreateVehicleRoute = require('./routes/DeliveryManagementRoutes/DeliveryRoutes/CreateDeliveryRoutes');
+
 
 
 
@@ -100,94 +104,26 @@ app.use('/VehicleView' , VehicleViewRoutes);
 //Get Vehicle ID for Update
 app.use('/getVehicle' , GetVehicleRoutes);
 
-//Update and Delete Vehicle data
+//Update  Vehicle data
 app.use('/VehicleUpdateDelete' , VehicleUpdateDeleteRoutes);
 
-
+// Delete Vehicle data
 app.use('/VehicleDelete' , VehicleViewRoutes);
 
-// //Update and Delete Vehicle data
-// app.put('/VehicleUpdateDelete/:id', async (req, res) => {
-//     const id = req.params.id;
-//     try {
-//         // Find the vehicle by ID and update its details
-//         const updatedVehicle = await VehicleModel.findByIdAndUpdate(
-//             id,
-//             {
-//                 name: req.body.name,
-//                 model: req.body.model,
-//                 millage: req.body.millage,
-//                 availability: req.body.availability
-//             },
-//             { new: true } // To return the updated document
-//         );
-
-//         // Send the updated vehicle as response
-//         res.json(updatedVehicle);
-//     } catch (error) {
-//         // Handle errors
-//         console.error(error);
-//         res.status(500).json({ message: 'Internal server error' });
-//     }
-// });
-
-// //Delete Vehicle 
-// app.delete('/VehicleDelete/:id', (req, res) => {
-//     const id = req.params.id;
-//     DeliveryModel.findByIdAndDelete({_id: id})
-//         .then(deletedDelivery => {
-//             res.json(deletedDelivery); // Send the deleted delivery as JSON response
-//         })
-//         .catch(err => {
-//             res.status(500).json({ error: err.message }); // Send error response if there's an error
-//         });
-// });
-
-
-// Update vehicle availability
-app.put('/updateVehicleAvailability/:id', async (req, res) => {
-    const id = req.params.id;
-    try {
-        // Find the vehicle by ID and update its availability
-        const updatedVehicle = await VehicleModel.findByIdAndUpdate(
-            id,
-            {
-                availability: req.body.availability
-            },
-            { new: true } // To return the updated document
-        );
-
-        // Send the updated vehicle as response
-        res.json(updatedVehicle);
-    } catch (error) {
-        // Handle errors
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
-
+// Route to update vehicle availability by ID
+app.put('/VehicleUpdateDelete', VehicleAvailabilityRoutes);
 
 
 ///DeliveryDatabase
 //Create Delivery
-app.post("/CreateDelivery", (req, res) => {
-    console.log("Request Body:", req.body); // Log the request body
-    DeliveryModel.create(req.body)
-        .then(vehicle => res.json(vehicle))
-        .catch(err => {
-            console.error(err);
-            res.status(500).json({ error: 'Internal server error' });
-        });
-});
+app.use('/CreateDelivery', CreateVehicleRoute);
 
-//View Vehicles
-app.get('/DeliveryView' , (req , res) => {
-    DeliveryModel.find({})
-    .then(Users => res.json(Users))
-    .catch(err => res.json(err))
-})
+// //View Delivery
+app.use('/DeliveryView', ViewDeliveryRoute);
 
-////Get Delivery ID for Update
+
+
+//Get Delivery ID for Update
 app.get('/getDelivery/:id' , (req,res)=> {
     const id = req.params.id;
     DeliveryModel.findById({_id : id})

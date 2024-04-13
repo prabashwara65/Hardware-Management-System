@@ -49,16 +49,25 @@ const FormSide = ({ handleFetchData, sampleData }) => {
         return;
       }
 
-      axios.put(`http://localhost:3001/updateVehicleAvailability/${selectedVehicleData._id}`, { availability: 'notAvailable' })
+      axios.put(`http://localhost:8000/VehicleUpdateDelete/VehicleUpdateDelete/${selectedVehicleData._id}`, { availability: 'notAvailable' })
         .then(res => {
           console.log("Vehicle availability updated successfully!");
           toast.success("Delivery created successfully!");
           console.log("Response from server:", res.data);
-          window.location.reload(); // Refresh the page
+          console.log(selectedVehicleData)
+          // window.location.reload(); // Refresh the page
 
 
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err , selectVehicle));
+
+        axios.post('http://localhost:8000/CreateDelivery/CreateDelivery', { shippingAddress, selectedVehicle, deliveryCost , estimateTime})
+            .then(res => {
+                alert("Delevery created successfully!");
+                // Redirect to a different route after successful submission
+                // navigate('/'); 
+            })
+            .catch(err => console.log(err));
     }
   };
 

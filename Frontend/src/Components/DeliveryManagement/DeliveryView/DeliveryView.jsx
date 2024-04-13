@@ -12,7 +12,7 @@ function DeliveryView() {
     const [openDialog, setOpenDialog] = useState(false); // State to control dialog visibility
 
     useEffect(() => {
-        axios.get("http://localhost:3001/DeliveryView")
+        axios.get("http://localhost:8000/DeliveryView/DeliveryView")
             .then(res => {
                 setDeliveries(res.data);
             })
@@ -57,7 +57,7 @@ function DeliveryView() {
 
     const handleDelete = (id) => {
 
-        axios.delete(`http://localhost:3001/DeliveryDelete/${selectedDelivery}`)
+        axios.delete(`http://localhost:8001/DeliveryDelete/${selectedDelivery}`)
             .then(() => {
                 setDeliveries(deliveries.filter(delivery => delivery._id !== id));
                 //console.log(selectedDelivery)
