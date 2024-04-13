@@ -122,7 +122,7 @@ const MapView = () => {
         }
       );
     }
-  };
+  }; 
 
 
   const PaperStyle = { width: 805, marginTop: "20px", marginLeft: "28px", height: "640px"  }; //height = 550

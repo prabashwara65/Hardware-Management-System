@@ -10,6 +10,7 @@ import {
   BsListCheck,
   BsMenuButtonWideFill,
   BsFillGearFill,
+  BsFillCursorFill,
 } from "react-icons/bs";
 
 function Sidebar() {
@@ -37,7 +38,7 @@ function Sidebar() {
 
         <li className="sidebar-list-item">
           <a href="/MapView">
-            <BsFillArchiveFill className="icon" /> Delivery Management
+            <BsFillCursorFill className="icon" /> Delivery Management
           </a>
         </li>
 
