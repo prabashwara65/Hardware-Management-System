@@ -57,7 +57,7 @@ function DeliveryView() {
 
     const handleDelete = (id) => {
 
-        axios.delete(`http://localhost:8001/DeliveryDelete/${selectedDelivery}`)
+        axios.delete(`http://localhost:8000/DeliveryDelete/DeliveryDelete/${selectedDelivery}`)
             .then(() => {
                 setDeliveries(deliveries.filter(delivery => delivery._id !== id));
                 //console.log(selectedDelivery)

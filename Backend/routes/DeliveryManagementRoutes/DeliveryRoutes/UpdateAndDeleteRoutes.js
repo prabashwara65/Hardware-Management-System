@@ -27,4 +27,24 @@ router.put('/DeliveryUpdateDelete/:id', async (req, res) => {
     }
 });
 
+
+
+// Define a route to handle DELETE requests for deleting a delivery by ID
+router.delete('/DeliveryDelete/:id', (req, res) => {
+    const id = req.params.id;
+    DeliveryModel.findByIdAndDelete({_id: id})
+        .then(deletedDelivery => {
+            if (!deletedDelivery) {
+                res.status(404).json({ error: "Delivery not found" });
+                return;
+            }
+            res.json(deletedDelivery); // Send the deleted delivery as JSON response
+        })
+        .catch(err => {
+            res.status(500).json({ error: err.message }); // Send error response if there's an error
+        });
+});
+
 module.exports = router;
+
+

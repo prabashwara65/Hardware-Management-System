@@ -129,18 +129,22 @@ app.use('/getDelivery', GetDeliveryRoutes);
 //Delivery Update  
 app.use('/DeliveryUpdateDelete', DeliveryUpdateDeleteRoutes);
 
-
 //Get Delivery ID for Delete
-app.delete('/DeliveryDelete/:id', (req, res) => {
-    const id = req.params.id;
-    DeliveryModel.findByIdAndDelete({_id: id})
-        .then(deletedDelivery => {
-            res.json(deletedDelivery); // Send the deleted delivery as JSON response
-        })
-        .catch(err => {
-            res.status(500).json({ error: err.message }); // Send error response if there's an error
-        });
-});
+app.use('/DeliveryDelete', DeliveryUpdateDeleteRoutes);
+
+
+
+// //Get Delivery ID for Delete
+// app.delete('/DeliveryDelete/:id', (req, res) => {
+//     const id = req.params.id;
+//     DeliveryModel.findByIdAndDelete({_id: id})
+//         .then(deletedDelivery => {
+//             res.json(deletedDelivery); // Send the deleted delivery as JSON response
+//         })
+//         .catch(err => {
+//             res.status(500).json({ error: err.message }); // Send error response if there's an error
+//         });
+// });
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------//
 
