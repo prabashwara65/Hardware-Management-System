@@ -99,22 +99,22 @@ function DeliveryView() {
                                 <TableCell>{delivery.selectedVehicle}</TableCell>
                                 <TableCell>{delivery.deliveryCost}</TableCell>
                                 <TableCell>{delivery.estimateTime}</TableCell>
-                                <TableCell>
-                                    <Link to={`/DeliveryUpdateDelete/${delivery._id}`} style={{ textDecoration: 'none', marginRight: '10px' }}>
-                                        <Button variant="contained" color="primary">Update</Button>
+                                <TableCell style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Link to={`/DeliveryUpdateDelete/${delivery._id}`} style={{ textDecoration: 'none', marginRight: '10px'   }}>
+                                        <Button style={{height: "50px" , width: "100px"}} variant="contained" color="primary">Update</Button>
                                     </Link>
                                     <Button
-                                        style={{ textDecoration: 'none', marginRight: '10px', backgroundColor: "#D875C7" }}
+                                        style={{ textDecoration: 'none', marginRight: '5px', backgroundColor: "#D875C7" , height: "50px" , width: "100px" }}
                                         variant="contained"
                                         color="secondary"
                                         onClick={() => {
                                             setSelectedDelivery(delivery._id); // Set the selected delivery
                                             setOpenDialog(true); // Open the dialog for confirmation
-                                        }}
+                                        }} 
                                     >
                                         Delete
                                     </Button>
-                                    <Button style={{ textDecoration: 'none', marginRight: '10px', backgroundColor: "#6196A6" }} variant="contained" onClick={() => downloadAsPdf(delivery)}>Download as PDF</Button>
+                                    <Button style={{ textDecoration: 'none', marginRight: '5px', backgroundColor: "#6196A6"  , height: "50px" , width: "100px"}} variant="contained" onClick={() => downloadAsPdf(delivery)}>Download as PDF</Button>
                                 </TableCell>
                             </TableRow>
                         ))}
