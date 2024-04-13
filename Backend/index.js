@@ -25,6 +25,8 @@ const VehicleUpdateDeleteRoutes = require('./routes/DeliveryManagementRoutes/Veh
 const VehicleAvailabilityRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/VehicleAvailabilityRoutes');
 const ViewDeliveryRoute = require('./routes/DeliveryManagementRoutes/DeliveryRoutes/ViewDeliveryRoute');
 const CreateVehicleRoute = require('./routes/DeliveryManagementRoutes/DeliveryRoutes/CreateDeliveryRoutes');
+const GetDeliveryRoutes = require('./routes/DeliveryManagementRoutes/DeliveryRoutes/GetDeliveryRoute');
+const DeliveryUpdateDeleteRoutes = require('./routes/DeliveryManagementRoutes/DeliveryRoutes/UpdateAndDeleteRoutes');
 
 
 
@@ -118,18 +120,14 @@ app.put('/VehicleUpdateDelete', VehicleAvailabilityRoutes);
 //Create Delivery
 app.use('/CreateDelivery', CreateVehicleRoute);
 
-// //View Delivery
+//View Delivery
 app.use('/DeliveryView', ViewDeliveryRoute);
 
-
-
 //Get Delivery ID for Update
-app.get('/getDelivery/:id' , (req,res)=> {
-    const id = req.params.id;
-    DeliveryModel.findById({_id : id})
-    .then(Users => res.json(Users))
-    .catch(err => res.json(err))
-})
+app.use('/getDelivery', GetDeliveryRoutes);
+
+//Delivery Update  
+app.use('/DeliveryUpdateDelete', DeliveryUpdateDeleteRoutes);
 
 
 //Get Delivery ID for Delete
@@ -142,32 +140,6 @@ app.delete('/DeliveryDelete/:id', (req, res) => {
         .catch(err => {
             res.status(500).json({ error: err.message }); // Send error response if there's an error
         });
-});
-
-//Delivery Update and Delete 
-app.put('/DeliveryUpdateDelete/:id', async (req, res) => {
-    const id = req.params.id;
-    try {
-        // Find the vehicle by ID and update its details
-        const updatedVehicle = await DeliveryModel.findByIdAndUpdate(
-            id,
-            {
-                shippingAddress: req.body.shippingAddress,
-                selectVehicle: req.body.selectVehicle,
-                deliveryCost: req.body.deliveryCost,
-                estimateTime: req.body.estimateTime
-
-            },
-            { new: true } // To return the updated document
-        );
-
-        // Send the updated vehicle as response
-        res.json(updatedVehicle);
-    } catch (error) {
-        // Handle errors
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
 });
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------//

@@ -12,7 +12,7 @@ function DeliveryUpdateDelete() {
     const [estimateTime, setEstimateTime] = useState('');
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/getDelivery/${id}`)
+        axios.get(`http://localhost:8000/getDelivery/getDelivery/${id}`)
             .then(result => {
                 setShippingAddress(result.data.shippingAddress);
                 setSelectedVehicle(result.data.selectedVehicle);
@@ -24,7 +24,7 @@ function DeliveryUpdateDelete() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:3001/DeliveryUpdateDelete/${id}`, { shippingAddress, selectedVehicle, deliveryCost, estimateTime })
+        axios.put(`http://localhost:8000/DeliveryUpdateDelete/DeliveryUpdateDelete/${id}`, { shippingAddress, selectedVehicle, deliveryCost, estimateTime })
             .then(result => {
                 console.log(result);
                 // Assuming you're using react-router-dom for navigation
@@ -40,7 +40,7 @@ function DeliveryUpdateDelete() {
     const [navigate, setNavigate] = useState(false); // State to manage navigation
 
     if (navigate) {
-        return <Navigate to="/" />; // Navigate when state is true
+        return <Navigate to="/DeliveryView" />; // Navigate when state is true
     }
 
     return (

@@ -105,7 +105,7 @@ function VehicleDetails() {
                                         <Button variant="contained" color="primary">Update</Button>
                                     </Link>
                                     <Button
-                                        style={{ textDecoration: 'none', marginRight: '10px', backgroundColor: "#D875C7" }}
+                                        style={{ textDecoration: 'none', marginRight: '10px', backgroundColor: "#D875C7"  }}
                                         variant="contained"
                                         color="secondary"
                                         onClick={() => {

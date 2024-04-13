@@ -5,7 +5,7 @@ import { Navigate, useParams } from "react-router-dom";
 
 
 function VehicleUpdateDelete() {
- 
+
     const { id } = useParams();
 
     const [name, setName] = useState('');
@@ -29,17 +29,24 @@ function VehicleUpdateDelete() {
     };
 
     const handleSubmit = (e) => {
-        
-            e.preventDefault();
-            axios.put(`http://localhost:8000/VehicleUpdateDelete/VehicleUpdateDelete/${id}` , {name, model, millage, availability})
+
+        e.preventDefault();
+        axios.put(`http://localhost:8000/VehicleUpdateDelete/VehicleUpdateDelete/${id}`, { name, model, millage, availability })
             .then(result => {
                 console.log(result)
-                return <Navigate to="/" />;
-    
-            }) 
-            .catch(err=> console.log(err , id))
-          
+                
+                setNavigate(true);
+
+            })
+            .catch(err => console.log(err, id))
+
     };
+
+    const [navigate, setNavigate] = useState(false); // State to manage navigation
+
+    if (navigate) {
+        return <Navigate to="/VehicleView" />; // Navigate when state is true
+    }
 
     return (
         <Container maxWidth="md" style={{ backgroundColor: 'white', minHeight: '100vh' }}>
