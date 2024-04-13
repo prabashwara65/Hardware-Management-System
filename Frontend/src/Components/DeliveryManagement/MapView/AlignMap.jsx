@@ -1,12 +1,29 @@
 import React, { useState } from 'react';
 import { Box, Stack, Drawer, IconButton } from '@mui/material';
-import { Menu } from '@mui/icons-material'; // Import the Menu icon
+import { Menu } from '@mui/icons-material';
 import DeliveryForm from './DeliveryForm';
 import MapView from './MapView';
 import MapViewCss from './AlignMap.module.css';
 import Footer from './Footer';
-import DashboardSidebar from '../../../Components/Dashboard/Dashboard_Sidebar';
-import DashboardHome from '../../../Components/Dashboard/Dashboard_Home';
+import DashboardSidebar from './DashboardSidebar';
+import PopupHome from './PopupHome';
+
+function Overlay({ open, onClick }) {
+  return open ? (
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '0%',
+        height: '0%',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+        zIndex: 0,
+      }}
+      onClick={onClick}
+    />
+  ) : null;
+}
 
 function App() {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -21,8 +38,9 @@ function App() {
   };
 
   const handleToggleBoth = () => {
-    handleToggleSidebar();
-    handleToggleHome();
+    setOpenHome(!openHome);
+    setOpenSidebar(!openSidebar);
+    
   };
 
   return (
@@ -31,7 +49,7 @@ function App() {
         <DeliveryForm />
         <MapView />
         <IconButton
-          onClick={handleToggleBoth} // Call handleToggleBoth function
+          onClick={handleToggleBoth}
           sx={{
             position: 'absolute',
             top: -10,
@@ -39,9 +57,9 @@ function App() {
             zIndex: 1,
             height: 48,
             width: 48,
-            bgcolor: 'transparent', // Make the background transparent
+            bgcolor: 'transparent',
             '&:hover': {
-              bgcolor: 'transparent', // Keep the background transparent on hover
+              bgcolor: 'transparent',
             },
           }}
           color="primary"
@@ -50,12 +68,18 @@ function App() {
           <Menu />
         </IconButton>
       </Stack>
-      <Drawer anchor="left" open={openSidebar} onClose={handleToggleSidebar}>
-        <DashboardSidebar />
-      </Drawer>
+
+      
+      
       <Drawer anchor="right" open={openHome} onClose={handleToggleHome}>
-        <DashboardHome />
+        <PopupHome handleToggle={handleToggleBoth} />
       </Drawer>
+
+      <Drawer anchor="left" open={openSidebar} onClose={handleToggleSidebar}>
+        <DashboardSidebar onClose={handleToggleBoth}/>
+      </Drawer>
+      
+      <Overlay open={openHome} onClick={handleToggleHome} />
       <Footer />
     </Box>
   );
