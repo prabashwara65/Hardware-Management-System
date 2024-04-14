@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import { Table, TableHead, TableBody, TableRow, TableCell, Paper, Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from "@mui/material";
 import DeliveryViewCss from './DeliveryView.module.css';
 import jsPDF from 'jspdf';
+import PopupHome from "../MapView/PopupHome"; // Correct import statement
 
 function DeliveryView() {
     const [deliveries, setDeliveries] = useState([]);
+    const [deliveryCount, setDeliveryCount] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDelivery, setSelectedDelivery] = useState(null); // Track the selected delivery
     const [openDialog, setOpenDialog] = useState(false); // State to control dialog visibility
@@ -18,8 +20,8 @@ function DeliveryView() {
             })
             .catch(err => console.log(err));
     }, []);
-
-
+    
+ 
 
     const downloadAsPdf = (delivery) => {
         const pdf = new jsPDF();
@@ -49,28 +51,27 @@ function DeliveryView() {
         pdf.save("Delivery-Details.pdf");
     };
 
-
     const filteredDeliveries = deliveries.filter(delivery =>
         delivery.shippingAddress.toLowerCase().includes(searchQuery.toLowerCase()) ||
         delivery.selectedVehicle.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const handleDelete = (id) => {
-
         axios.delete(`http://localhost:8000/DeliveryDelete/DeliveryDelete/${selectedDelivery}`)
             .then(() => {
                 setDeliveries(deliveries.filter(delivery => delivery._id !== id));
-                //console.log(selectedDelivery)
                 setOpenDialog(false); // Close the dialog after deletion
                 window.location.reload(); // Reload the page
-
             })
             .catch(err => console.log(err));
-
     };
 
     return (
+     
+            
         <div className={DeliveryViewCss.body}>
+            
+            
             <Paper className={DeliveryViewCss.paper}>
                 <TextField
                     label="Search"
@@ -100,21 +101,21 @@ function DeliveryView() {
                                 <TableCell>{delivery.deliveryCost}</TableCell>
                                 <TableCell>{delivery.estimateTime}</TableCell>
                                 <TableCell style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Link to={`/DeliveryUpdateDelete/${delivery._id}`} style={{ textDecoration: 'none', marginRight: '10px'   }}>
-                                        <Button style={{height: "50px" , width: "100px"}} variant="contained" color="primary">Update</Button>
+                                    <Link to={`/DeliveryUpdateDelete/${delivery._id}`} style={{ textDecoration: 'none', marginRight: '10px' }}>
+                                        <Button style={{ height: "50px", width: "100px" }} variant="contained" color="primary">Update</Button>
                                     </Link>
                                     <Button
-                                        style={{ textDecoration: 'none', marginRight: '5px', backgroundColor: "#D875C7" , height: "50px" , width: "100px" }}
+                                        style={{ textDecoration: 'none', marginRight: '5px', backgroundColor: "#D875C7", height: "50px", width: "100px" }}
                                         variant="contained"
                                         color="secondary"
                                         onClick={() => {
                                             setSelectedDelivery(delivery._id); // Set the selected delivery
                                             setOpenDialog(true); // Open the dialog for confirmation
-                                        }} 
+                                        }}
                                     >
                                         Delete
                                     </Button>
-                                    <Button style={{ textDecoration: 'none', marginRight: '5px', backgroundColor: "#6196A6"  , height: "50px" , width: "100px"}} variant="contained" onClick={() => downloadAsPdf(delivery)}>Download as PDF</Button>
+                                    <Button style={{ textDecoration: 'none', marginRight: '5px', backgroundColor: "#6196A6", height: "50px", width: "100px" }} variant="contained" onClick={() => downloadAsPdf(delivery)}>Download as PDF</Button>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -144,6 +145,7 @@ function DeliveryView() {
                 </DialogActions>
             </Dialog>
         </div>
+        
     );
 }
 

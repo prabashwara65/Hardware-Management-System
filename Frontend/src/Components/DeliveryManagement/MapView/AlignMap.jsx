@@ -80,7 +80,7 @@ function App() {
       </Drawer>
       
       <Overlay open={openHome} onClick={handleToggleHome} />
-      <Footer />
+      {/* <Footer /> */}
     </Box>
   );
 }
