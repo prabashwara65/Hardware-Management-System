@@ -20,6 +20,15 @@ import NotificationDetails from "./pages/SupplyManager/components/NotificationDe
 import SupplierList from "./pages/SupplyManager/components/SupplierList"
 
 
+import MapView from './Components/DeliveryManagement/MapView/AlignMap'
+import CreateVehicle from './Components/DeliveryManagement/VehicleView/CreateVehicle'
+import VehicleView from './Components/DeliveryManagement/VehicleView/VehicleView'
+import VehicleUpdateDelete from './Components/DeliveryManagement/VehicleView/VehicleUpdateDelete'
+import DeliveryView from './Components/DeliveryManagement/DeliveryView/DeliveryView'
+import CreateDelivery from './Components/DeliveryManagement/MapView/DeliveryForm'
+import DeliveryUpdateDelete from './Components/DeliveryManagement/DeliveryView/DeliveryUpdateDelete'
+
+
 
 import { Provider } from "react-redux";
 import store from "../src/Components/ReduxTool/Store";
@@ -50,13 +59,23 @@ function App() {
           <Route exact path="/cusHome" element={<CusHome />} />
           <Route exact path="/cusSelectedItem/:id" element={<CusSelectedItem />} />
           <Route exact path="/report1" element={<Report1 />} />
-          
+
           {/* sanjuka - routes */}
           <Route path="/rentalService" element={<RentalManagement />} />
           <Route path="/lendedItems" element={<LendedItemsList />} />
           <Route path="/userItemList" element={<UserItemList />} />
           <Route path="/reserved-items" element={<ReservedItemsList />} />
           <Route path="/rentalReport" element={<RentalReport />} />
+
+
+          {/* Prabashwara's routes */}
+          <Route path="/MapView" element={<MapView />} />
+          <Route path="/CreateVehicle" element={<CreateVehicle />} />
+          <Route path="/VehicleView" element={<VehicleView />} />
+          <Route path="/VehicleUpdateDelete/:id" element={<VehicleUpdateDelete />} />
+          <Route path="/DeliveryView" element={<DeliveryView />} />
+          <Route path="/CreateDelivery" element={<CreateDelivery />} />
+          <Route path="/DeliveryUpdateDelete/:id" element={< DeliveryUpdateDelete />} />
 
           <Route
             path="/supply-management/*"
@@ -80,6 +99,10 @@ function App() {
               </Layout>
             }
           />
+
+          
+
+
         </Routes>
       </BrowserRouter>
     </Provider>
