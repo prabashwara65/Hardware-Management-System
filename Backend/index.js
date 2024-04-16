@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
-
+ 
 
 
 const registerRouter = require('./routes/LoginRegisterDashboard/registerRouter');
@@ -133,18 +133,6 @@ app.use('/DeliveryUpdateDelete', DeliveryUpdateDeleteRoutes);
 app.use('/DeliveryDelete', DeliveryUpdateDeleteRoutes);
 
 
-
-// //Get Delivery ID for Delete
-// app.delete('/DeliveryDelete/:id', (req, res) => {
-//     const id = req.params.id;
-//     DeliveryModel.findByIdAndDelete({_id: id})
-//         .then(deletedDelivery => {
-//             res.json(deletedDelivery); // Send the deleted delivery as JSON response
-//         })
-//         .catch(err => {
-//             res.status(500).json({ error: err.message }); // Send error response if there's an error
-//         });
-// });
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------//
 
