@@ -17,7 +17,6 @@ function ItemCard({ item, onLendClick, onUpdateItemClick }) {
   const handleLendClick = () => {
     console.log(`Lend item clicked for: ${item.itemName}`);
     if (item.quantity < 1) {
-      // Display a message indicating no items to lend
       setNoItemsDialogOpen(true);
     } else {
       // Open the lend form
@@ -27,7 +26,7 @@ function ItemCard({ item, onLendClick, onUpdateItemClick }) {
 
   const handleUpdateClick = () => {
     console.log(`Update item clicked for: ${item.itemName}`);
-    onUpdateItemClick(item); // Call the onUpdateItemClick function and pass the item
+    onUpdateItemClick(item);
   };
   const [isNoItemsDialogOpen, setNoItemsDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -48,7 +47,6 @@ function ItemCard({ item, onLendClick, onUpdateItemClick }) {
     try {
       await axios.delete(`http://localhost:8000/items/${item._id}`);
       console.log("Item deleted successfully");
-      // Handle UI update or redirection as needed
     } catch (error) {
       console.error("Error deleting item:", error);
     }
@@ -60,9 +58,8 @@ function ItemCard({ item, onLendClick, onUpdateItemClick }) {
       <CardMedia
         component="img"
         height="140"
-        //image={"abc.jpg"}
-        image={item.imageUrl} // Use the actual item image URL
-        alt={item.itemName} // Update to use item.itemName
+        image={item.imageUrl}
+        alt={item.itemName}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

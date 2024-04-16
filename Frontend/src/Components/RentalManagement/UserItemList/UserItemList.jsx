@@ -5,24 +5,23 @@ import UserItemCard from "../UserItemCard/UserItemCard";
 
 function UserItemList() {
   const [items, setItems] = useState([]);
-  const [filteredItems, setFilteredItems] = useState([]); // State for storing filtered items
+  const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {
-    // Fetch items from the server when the component mounts
+    // get items
     axios
       .get(`http://localhost:8000/items`)
       .then((response) => {
         setItems(response.data);
-        setFilteredItems(response.data); // Initialize filtered items with all items
+        setFilteredItems(response.data);
       })
       .catch((error) => {
         console.error("Error fetching items:", error);
       });
   }, []);
 
-  // Function to handle search
+  // handle search
   const handleSearch = (searchTerm) => {
-    // Filter items based on search term
     const filtered = items.filter((item) =>
       item.itemName.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -32,8 +31,10 @@ function UserItemList() {
   return (
     <>
       <h1>Item List (Customer side)</h1>
-      <SearchBar onSearch={handleSearch} />{" "}
-      {/* Integrate SearchBar component */}
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <SearchBar onSearch={handleSearch} />{" "}
+      </div>
+
       <div
         style={{
           display: "flex",

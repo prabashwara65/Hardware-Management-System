@@ -5,19 +5,28 @@ import Login from "./Components/Login/Login";
 import DashBoard from "./Components/Dashboard//DashBoard";
 import NavHome from "./Components/Home/NavHome";
 
-import InventoryHome from './Components/Inventory/InventoryHome';
-import InventoryForm from './Components/Inventory/InventoryForm';
-import SelectedItem from './Components/Inventory/SelectedItem';
-import EditInventoryItems from './Components/Inventory/EditInventoryItems';
-import CusHome from './Components/Home/Home-Products';
-import CusSelectedItem from'./Components/Home/Home-SelectedItem';
-import Report1 from './Components/Inventory/Inventory-report1';
+import InventoryHome from "./Components/Inventory/InventoryHome";
+import InventoryForm from "./Components/Inventory/InventoryForm";
+import SelectedItem from "./Components/Inventory/SelectedItem";
+import EditInventoryItems from "./Components/Inventory/EditInventoryItems";
+import CusHome from "./Components/Home/Home-Products";
+import CusSelectedItem from "./Components/Home/Home-SelectedItem";
+import Report1 from "./Components/Inventory/Inventory-report1";
 
 import Layout from "./pages/SupplyManager/components/Layout";
 import SupplyManagementHome from "./pages/SupplyManager/home.page"
 import NotificationPage from "./pages/SupplyManager/home.notifications"
 import NotificationDetails from "./pages/SupplyManager/components/NotificationDetails"
 import SupplierList from "./pages/SupplyManager/components/SupplierList"
+
+
+import MapView from './Components/DeliveryManagement/MapView/AlignMap'
+import CreateVehicle from './Components/DeliveryManagement/VehicleView/CreateVehicle'
+import VehicleView from './Components/DeliveryManagement/VehicleView/VehicleView'
+import VehicleUpdateDelete from './Components/DeliveryManagement/VehicleView/VehicleUpdateDelete'
+import DeliveryView from './Components/DeliveryManagement/DeliveryView/DeliveryView'
+import CreateDelivery from './Components/DeliveryManagement/MapView/DeliveryForm'
+import DeliveryUpdateDelete from './Components/DeliveryManagement/DeliveryView/DeliveryUpdateDelete'
 
 
 
@@ -28,6 +37,9 @@ import store from "../src/Components/ReduxTool/Store";
 import RentalManagement from "./Components/RentalManagement/RentalManagement";
 import LendedItemsList from "./Components/RentalManagement/lendedItem/LendedItemList";
 import UserItemList from "./Components/RentalManagement/UserItemList/UserItemList";
+import ReservedItemsList from "./Components/RentalManagement/ReservedItemsList/ReservedItemsList";
+import RentalReport from "./Components/RentalManagement/RentalReport/RentalReport";
+
 // import SearchBar from "./Components/RentalManagement/searchBar/searchBar";
 
 function App() {
@@ -47,12 +59,23 @@ function App() {
           <Route exact path="/cusHome" element={<CusHome />} />
           <Route exact path="/cusSelectedItem/:id" element={<CusSelectedItem />} />
           <Route exact path="/report1" element={<Report1 />} />
-          
+
           {/* sanjuka - routes */}
           <Route path="/rentalService" element={<RentalManagement />} />
           <Route path="/lendedItems" element={<LendedItemsList />} />
           <Route path="/userItemList" element={<UserItemList />} />
-          
+          <Route path="/reserved-items" element={<ReservedItemsList />} />
+          <Route path="/rentalReport" element={<RentalReport />} />
+
+
+          {/* Prabashwara's routes */}
+          <Route path="/MapView" element={<MapView />} />
+          <Route path="/CreateVehicle" element={<CreateVehicle />} />
+          <Route path="/VehicleView" element={<VehicleView />} />
+          <Route path="/VehicleUpdateDelete/:id" element={<VehicleUpdateDelete />} />
+          <Route path="/DeliveryView" element={<DeliveryView />} />
+          <Route path="/CreateDelivery" element={<CreateDelivery />} />
+          <Route path="/DeliveryUpdateDelete/:id" element={< DeliveryUpdateDelete />} />
 
           <Route
             path="/supply-management/*"
@@ -61,15 +84,25 @@ function App() {
                 <Routes>
                   <Route index element={<SupplyManagementHome />} />
                   <Route path="notifications" element={<NotificationPage />} />
-                  <Route path="notifications/:id" element={<NotificationDetails />} />
-                  <Route path="supplier-management" element={ <SupplierList /> } />
-                  <Route path="purchase-orders" element={ <SupplierList /> } />
-                  <Route path="return-management" element={ <SupplierList /> } />
-                  <Route path="reports" element={ <SupplierList /> } />
+                  <Route
+                    path="notifications/:id"
+                    element={<NotificationDetails />}
+                  />
+                  <Route
+                    path="supplier-management"
+                    element={<SupplierList />}
+                  />
+                  <Route path="purchase-orders" element={<SupplierList />} />
+                  <Route path="return-management" element={<SupplierList />} />
+                  <Route path="reports" element={<SupplierList />} />
                 </Routes>
               </Layout>
             }
           />
+
+          
+
+
         </Routes>
       </BrowserRouter>
     </Provider>

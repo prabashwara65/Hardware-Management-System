@@ -3,10 +3,10 @@
 }
 
 .search-container {
-    display: flex; /* Use flexbox */
+    display: flex; 
   }
   
   .button-container span {
-    margin-right: 10px; /* Optional: Add spacing between buttons */
+    margin-right: 10px; 
   }
 

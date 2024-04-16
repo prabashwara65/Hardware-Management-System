@@ -6,7 +6,8 @@ const LowStockSchema = new Schema({
 
     product: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Inventory' // Reference to the Product model
+        ref: 'Inventory', // Reference to the Product model
+        required: true
     },
     name: {
         type: String,

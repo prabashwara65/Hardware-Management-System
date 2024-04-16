@@ -6,15 +6,16 @@ import { Button } from "@mui/material";
 import axios from "axios";
 
 const LendedItemList = () => {
+  document.title = "Rented Items";
   const [lendedItems, setLendedItems] = useState([]);
   const [isUpdateFormOpen, setUpdateFormOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
-    fetchLendedItems(); // Fetch lended items when the component mounts
+    fetchLendedItems();
   }, []);
 
-  // Function to fetch lended items from the backend
+  // Get lended items
   const fetchLendedItems = () => {
     axios
       .get(`http://localhost:8000/lendedItems`)
@@ -26,29 +27,50 @@ const LendedItemList = () => {
       });
   };
 
-  // Function to handle marking item as received
+  // marking item as received
   function onItemReceived(item) {
-    // Send a DELETE request to delete the item
+    // delete the item
     axios
       .delete(`http://localhost:8000/lendedItems/${item._id}`)
-      .then((response) => {
+      .then(async (response) => {
         console.log("Item received:", response.data);
         // Remove the item from the list
         const updatedItems = lendedItems.filter((i) => i._id !== item._id);
         setLendedItems(updatedItems);
+
+        // Save the deleted record to rental-report
+        const reportData = {
+          itemId: item.itemId,
+          itemName: item.itemName,
+          lenderName: item.lenderName,
+          daysForLend: item.daysForLend,
+          oneDayPrice: item.oneDayPrice,
+          totalPay: item.totalPay,
+        };
+
+        try {
+          // save the record to rental-report
+          await axios.post("http://localhost:8000/rentalReport", reportData);
+          console.log("Deleting record saved to rental-report:", reportData);
+        } catch (error) {
+          console.error(
+            "Error saving deleting record to rental-report:",
+            error
+          );
+        }
       })
       .catch((error) => {
         console.error("Error marking item as received:", error);
       });
   }
 
-  // Function to handle extending time
+  // handle extending time
   function onExtendTime(item) {
     setUpdateFormOpen(true);
     setSelectedItem(item);
   }
 
-  // Function to close the Update Form modal
+  // close the Update Form
   const closeUpdateForm = () => {
     setUpdateFormOpen(false);
     setSelectedItem(null);
@@ -58,18 +80,17 @@ const LendedItemList = () => {
     <div>
       <h2>Rented Items List</h2>
 
-      {/* Check if lendedItems is an array before mapping */}
       {Array.isArray(lendedItems) &&
         lendedItems.map((item) => (
           <LendedItemCard
             key={item._id}
             item={item}
             onExtendTime={() => onExtendTime(item)}
-            onItemReceived={() => onItemReceived(item)} // Attach onItemReceived function to the button
+            onItemReceived={() => onItemReceived(item)}
           />
         ))}
 
-      {/* Update Form Modal */}
+      {/* Update Form */}
       {isUpdateFormOpen && selectedItem && (
         <UpdateForm
           isOpen={isUpdateFormOpen}
@@ -83,7 +104,6 @@ const LendedItemList = () => {
         />
       )}
 
-      {/* Add button to navigate to home page */}
       <Link to="/rentalService">
         <Button variant="contained" color="primary">
           Go to Item List

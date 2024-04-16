@@ -16,18 +16,17 @@ const LendForm = ({
   const [daysForLend, setDaysForLend] = useState("");
   const [oneDayPrice, setOneDayPrice] = useState("");
 
-  // Calculate total pay based on days and one day price
+  // Calculate total pay
   const totalPay = daysForLend * selectedItemOneDay;
 
   const formLendClick = async () => {
-    // Perform validation
+    //validating
     if (!lenderName || !daysForLend) {
-      // Display an error message or prevent form submission
+      // Display an error message
       alert("Please fill out all fields");
       return;
     }
 
-    // Create a lending object
     const lendingData = {
       itemId: selectedItemId,
       itemName: selectedItemName,
@@ -38,28 +37,23 @@ const LendForm = ({
     };
 
     try {
-      // Make a POST request to your backend API to save lending data
+      //save lending data
       const response = await axios.post(
         `http://localhost:8000/lendedItems`,
         lendingData
       );
 
-      // If the request is successful, you can perform additional actions
       console.log("Lending data saved:", response.data);
 
-      // Call the onSave prop (if needed)
       onSave(lendingData);
     } catch (error) {
-      // Handle errors, such as displaying an alert
       console.error("Error saving lending data:", error);
     }
 
-    // Close the form
     onClose();
   };
 
   const handleCancelClick = () => {
-    // Close the form without saving
     onClose();
   };
 

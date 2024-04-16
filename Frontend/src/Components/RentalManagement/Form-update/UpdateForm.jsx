@@ -5,19 +5,23 @@ import axios from "axios";
 const UpdateForm = ({ isOpen, onClose, item, onSave }) => {
   const [numberOfDays, setNumberOfDays] = useState(0);
 
-  // Calculate Adding Value and Total Pay
   const addingValue = numberOfDays * item.oneDayPrice;
   const totalPay = item.totalPay + addingValue;
 
+  const updatedDaysForLend = item.daysForLend + parseInt(numberOfDays, 10);
+
   const handleUpdate = () => {
-    // Send a request to update the totalPay value
+    // update the totalPay value
     axios
-      .put(`http://localhost:8000/lendedItems/${item._id}/updateTotalPay`, {
-        totalPay,
-      })
+      .put(
+        `http://localhost:8000/lendedItems/${item._id}/updateTotalPayAndDaysForLend`,
+        {
+          totalPay,
+          daysForLend: updatedDaysForLend,
+        }
+      )
       .then((response) => {
         console.log("TotalPay updated successfully:", response.data);
-        // Close the modal after updating
         onClose();
         onSave(response.data);
       })
@@ -51,7 +55,7 @@ const UpdateForm = ({ isOpen, onClose, item, onSave }) => {
             padding: "20px",
             borderRadius: "8px",
             boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-            width: "400px", // Add a width to the form
+            width: "400px",
           }}
         >
           <h2>Update Form</h2>
@@ -60,7 +64,7 @@ const UpdateForm = ({ isOpen, onClose, item, onSave }) => {
               <Grid item xs={12}>
                 <TextField
                   label="Item Name"
-                  value={item.itemName} // Populate with item name
+                  value={item.itemName}
                   fullWidth
                   disabled
                 />
@@ -68,7 +72,7 @@ const UpdateForm = ({ isOpen, onClose, item, onSave }) => {
               <Grid item xs={12}>
                 <TextField
                   label="Item ID"
-                  value={item._id} // Populate with item _id
+                  value={item._id}
                   fullWidth
                   disabled
                 />

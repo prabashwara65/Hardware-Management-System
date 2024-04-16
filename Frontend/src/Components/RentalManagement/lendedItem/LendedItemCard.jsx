@@ -21,12 +21,11 @@ function LendedItemCard({ item, onExtendTime, onItemReceived }) {
 
   const handleConfirmReceived = async () => {
     try {
-      // Send a request to the backend to indicate that the item has been received
+      // set item received
       await axios.put(
         `http://localhost:8000/items/${item.itemName}/markReceived`
       );
       setOpenConfirmation(false);
-      // Call the onItemReceived callback to handle any further actions in the parent component
       onItemReceived(item);
     } catch (error) {
       console.error("Error marking item as received:", error);
@@ -38,7 +37,14 @@ function LendedItemCard({ item, onExtendTime, onItemReceived }) {
   };
 
   return (
-    <Card style={{ backgroundColor: "#f0f0f0", marginBottom: "10px" }}>
+    <Card
+      style={{
+        margin: "auto",
+        backgroundColor: "#f0f0f0",
+        marginBottom: "10px",
+        width: "70%",
+      }}
+    >
       {/* Left Side - Image */}
       <img
         src={item.imageUrl}
@@ -56,7 +62,7 @@ function LendedItemCard({ item, onExtendTime, onItemReceived }) {
         </Typography>
       </CardContent>
 
-      {/* Right Corner - Buttons */}
+      {/* Right side - Buttons */}
       <CardActions>
         <Button variant="outlined" onClick={() => onExtendTime(item)}>
           Extend Time Period
@@ -66,7 +72,6 @@ function LendedItemCard({ item, onExtendTime, onItemReceived }) {
         </Button>
       </CardActions>
 
-      {/* Confirmation Dialog */}
       <Dialog open={openConfirmation} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm</DialogTitle>
         <DialogContent>
