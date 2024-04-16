@@ -71,15 +71,23 @@ const LendForm = ({
           padding: "20px",
           minWidth: "300px",
           maxWidth: "95vw",
-          maxHeight: "90vh",
+          maxHeight: "95vh",
           overflowY: "auto",
           backgroundColor: "white",
           margin: 0,
         }}
       >
-        <h2 id="lend-form-title">Rental Form</h2>
+        <h2
+          style={{
+            textDecoration: "underline",
+            fontSize: "25px",
+            marginBottom: "15px",
+          }}
+        >
+          Rental Form
+        </h2>
         <form onSubmit={formLendClick}>
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             <Grid item xs={12}>
               <TextField
                 label="Item Name"
@@ -138,17 +146,36 @@ const LendForm = ({
               />
             </Grid>
           </Grid>
-          <div style={{ marginTop: "20px" }}>
-            <Button variant="contained" color="primary" type="submit">
-              Lend
-            </Button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: "20px",
+            }}
+          >
             <Button
               variant="outlined"
-              color="secondary"
-              sx={{ marginTop: "2px" }}
               onClick={handleCancelClick}
+              style={{
+                marginRight: "8px",
+                backgroundColor: "#ffffff",
+                color: "#ef476f",
+                fontWeight: "bold",
+              }}
             >
               Cancel
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              style={{
+                backgroundColor: "#1a759f",
+                fontWeight: "bold",
+              }}
+            >
+              Rent
             </Button>
           </div>
         </form>
