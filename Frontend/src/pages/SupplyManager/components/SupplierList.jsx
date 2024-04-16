@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {
   DataGrid,
   GridToolbarContainer,
@@ -13,35 +14,43 @@ import {
   GridRowEditStopReasons,
   GridRowModes,
 } from '@mui/x-data-grid';
+import { useNavigate } from 'react-router-dom';
+import ProductDetailsModal from './supplier-management/productDetailsModal/productDetails';
+import AddSupplierForm from './supplier-management/AddSupplierFormModal/AddSupplierForm';
+import UpdateSupplierForm from './supplier-management/UpdateSupplierFormModal/UpdateSupplierForm';
 
 const initialRows = [];
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
+  const [isFormOpen, setIsFormOpen] = React.useState(false);
 
-  const handleClick = async () => {
+  const handleFormClose = () => {
+    setIsFormOpen(false);
+  };
+
+  const handleFormSubmit = async (formData) => {
     try {
       const response = await fetch("http://localhost:8000/supply-management/suppliers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name: ' ',
-          contact: { phone: '', email: '', address: '' },
-          productsSupplied: [],
-          paymentTerms: '',
-          notes: ''
-        }),
+        body: JSON.stringify(formData),
       });
       if (response.ok) {
         const newSupplier = await response.json();
-
         newSupplier.id = newSupplier._id;
+        newSupplier.phone = newSupplier.contact.phone;
+        newSupplier.email = newSupplier.contact.email;
+        newSupplier.address = newSupplier.contact.address;
 
-        const productsSuppliedString = '';
 
-        setRows((oldRows) => [...oldRows, { ...newSupplier, productsSuppliedString }]);
+        setRows((oldRows) => [newSupplier, ...oldRows]);
+
+
+        setIsFormOpen(false);
+
 
         setRowModesModel((oldModel) => ({
           ...oldModel,
@@ -54,77 +63,46 @@ function EditToolbar(props) {
       console.error('Error adding supplier:', error);
     }
   };
+  const handleAddSupplierClick = () => {
+    setIsFormOpen(true);
+  };
 
   return (
-    <GridToolbarContainer sx={{ width: 180, height: 50 }}>
-      <Button
-        sx={{
-          color: 'primary.main',
-          '&:hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.1)',
-          },
-        }}
-        startIcon={<AddIcon />} onClick={handleClick} >
-        Add Supplier
-      </Button>
-    </GridToolbarContainer>
+    <React.Fragment>
+      <GridToolbarContainer sx={{ width: 180, height: 50 }}>
+        <Button
+          sx={{
+            color: 'primary.main',
+            '&:hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.1)',
+            },
+          }}
+          startIcon={<AddIcon />} onClick={handleAddSupplierClick} >
+          Add Supplier
+        </Button>
+      </GridToolbarContainer>
+      <AddSupplierForm
+        isOpen={isFormOpen}
+        onClose={handleFormClose}
+        onSubmit={handleFormSubmit}
+      />
+    </React.Fragment>
   );
 }
 
 export default function SupplierList() {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
-
-  const handleRowEditStop = (params, event) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
-      
-      const updatedRow = { ...params.props.row }; // Get the updated row data
-      const updatedRows = rows.map((row) =>
-        row.id === updatedRow.id ? updatedRow : row
-      );
-      setRows(updatedRows);
-    }
-  };
-  
-
-  const handleEditClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
-
-  const handleSaveClick = (id) => async () => {
-    try {
-      const updatedRow = rows.find((row) => row.id === id);
-
-      if (!updatedRow) {
-        console.error('No changes found for the row.');
-        return;
-      }
-
-      updatedRow.productsSupplied = transformProductsSupplied(updatedRow.productsSupplied);
+  const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [selectedSupplier, setSelectedSupplier] = React.useState(null);
+  const [isUpdateFormOpen, setIsUpdateFormOpen] = React.useState(false);
 
 
-      const response = await fetch(`http://localhost:8000/supply-management/suppliers/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedRow),
-      });
-      if (response.ok) {
-        const updatedSupplier = await response.json();
-        updatedSupplier.id = updatedSupplier._id;
-        setRows(rows.map((row) => (row.id === id ? updatedSupplier : row)));
-        setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-      } else {
-        console.error('Failed to update supplier');
-      }
-    } catch (error) {
-      console.error('Error updating supplier:', error);
-    }
-  };
+
 
   const handleDeleteClick = (id) => async () => {
+    console.log('deleting')
     try {
       const response = await fetch(`http://localhost:8000/supply-management/suppliers/${id}`, {
         method: "DELETE",
@@ -139,56 +117,95 @@ export default function SupplierList() {
     }
   };
 
-  const handleCancelClick = (id) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
-    });
 
-    const editedRow = rows.find((row) => row.id === id);
-    if (editedRow.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
+
+  const handleViewProducts = (id) => {
+    const supplier = rows.find((row) => row.id === id);
+    setSelectedSupplier(supplier);
+    setModalOpen(true);
+  };
+
+  const handleEditClick = (id) => {
+    const supplier = rows.find((row) => row.id === id);
+    setSelectedSupplier(supplier);
+    setIsUpdateFormOpen(true);
+  };
+
+  const handleUpdateFormClose = () => {
+    setIsUpdateFormOpen(false);
+  };
+
+  const handleUpdateFormSubmit = async (formData) => {
+    const id = formData.id;
+    try {
+      const response = await fetch(`http://localhost:8000/supply-management/suppliers/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        const updatedSupplierData = await response.json();
+
+        updatedSupplierData.id = updatedSupplierData._id;
+        updatedSupplierData.phone = updatedSupplierData.contact.phone;
+        updatedSupplierData.email = updatedSupplierData.contact.email;
+        updatedSupplierData.address = updatedSupplierData.contact.address;
+
+        const updatedIndex = rows.findIndex((row) => row.id === id);
+        if (updatedIndex !== -1) {
+
+          const updatedRows = [...rows];
+
+          updatedRows[updatedIndex] = updatedSupplierData
+
+          setRows(updatedRows);
+
+          setIsUpdateFormOpen(false);
+
+          setRowModesModel((oldModel) => ({
+            ...oldModel,
+            [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+          }));
+
+          setSelectedSupplier(updatedSupplierData);
+        } else {
+          console.error('Failed to find updated supplier in the rows array');
+        }
+      } else {
+        console.error('Failed to update supplier');
+      }
+    } catch (error) {
+      console.error('Error updating supplier:', error);
     }
   };
 
-  const processRowUpdate = (newRow) => {
-    const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    return updatedRow;
-  };
-
-  const handleRowModesModelChange = (newRowModesModel) => {
-    setRowModesModel(newRowModesModel);
-  };
-
-  const transformProductsSupplied = (productsSupplied) => {
-  if (Array.isArray(productsSupplied)) {
-    // If productsSupplied is already an array, return it directly
-    return productsSupplied;
-  } else if (typeof productsSupplied === 'string') {
-    // If productsSupplied is a string, split it and transform it into an array
-    return productsSupplied.split(', ').map((productString) => {
-      const [name, category] = productString.split(' (');
-     const formattedCategory = category ? category.substring(0, category.length - 1) : '';
-      return { name, category: formattedCategory };
-    });
-  } else {
-    // Handle other cases, such as undefined or unexpected types
-    console.error('Invalid productsSupplied format:', productsSupplied);
-    return [];
-  }
-};
-
-  
 
   const columns = [
-    { field: 'name', headerName: 'Name', width: 180, editable: true },
-    { field: 'contact.phone', headerName: 'Phone', width: 180, editable: true },
-    { field: 'contact.email', headerName: 'Email', width: 180, editable: true },
-    { field: 'contact.address', headerName: 'Address', width: 250, editable: true },
-    { field: 'productsSupplied', headerName: 'Products Supplied', width: 250, editable: true },
-    { field: 'paymentTerms', headerName: 'Payment Terms', width: 150, editable: true },
-    { field: 'notes', headerName: 'Notes', width: 250, editable: true },
+    { field: 'name', headerName: 'Name', width: 180, editable: false },
+    { field: 'phone', headerName: 'Phone', width: 180, editable: false },
+    {
+      field: 'email', headerName: 'Email', width: 180, editable: false,
+      renderCell: (params) => (
+        <a href={`mailto:${params.value}`}>{params.value}</a>
+      ),
+    },
+    { field: 'address', headerName: 'Address', width: 250, editable: false },
+    {
+      field: 'products',
+      headerName: 'Products',
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          onClick={() => handleViewProducts(params.row.id)}
+
+        >
+          View Products
+        </Button>
+      ),
+    },
+    { field: 'paymentTerms', headerName: 'Payment Terms', width: 150, editable: false },
     {
       field: 'actions',
       type: 'actions',
@@ -196,44 +213,48 @@ export default function SupplierList() {
       width: 150,
       cellClassName: 'actions',
       getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
-        if (isInEditMode) {
-          return [
-            <GridActionsCellItem
-              icon={<SaveIcon />}
-              label="Save"
-              sx={{ color: 'primary.main', width: 50, height: 50 }}
-              onClick={handleSaveClick(id)}
-            />,
-            <GridActionsCellItem sx={{ width: 50, height: 50 }}
-              icon={<CancelIcon />}
-              label="Cancel"
-              className="textPrimary"
-              onClick={handleCancelClick(id)}
-              color="inherit"
-            />,
-          ];
-        }
 
         return [
           <GridActionsCellItem sx={{ width: 50, height: 50 }}
             icon={<EditIcon />}
             label="Edit"
             className="textPrimary"
-            onClick={handleEditClick(id)}
+            onClick={() => handleEditClick(id)}
             color="inherit"
+            title='Edit row'
           />,
           <GridActionsCellItem sx={{ width: 50, height: 50 }}
             icon={<DeleteIcon />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
+            title='Delete row'
           />,
         ];
       },
     },
+    {
+      field: 'navigate',
+      headerName: '',
+      width: 150,
+      type: 'actions',
+      renderCell: (params) => (
+        <Button
+          endIcon={<ChevronRightIcon />}
+          onClick={() => handleNavigate(params.row.id)}
+        >
+          View more
+        </Button>
+      ),
+    },
+
   ];
+
+  const handleNavigate = (id) => {
+
+    navigate(`/suppliers/${id}`);
+  };
+
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -244,14 +265,15 @@ export default function SupplierList() {
           const transformedData = data.map(supplier => ({
             id: supplier._id,
             name: supplier.name,
-            contact: {
-              phone: supplier.contact.phone,
-              email: supplier.contact.email,
-              address: supplier.contact.address,
-            },
-            productsSupplied: supplier.productsSupplied.map(product => `${product.name} (${product.category})`).join(', '),
+            phone: supplier.contact.phone,
+            email: supplier.contact.email,
+            address: supplier.contact.address,
+            productsSupplied: supplier.productsSupplied.map(product => ({
+              name: product.name,
+              category: product.category
+            })),
             paymentTerms: supplier.paymentTerms,
-            notes: supplier.notes
+
           }));
           setRows(transformedData);
         } else {
@@ -282,11 +304,9 @@ export default function SupplierList() {
       <DataGrid
         rows={rows}
         columns={columns}
-        editMode="row"
+        editMode='row'
         rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
+
         slots={{
           toolbar: EditToolbar,
         }}
@@ -294,6 +314,20 @@ export default function SupplierList() {
           toolbar: { setRows, setRowModesModel },
         }}
       />
+
+      <ProductDetailsModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        supplier={selectedSupplier}
+      />
+
+      <UpdateSupplierForm
+        isOpen={isUpdateFormOpen}
+        onClose={handleUpdateFormClose}
+        onSubmit={handleUpdateFormSubmit}
+        initialData={selectedSupplier}
+      />
+
     </Box>
   );
 }

@@ -60,7 +60,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     padding: 20px;
-    margin-top: 20px; /* Add some spacing after notification list */
+    margin-top: 64px; /* Add some spacing after notification list */
   }
   
   .notification-item {
@@ -85,4 +85,7 @@
     font-weight: bold;
   }
   
+  .expanded-row {
+    background-color: #f5f5f5;
+  }
   

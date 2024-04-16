@@ -14,8 +14,9 @@ const authDashboard = require('./routes/LoginRegisterDashboard/authDashboard');
 const inventoryRoutes = require('./routes/inventory');
 
 
-const supplyManagementRoutes = require('./routes/SupplyManagementRoutes/SupplyManagementRoutes')
-const supplierManagementRoutes = require('./routes/SupplyManagementRoutes/SupplierManagementRoutes')
+const lowStockNotifications = require('./routes/SupplyManagementRoutes/NotificationsRoutes');
+const supplierManagementRoutes = require('./routes/SupplyManagementRoutes/SupplierManagementRoutes');
+const purchaseOrderRoutes = require('./routes/SupplyManagementRoutes/PurchaseOrdersRoutes');
 
 
 
@@ -46,8 +47,9 @@ app.get('/logout', (req, res) => {
 })
 
 //Supply Manager Api's
-app.use('/supply-management/suppliers', supplierManagementRoutes)
-app.use('/supply-management', supplyManagementRoutes)
+app.use('/supply-management/suppliers', supplierManagementRoutes);
+app.use('/supply-management', lowStockNotifications);
+app.use('/supply-management/purchase-orders', purchaseOrderRoutes);
 
 
 

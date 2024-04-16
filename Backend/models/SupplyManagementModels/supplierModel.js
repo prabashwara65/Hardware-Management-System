@@ -31,7 +31,7 @@ const SupplierSchema = new Schema({
     responsiveness: Number,
     
   },
-  notes: String
+  
 }, { timestamps: true });
 
 module.exports = mongoose.model('Supplier', SupplierSchema);
