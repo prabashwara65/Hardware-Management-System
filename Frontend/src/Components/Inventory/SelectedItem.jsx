@@ -57,7 +57,7 @@ const SelectedItem = () => {
       {!loading && product && (
 
         <div className="detailsBox">
-          <p>Product Id : {id}</p>
+          
           <p>Product Name : {product.name}</p>
           <p>Product Category : {product.category}</p>
           <p>Unit Price : {product.price}</p>

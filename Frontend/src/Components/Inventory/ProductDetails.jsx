@@ -12,6 +12,7 @@ const ProductDetails = ({Inventory}) => {
             </ul>
             </Link>
         </div>
+        
      );
 }
  

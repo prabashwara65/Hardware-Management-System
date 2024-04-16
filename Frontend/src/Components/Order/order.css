@@ -1,0 +1,130 @@
+/* google font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+/* layout */
+
+/* pagination */
+body {
+  background: #f1f1f1;
+  margin: 0;
+  font-family: "Poppins";
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 5px 580px;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  text-decoration: none;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.page-link:hover {
+  background-color: #e0e0e0;
+}
+
+.active .page-link {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+/* searchbar style */
+
+.searchbar{
+  display: flex;
+  margin: 10px 0;
+  border-bottom: #333 solid;
+}
+
+.searchbox{
+  margin: auto;
+}
+
+/* HomePage */
+.cusHomeView{
+  margin: 5px 90px;
+}
+
+.homeProductDetails{
+  text-decoration: none;
+  height: 350px;
+  width: 200px;
+  border: 1px black solid;
+  padding: 10px;
+  margin-right: 10px;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.rowView {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.singleProduct{
+  text-decoration: none; 
+  color: inherit;
+}
+.selectedProduct {
+    margin: 20px;
+  }
+  
+  .detailsBox {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    height: 600px;
+  }
+  
+  .productImage {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .imagePlaceholder {
+    width: 100px; /* Adjust the width and height according to your design */
+    height: 100px;
+    background-color: #f0f0f0; /* Placeholder color */
+  }
+  
+  .productDetails {
+    flex: 2;
+    margin-top: 25px;
+    margin-bottom: 50px;
+    font-size: 20px;
+  }
+  
+  
+  .productName, .unitPrice, .availableAmount {
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 15px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
