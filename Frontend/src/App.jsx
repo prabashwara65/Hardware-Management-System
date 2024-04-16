@@ -35,8 +35,8 @@ import DeliveryUpdateDelete from './Components/DeliveryManagement/DeliveryView/D
 // import CusSelectedItem from './Components/Order/Home-selectedItems';
 // import CartPage from './Components/Order/cartPage';
 
-import CusHome from './Components/Order/Home-Products'
-import CusSelectedItem from './Components/Order/Home-SelectedItem'
+import CusOrderHome from './Components/Order/Home-Products'
+import SelectedOrderItem from './Components/Order/Home-SelectedItem'
 import CartPage from './Components/Order/CartPages'
 import DeliveryInfoPage from './Components/Order/DeliveryInfoPage';
 import PaymentPage from './Components/Order/PaymentPage'
@@ -74,9 +74,9 @@ function App() {
           <Route exact path="/selectedItem/:id" element={<SelectedItem />} />
           <Route exact path="/editItem/:id" element={<EditInventoryItems />} />
 
-          <Route exact path="/cusHome" element={<CusHome addToCart={addToCart}/>} />
+          <Route exact path="/cusOrderHome" element={<CusOrderHome addToCart={addToCart}/>} />
           <Route exact path='/cart' element={<CartPage cart={cart}/>}/>
-          <Route exact path="/cusSelectedItem/:id" element={<CusSelectedItem  addToCart={addToCart}/>} />
+          <Route exact path="/cusOrderSelectedItem/:id" element={<SelectedOrderItem  addToCart={addToCart}/>} />
           <Route exact path='/deliveryinfo' element={<DeliveryInfoPage />}/>
           <Route exact path='/payment' element={<PaymentPage />}/>
           <Route exact path='/order' element={<AdminOrdersPage />}/>
