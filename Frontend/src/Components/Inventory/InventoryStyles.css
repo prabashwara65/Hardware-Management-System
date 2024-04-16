@@ -1,14 +1,7 @@
 /* google font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 
-/* layout */
-/* :root {
-  --primary: #1aac83;
-  --error: #e7195a;
-} */
 body {
-  /* background: #f1f1f1; */
-  /* margin: 0; */
   font-family: "Poppins";
 }
 header {
@@ -33,16 +26,6 @@ header a {
 }
 .pageview{
   display: flex;
-}
-.Sidebar{
-  width: 350px;
-  height: 744px;
-  /* padding: 30px;
-  margin: 0px 20px; */
-  border-width: 2px; 
-  border-color: #333;
-  border-style: solid;
-  background: #0e33a2;
 }
 
 /* ststus boxes */
@@ -105,15 +88,16 @@ header a {
 
 /* searchbar style */
 
-.searchbar{
+.functionBar{
   display: flex;
-  margin: 10px 0;
+  margin: 10px;
+  padding-bottom: 10px;
   border-bottom: #333 solid;
-  /* border-top:  #333 solid; */
 }
 
-.searchbox{
+.categoryBox{
   margin: auto;
+  width: 250px;
 }
 .addButton{
   display: inline-block;
@@ -135,14 +119,14 @@ header a {
 
 /* home page */
 
-.topicline ul{
+.topicline td{
   border-radius: 4px;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-.productDetails ul {
+.productDetails td {
   background: #fff;
   border-radius: 4px;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
@@ -161,66 +145,79 @@ header a {
 .productDetails {
   border-bottom: #0e33a2 2px solid;
 }
-.productDetails-name, 
-.productDetails-category{
-  text-align: left;
-  margin: 5px 10px 10px 30px;
-  width: 230px;
-}
-.productDetails-price, 
-.productDetails-quantity{
-  text-align: right;
-  margin: 5px 0 10px 120px;
-  width: 50px;
+
+.productDetails {
+  margin-bottom: 10px;
 }
 
-.topic-name, 
-.topic-category{
-  text-align: center;
-  margin: 5px 15px 10px 20px;
-  width: 250px;
+.productDetails table {
+  width: calc(100% - 20px); /* Adjust the width as needed */
+  border-collapse: collapse;
 }
+
+.productDetails td {
+  padding: 8px;
+}
+
+.productDetails a {
+  text-decoration: none;
+  color: black; 
+}
+
+.productDetails-image img {
+  max-width: 30px;
+  height: 30px;
+}
+
+.productDetails-name {
+  width: 40%; 
+}
+
+.productDetails-price,
+.productDetails-disPrice,
+.productDetails-quantity {
+  width: 20%; 
+  padding-right: 30px;
+  text-align: right;
+}
+
+.topicline {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.topic-photo{
+  width: 3%; 
+}
+.topic-name {
+  width: 30%; 
+}
+
+.topic-disPrice {
+  width: 30%; 
+}
+
 .topic-price{
-  text-align: center;
-  margin: 5px 0 10px 250px;
-  width: 50px;
+  width: 30%; 
 }
-.tpoic-quantity{
-  text-align: center;
-  margin: 5px 0 10px 100px;
-  width: 50px;
+.tpoic-quantity {
+  width: 30%; 
 }
 
 
 /* InventoryForm page */
 
-.newItem-form {
-  width: 500px;
+.newItem-form,.editItem-form {
+  width: 1000px;
   margin: 20px 250px;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #262bc8;
   border-radius: 8px;
   background-color: #f7f7f7;
   display: flex;
   flex-direction: column;
 }
 
-h2 {
-  text-align: center;
-  color: #333;
-}
-
-.row1,
-.row2 {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-}
-
-label {
-  margin-bottom: 5px;
-  color: #555;
-}
 
 input,
 select,

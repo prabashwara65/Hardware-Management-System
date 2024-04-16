@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import ProductDetails from './Home-ProductDetails';
+import homeCss from "./home.module.css";
 
 const CustomerSideHome = () => {
     const [products, setProducts] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
     const [curPage, setCurPage] = useState(1);
     const recordsPerPage = 15;
 
     const handleCategory = (e) => {
         setSelectedCategory(e.target.value);
         setCurPage(1); // Reset page number when category change
+    };
+
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+        setCurPage(1); // Reset page number when search query change
     };
 
     useEffect(() => {
@@ -25,11 +32,13 @@ const CustomerSideHome = () => {
         fetchProducts();
     }, []);
 
-    
-
     const lastIndex = curPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
-    const filteredProducts = products ? products.filter(product => !selectedCategory || product.category === selectedCategory) : [];
+    const filteredProducts = products ? products.filter(product =>
+        (!selectedCategory || product.category === selectedCategory) &&
+        (product.displayItem === true) &&
+        (!searchQuery || product.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    ) : [];
     const records = filteredProducts.slice(firstIndex, lastIndex);
     const noOfPage = Math.ceil(filteredProducts.length / recordsPerPage);
     const numbers = [...Array(noOfPage + 1).keys()].slice(1);
@@ -52,10 +61,13 @@ const CustomerSideHome = () => {
      }
 
     return ( 
-        <div className="cusHomeView">
-            <div className="searchbar">
-                <h2>Our Products</h2>
-                <div className="searchbox">
+        <div className={homeCss.cusHomeView}>
+            <h2>Latest Products</h2>
+            <div className={homeCss.homeContainer}>
+                <div className={homeCss.searchBox}>
+                    <input type="text" label="Search by Name" value={searchQuery} onChange={handleSearch} />
+                </div>
+                <div className={homeCss.categoryBox}>
                     <select onChange={handleCategory} value={selectedCategory || ''} >
                         <option value=""> All </option>
                         <option value="Hand Tools"> Hand Tools </option>
@@ -71,7 +83,7 @@ const CustomerSideHome = () => {
             <hr/>
 
             {Array.from({ length: Math.ceil(records.length / 5) }).map((_id, index) => (
-              <div className="rowView" key={index}>
+              <div className={homeCss.rowView} key={index}>
                 {records.slice(index * 5, (index + 1) * 5).map((Inventory) => (
                   <ProductDetails key={Inventory._id} Inventory={Inventory} />
                 ))}
