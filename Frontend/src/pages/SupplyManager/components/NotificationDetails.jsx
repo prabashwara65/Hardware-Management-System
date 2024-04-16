@@ -10,7 +10,7 @@ const NotificationDetails = () => {
 
     useEffect(() => {
         const fetchNotifications = async () => {
-            const response = await fetch('http://localhost:8000/supply-management/notifications/' + id)
+            const response = await fetch(`http://localhost:8000/supply-management/notifications/${id}`)
             const json = await response.json()
 
             if (response.ok) {
@@ -32,8 +32,8 @@ const NotificationDetails = () => {
         <div className="notification-details">
           {notification && (
             <article className="notification-item">
-              <h2>{notification.title}</h2>
-              <p>{notification.description}</p>
+              <h2>{notification.name}</h2>
+              <p>{notification.category}</p>
               {notification.quantity && ( // Check if quantity exists
                 <p><strong>Quantity: </strong>{notification.quantity}</p>
               )}

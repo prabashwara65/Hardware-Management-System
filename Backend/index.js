@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
- 
+
 
 
 const registerRouter = require('./routes/LoginRegisterDashboard/registerRouter');
@@ -15,8 +15,9 @@ const inventoryRoutes = require('./routes/inventory');
 const feedbackRoutes = require('./routes/productFeedback');
 
 
-const supplyManagementRoutes = require('./routes/SupplyManagementRoutes/SupplyManagementRoutes')
-const supplierManagementRoutes = require('./routes/SupplyManagementRoutes/SupplierManagementRoutes')
+const lowStockNotifications = require('./routes/SupplyManagementRoutes/NotificationsRoutes');
+const supplierManagementRoutes = require('./routes/SupplyManagementRoutes/SupplierManagementRoutes');
+const purchaseOrderRoutes = require('./routes/SupplyManagementRoutes/PurchaseOrdersRoutes');
 
 const CreatevehicleRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/CreateVehicleRoute');
 const VehicleViewRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/VehicleViewRoute');
@@ -59,8 +60,10 @@ app.get('/logout', (req, res) => {
 })
 
 //Supply Manager Api's
-app.use('/supply-management/suppliers', supplierManagementRoutes)
-app.use('/supply-management', supplyManagementRoutes)
+app.use('/supply-management/suppliers', supplierManagementRoutes);
+app.use('/supply-management', lowStockNotifications);
+app.use('/supply-management/purchase-orders', purchaseOrderRoutes);
+
 
 
 
@@ -134,6 +137,18 @@ app.use('/DeliveryDelete', DeliveryUpdateDeleteRoutes);
 
 
 
+// //Get Delivery ID for Delete
+// app.delete('/DeliveryDelete/:id', (req, res) => {
+//     const id = req.params.id;
+//     DeliveryModel.findByIdAndDelete({_id: id})
+//         .then(deletedDelivery => {
+//             res.json(deletedDelivery); // Send the deleted delivery as JSON response
+//         })
+//         .catch(err => {
+//             res.status(500).json({ error: err.message }); // Send error response if there's an error
+//         });
+// });
+
 //-----------------------------------------------------------------------------------------------------------------------------------------------------//
 
 
@@ -149,4 +164,3 @@ mongoose.connect(process.env.MONGODB_URL)
     .catch((error) => {
         console.log(error)
     })
-
