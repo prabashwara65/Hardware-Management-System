@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { TextField, Button, Grid, MenuItem, Checkbox, FormControlLabel, TextareaAutosize } from "@mui/material";
 import './InventoryStyles.css';
 
 const InventoryHome = () => {
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
     const [price, setPrice] = useState('');
@@ -21,17 +23,40 @@ const InventoryHome = () => {
         const fetchCategories = async () => {
             try {
                 const response = await fetch('http://localhost:8000/categories');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch categories');
+                }
                 const data = await response.json();
                 setCategories(data);
             } catch (error) {
-                setError(error.message);
+                setError('Error has been occurred. Please try again.');
             }
         };
         fetchCategories();
-    }, []); // Add an empty dependency array to run this effect only once
+    }, []); // empty dependency array to run this effect only once
+
+    //form validation function
+    const validateForm = () => {
+        if (!name || !category || !price || !buyingPrice || !quantity || !quantityLimit || !discount || !description || !image) {
+            setError('Please fill in all fields.');
+            return false;
+        }
+    
+        // Check if selling price is greater than buying price
+        if (parseFloat(price) <= parseFloat(buyingPrice)) {
+            setError('Selling price must be greater than buying price.');
+            return false;
+        }
+    
+        return true;
+    }
 
     const handleInventoryFrom = async (e) => {
         e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
 
         const formData = new FormData();
         formData.append('name', name);
@@ -53,7 +78,12 @@ const InventoryHome = () => {
             const data = await response.json();
 
             if (!response.ok) {
+                window.alert('Unable to add New Product !');
+                navigate(`/inventory`);
                 throw new Error(data.error);
+            } else {
+                window.alert('New Product Successfully Added');
+                navigate(`/inventory`);
             }
 
             setName('');
@@ -75,10 +105,7 @@ const InventoryHome = () => {
 
     return (
         <form className="newItem-form" onSubmit={handleInventoryFrom}>
-            <h2>Add New Product</h2>
-            <hr/>
-
-            <Grid container spacing={2}>
+            <Grid container spacing={0.8}>
                 <Grid item xs={12}>
                     <TextField
                         label="Item Name"

@@ -13,6 +13,7 @@ import CusHome from "./Components/Home/Home-Products";
 import CusSelectedItem from "./Components/Home/Home-SelectedItem";
 import Report1 from "./Components/Inventory/Inventory-report1";
 import ProductCategory from "./Components/Inventory/inventory-AddNewCategory";
+import ScannerBarcode from "./Components/Inventory/scanner";
 
 import Layout from "./pages/SupplyManager/components/Layout";
 import SupplyManagementHome from "./pages/SupplyManager/home.page"
@@ -52,6 +53,7 @@ function App() {
           <Route exact path="/cusSelectedItem/:id" element={<CusSelectedItem />} />
           <Route exact path="/report1" element={<Report1 />} />
           <Route exact path="/addNewCategory" element={<ProductCategory />} />
+          <Route exact path="/scannerBarcode" element={<ScannerBarcode />} />
           
           {/* sanjuka - routes */}
           <Route path="/rentalService" element={<RentalManagement />} />
