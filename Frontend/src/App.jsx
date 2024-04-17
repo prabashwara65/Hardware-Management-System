@@ -31,11 +31,7 @@ import DeliveryUpdateDelete from './Components/DeliveryManagement/DeliveryView/D
 
 
 
-// import CusHome from './Components/Order/Home-Product';
-// import CusSelectedItem from './Components/Order/Home-selectedItems';
-// import CartPage from './Components/Order/cartPage';
 
-import CusOrderHome from './Components/Order/Home-Products'
 import SelectedOrderItem from './Components/Order/Home-SelectedItem'
 import CartPage from './Components/Order/CartPages'
 import DeliveryInfoPage from './Components/Order/DeliveryInfoPage';
@@ -74,7 +70,6 @@ function App() {
           <Route exact path="/selectedItem/:id" element={<SelectedItem />} />
           <Route exact path="/editItem/:id" element={<EditInventoryItems />} />
 
-          <Route exact path="/cusOrderHome" element={<CusOrderHome addToCart={addToCart}/>} />
           <Route exact path='/cart' element={<CartPage cart={cart}/>}/>
           <Route exact path="/cusOrderSelectedItem/:id" element={<SelectedOrderItem  addToCart={addToCart}/>} />
           <Route exact path='/deliveryinfo' element={<DeliveryInfoPage />}/>
@@ -83,7 +78,7 @@ function App() {
           
           
 
-          <Route exact path="/cusHome" element={<CusHome />} />
+          <Route exact path="/cusHome" element={<CusHome addToCart={addToCart}/>} />
           <Route exact path="/cusSelectedItem/:id" element={<CusSelectedItem />} />
           <Route exact path="/report1" element={<Report1 />} />
 
