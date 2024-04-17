@@ -17,6 +17,7 @@ const orderRoutes = require('./routes/order');
 const cartRoutes = require('./routes/cart')
 const deliveryInfoRoutes = require('./routes/deliveryInfo')
 const feedbackRoutes = require('./routes/productFeedback');
+const productCategoryRoutes = require('./routes/productCategories');
 
 
 const lowStockNotifications = require('./routes/SupplyManagementRoutes/NotificationsRoutes');
@@ -43,7 +44,7 @@ const app = express()
 
 //middleware
 app.use(express.json());
-app.use(cors({
+app.use(cors({ 
     origin: ['http://localhost:5173'],
     methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
     credentials: true
@@ -56,9 +57,10 @@ app.use('/register', registerRouter);
 app.use('/', authRoutes);
 app.use('/dashboard', authDashboard);
 
-//Binura's Api
+//Inventory Manager's Api
 app.use('/inventory', inventoryRoutes);
 app.use('/feedback',feedbackRoutes);
+app.use('/categories',productCategoryRoutes);
 
 //Navishka's API
 app.use('/order', orderRoutes); // Add order routes
