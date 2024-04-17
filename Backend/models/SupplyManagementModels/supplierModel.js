@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const SupplierSchema = new Schema({
   name: {
     type: String,
-    required: true
+    //required: true
   },
   contact: {
     phone: String,
@@ -31,7 +31,7 @@ const SupplierSchema = new Schema({
     responsiveness: Number,
     
   },
-  notes: String
+  
 }, { timestamps: true });
 
 module.exports = mongoose.model('Supplier', SupplierSchema);

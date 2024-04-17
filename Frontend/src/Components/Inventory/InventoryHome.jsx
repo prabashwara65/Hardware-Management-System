@@ -2,17 +2,23 @@ import { useState, useEffect } from 'react';
 import ProductDetails from './Inventory-ProductDetails';
 import Status from './Inventory-Status';
 import Sidebar from "../Dashboard/Dashboard_Sidebar";
-import { Grid, Select, MenuItem, Button } from '@mui/material';
+import { TextField, Select, MenuItem, Button, FormControl, InputLabel } from '@mui/material';
 
 const InventoryHome = () => {
     const [products, setProducts] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
     const [curPage, setCurPage] = useState(1);
     const recordsPerPage = 5;
 
     const handleCategory = (e) => {
         setSelectedCategory(e.target.value);
         setCurPage(1); // Reset page number when category change
+    };
+
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+        setCurPage(1); // Reset page number when search query change
     };
 
     useEffect(() => {
@@ -70,7 +76,6 @@ const InventoryHome = () => {
                     outOfStock += 1;
                 } else if (product.quantity < product.quantityLimit) {
                     lowStockProducts.push({ product: product._id, name: product.name, category: product.category, quantity: product.quantity });
-                    console.log(lowStockProducts);
                 }
             }
         });
@@ -110,7 +115,10 @@ const InventoryHome = () => {
     // Pagination variables
     const lastIndex = curPage * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
-    const filteredProducts = products ? products.filter(product => !selectedCategory || product.category === selectedCategory) : [];
+    const filteredProducts = products ? products.filter(product =>
+        (!selectedCategory || product.category === selectedCategory) &&
+        (!searchQuery || product.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    ) : [];
     const records = filteredProducts.slice(firstIndex, lastIndex);
     const noOfPage = Math.ceil(filteredProducts.length / recordsPerPage);
     const numbers = [...Array(noOfPage + 1).keys()].slice(1);
@@ -139,29 +147,35 @@ const InventoryHome = () => {
             <h2>Inventory</h2>
             <br></br>
             <Status totalvalue={calculateTotalValue()} totalProducts={calculateTotalProducts()} outOfStock={calculateOutOfStock()}/>
-            <div className="searchbar">
-                <h2>Products</h2>
-                <div className="searchbox">
-                    <Select value={selectedCategory} onChange={handleCategory} fullWidth>
-                        <MenuItem value="">All</MenuItem>
-                        <MenuItem value="Hand Tools">Hand Tools</MenuItem>
-                        <MenuItem value="Power Tools">Power Tools</MenuItem>
-                        <MenuItem value="Building Materials">Building Materials</MenuItem>
-                        <MenuItem value="Paint and Painting Supplies">Paint and Painting Supplies</MenuItem>
-                        <MenuItem value="Plumbing Supplies">Plumbing Supplies</MenuItem>
-                        <MenuItem value="Electrical Supplies">Electrical Supplies</MenuItem>
-                        <MenuItem value="Other">Other</MenuItem>
-                    </Select>
+            <div className="functionBar">
+                <div>
+                    <TextField label="Search by Name" value={searchQuery} onChange={handleSearch} fullWidth />
+                </div>
+                <div className="categoryBox">
+                    <FormControl fullWidth>
+                        <InputLabel id="category-select-label">Select Category</InputLabel>
+                        <Select labelId="category-select-label" value={selectedCategory} onChange={handleCategory} fullWidth >
+                            <MenuItem value="">All</MenuItem>
+                            <MenuItem value="Hand Tools">Hand Tools</MenuItem>
+                            <MenuItem value="Power Tools">Power Tools</MenuItem>
+                            <MenuItem value="Building Materials">Building Materials</MenuItem>
+                            <MenuItem value="Paint and Painting Supplies">Paint and Painting Supplies</MenuItem>
+                            <MenuItem value="Plumbing Supplies">Plumbing Supplies</MenuItem>
+                            <MenuItem value="Electrical Supplies">Electrical Supplies</MenuItem>
+                            <MenuItem value="Other">Other</MenuItem>                             
+                        </Select>
+                    </FormControl>
                 </div>
                 <Button href="/addnewItem" variant="contained" color="primary">Add New Product</Button>
             </div>
             <div className="topicline">
-                <ul>
-                    <li className='topic-name'><strong>Name</strong></li>
-                    <li><strong className='topic-category'>Category</strong></li>
-                    <li><strong className='topic-price'>Price (Rs)</strong></li>
-                    <li><strong className='tpoic-quantity'>Quantity</strong></li>
-                </ul>
+                <table>
+                    <th className='topic-photo'></th>
+                    <th className='topic-name'>Name</th>
+                    <th className='topic-price'>Price (Rs)</th>
+                    <th className='topic-disPrice'>Discount Price</th>
+                    <th className='tpoic-quantity'>Quantity</th>
+                </table>
             </div>
             {records.map((Inventory) => (
                 <ProductDetails key={Inventory._id} Inventory={Inventory}/>

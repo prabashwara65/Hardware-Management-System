@@ -4,7 +4,8 @@
     margin: 0;
     min-height: 100vh;
     font-family: 'Arial', sans-serif;
-    background: url(HomeBackground.jpg) no-repeat;
+    /* background: url(HomeBackground.jpg) no-repeat; */
+    background-color: aliceblue;
     background-size: cover;
     /* background-position:center; */
   }
@@ -63,60 +64,48 @@
 
   /* home page */
 
-.topicline ul{
-  border-radius: 4px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-.productDetails ul {
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+.homeProductDetails {
+  align-items: center; 
+  text-align: center;
+  margin: auto;
+  width: 220px; 
+  height: 360px; 
+  border: 1px solid #ccc; 
+  box-shadow: 0px 4px 2px 4px #ffffff;
+  padding: 10px; 
+  box-sizing: border-box; 
 }
 
-.topicline li,
-.productDetails li {
-  display: inline-block;
-  padding-bottom: 5px;
-  padding-top: 5px; 
+.homeProductDetails a {
+  text-decoration: none; 
+  color: #000000;
 }
 
-.productDetails {
-  border-bottom: #0e33a2 2px solid;
-}
-.productDetails-name, 
-.productDetails-category{
-  text-align: left;
-  margin: 5px 10px 10px 30px;
-  width: 230px;
-}
-.productDetails-price, 
-.productDetails-quantity{
-  text-align: right;
-  margin: 5px 0 10px 120px;
-  width: 50px;
+.productPicture img {
+  max-width: 180px;
+  height: 220px;
 }
 
-.topic-name, 
-.topic-category{
-  text-align: center;
-  margin: 5px 15px 10px 20px;
-  width: 250px;
+.rowView{
+  max-width: 1400px;
+  display: flex;
+  margin: auto;
+  margin-bottom: 30px;
+  padding: auto;
 }
-.topic-price{
-  text-align: center;
-  margin: 5px 0 10px 250px;
-  width: 50px;
+
+.homeContainer{
+  display: flex;
+  max-width: 1000px;
+  margin: auto;
+  border: 1px black solid;
 }
-.tpoic-quantity{
-  text-align: center;
-  margin: 5px 0 10px 100px;
-  width: 50px;
+.searchBox input{
+  max-width: 500px;
+}
+
+.categoryBox{
+  max-width: 200px;
 }
 
 /* pagination */
