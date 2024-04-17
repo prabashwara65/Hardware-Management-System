@@ -1,13 +1,13 @@
 import React,{ useEffect, useState } from "react";
 import { useParams,Link, useNavigate   } from "react-router-dom";
-//import { useDispatch } from 'react-redux';
+
 
 const HomeSelectedItem = ({ addToCart }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  //const dispatch = useDispatch();
+  
 
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const handleAddToCart = async () => {
       body: JSON.stringify({
         cartItems: [{
           product: product._id,
-          quantity: 1, // Assuming default quantity is 1
+          quantity: 1, 
           price: product.price,
         }],
       }),
@@ -63,8 +63,9 @@ const handleAddToCart = async () => {
 
         <div className="detailsBox">
           <div className="productImage">
-          {/* Placeholder box/square for the image */}
-          <div className="imagePlaceholder"></div>
+          
+          <img src={`http://localhost:8000/images/${product.img_URL}`} alt={product.name} />
+          
           </div>
     
         <div className="productDetails">

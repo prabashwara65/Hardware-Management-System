@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
 import './order.css';
 
 const CartPage = () => {
@@ -14,7 +16,7 @@ const CartPage = () => {
             .then((response) => response.json())
             .then((data) => {
                 
-                setCarts(data.carts); // Assuming the response object has a property named carts
+                setCarts(data.carts); 
                 setLoading(false);
             })
             .catch((error) => {
@@ -28,7 +30,7 @@ const CartPage = () => {
     const handleQuantityChange = (index, itemIndex, newQuantity) => {
         const updatedCarts = [...carts];
         const item = updatedCarts[index].cartItems[itemIndex];
-        if (newQuantity > 0 && newQuantity <= item.product.quantity) { // Ensure quantity is within bounds
+        if (newQuantity > 0 && newQuantity <= item.product.quantity) { 
             item.quantity = newQuantity;
             item.price = newQuantity * (item.product && item.product.price);
             setCarts(updatedCarts);
@@ -76,7 +78,13 @@ const CartPage = () => {
         .then((response) => response.json())
         .then((data) => {
             console.log('Cart deleted successfully:', data);
-            // Optionally, you can reset the carts state or redirect to another page
+            const updatedCarts = carts.map((cart) => {
+                if (cart._id === cartId) {
+                    cart.cartItems = cart.cartItems.filter((item) => item.product._id !== productId);
+                }
+                return cart;
+            });
+            setCarts(updatedCarts);
         })
         .catch((error) => {
             console.error("Error deleting cart:", error);
@@ -84,13 +92,6 @@ const CartPage = () => {
         });
     };
 
-    // const handleProceedToCheckout = () => {
-    //     navigate('/deliveryinfo', { calculateTotalPrice });
-    // };
-    // const handleProceedToCheckout = () => {
-    //     const totalPrice = calculateTotalPrice();
-    //     navigate('/deliveryinfo', { state: { totalPrice } });
-    // };
 
     const handleProceedToCheckout = () => {
         const totalPrice = calculateTotalPrice();
@@ -117,77 +118,75 @@ const CartPage = () => {
         });
     };
 
-return (
-    
-    <div>
-            <h2>Cart Details</h2>
-            {loading ? (
-                <p>Loading...</p>
-            ) : carts.length === 0 ? (
-                <p>No carts available</p>
-            ) : (
-                <div>
-                    {carts.map((cart, index) => (
-                        <div key={index}>
-                            <h3>{index + 1}</h3>
-                            <ul>
+
+ return (
+    <div className="cartAll">
+        <h2>Cart Details</h2>
+        {loading ? (
+            <p>Loading...</p>
+        ) : carts.length === 0 ? (
+            <p>No carts available</p>
+        ) : (
+            <div className="cart">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {carts.map((cart, index) => (
+                            <React.Fragment key={index}>
                                 {cart.cartItems.map((item, itemIndex) => (
-                                    <li key={itemIndex}>
-                                        <p>Product:{item.product ? item.product.name : 'Product Name Not Available'}</p>
-                                        <p>Price: {item.price}</p>
-                                        <label htmlFor={`quantity_${index}_${itemIndex}`}>Quantity:</label>
-                                        <input
-                                            type="number"
-                                            id={`quantity_${index}_${itemIndex}`}
-                                            value={item.quantity}
-                                            onChange={(e) => handleQuantityChange(index, itemIndex, parseInt(e.target.value))}
-                                        />
-                                        <button onClick={() => handleRemoveItem(cart._id,item.product._id)}>Remove</button>
-                                    </li>
+                                    <tr key={itemIndex}>
+                                        <td><img src={`http://localhost:8000/images/${item.product.img_URL}`} alt={item.product.name} /></td>
+                                        <td>{item.product ? item.product.name : 'Product Name Not Available'}</td>
+                                        <td>{item.price}</td>
+                                        <td>
+                                            <input
+                                                type="number"
+                                                value={item.quantity}
+                                                onChange={(e) => handleQuantityChange(index, itemIndex, parseInt(e.target.value))}
+                                            />
+                                        </td>
+                                        <td>
+                                            <Button 
+                                                variant="contained"
+                                                color="error"
+                                                startIcon={<DeleteIcon />}
+                                                onClick={() => handleRemoveItem(cart._id, item.product._id)}
+                                            >
+                                                Remove
+                                            </Button>
+                                        </td>
+                                    </tr>
                                 ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-            )}
-            {changesMade && (
-                <button onClick={handleUpdateCart}>Update Cart</button>
-            )}
-            <div style={{ float: 'right', textAlign: 'right' }}>
-                <h3>Total Price: {calculateTotalPrice()}</h3>
-                
-                <button onClick={handleProceedToCheckout}>Proceed to Checkout</button>
+                            </React.Fragment>
+                        ))}
+                    </tbody>
+                </table>
+                {changesMade && (
+            <button className="update-cart-btn" onClick={handleUpdateCart}>Update Cart</button>
+        )}
             </div>
-            <Link to="/">Back to Home</Link>
+        )}
+        
+        
+        <div className="checkout-section">
+                <div>
+                    <h3>Total Price </h3>
+                    <h3><strong>{calculateTotalPrice()}</strong></h3>
+                    <button onClick={handleProceedToCheckout}>Proceed to Checkout</button>
+                </div>
         </div>
+    </div>
   );
 };
 
-
-// const CartPage = ({ cart, deleteCartItem }) => {
-//     const handleDelete = async (productId) => {
-//         try {
-//             await deleteCartItem(productId);
-//         } catch (error) {
-//             console.error('Error deleting item from cart:', error);
-//             alert('Failed to delete item from cart');
-//         }
-//     };
-
-//     return (
-//         <div className="cartPage">
-//             <h2>Cart Items</h2>
-//             <ul>
-//                 {cart.map((item, index) => (
-//                     <li key={index}>
-//                         {item.name} - {item.price}
-//                         <button onClick={() => handleDelete(item._id)}>Delete</button>
-//                     </li>
-//                 ))}
-//             </ul>
-//         </div>
-//     );
-// };
 
 
 

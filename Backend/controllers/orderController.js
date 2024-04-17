@@ -32,7 +32,7 @@ const getOrders = async (req, res) => {
             path: 'carts',
             populate: {
                 path: 'cartItems.product',
-                model: 'Inventory' // Assuming the model name is 'InventoryModel'
+                model: 'newInventory' // Assuming the model name is 'InventoryModel'
             }
         });
         res.json({ success: true, orders });

@@ -78,7 +78,7 @@ exports.getAllCarts = async (req, res) => {
         // Find all carts and populate the product name
         const carts = await Cart.find().populate({
             path: 'cartItems.product',
-            model: 'Inventory',
+            model: 'newInventory',
             //select: 'name'
         });
 

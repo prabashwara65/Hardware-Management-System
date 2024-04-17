@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate,useLocation } from 'react-router-dom'
+import './order.css'
 
 const DeliveryInfoPage = () => {
     const navigate = useNavigate();
@@ -47,7 +48,7 @@ const DeliveryInfoPage = () => {
         .then((response) => response.json())
         .then((data) => {
             console.log('Form data submitted successfully:', data);
-            // Redirect to thank you page or order summary page
+            
             navigate('/payment',{ state: { totalPrice } });
         })
         .catch((error) => {
@@ -57,7 +58,7 @@ const DeliveryInfoPage = () => {
     };
 
     return (
-        <div>
+        <div className="Billing">
             
             <h2>Billing Details</h2>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>

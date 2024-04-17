@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './order.css';
 
 const PaymentPage = ({ totalPrice }) => {
     const [cvv, setCvv] = useState('');
@@ -23,36 +24,7 @@ const PaymentPage = ({ totalPrice }) => {
 
 
 
-// const handleExpiryChange = (e) => {
-//   let value = e.target.value;
-//   // Validate MM/YY input
-//   if (value.length === 2 && value.charAt(2) !== '/') {
-//       value += '/';
-//   }
-//   setExpiry(value);
 
-//   const month = parseInt(value.substr(0, 2), 10);
-//   // Check if month is within the valid range (1 to 12)
-//   if (month < 1 || month > 12 || isNaN(month)) {
-//       setExpiryError('Invalid month');
-//   } else {
-//       setExpiryError('');
-//   }
-
-//   // Check if "/" is entered and validate year only after "/"
-//   if (value.indexOf('/') !== -1) {
-//       const yearString = value.split('/')[1];
-//       const inputYear = parseInt(yearString, 10);
-//       const currentYear = new Date().getFullYear() % 100;
-
-//       // Check year validity
-//       if (inputYear < currentYear || isNaN(inputYear)) {
-//           setExpiryError('Invalid year');
-//       } else {
-//           setExpiryError('');
-//       }
-//   }
-// };
 const handleExpiryChange = (e) => {
   let value = e.target.value;
   // Validate MM/YY input
@@ -95,7 +67,7 @@ const handleCardNumberChange = (e) => {
   }
 };
   return (
-    <div>
+    <div className="Payment">
       <h2>Payment Details</h2>
       <form style={{ display: 'flex', flexDirection: 'column' }}>
         <label htmlFor="cardName">Name on Card:</label>
