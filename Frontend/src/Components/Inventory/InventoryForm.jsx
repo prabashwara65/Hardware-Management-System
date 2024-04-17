@@ -7,12 +7,13 @@ const InventoryHome = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
-    const [price, setPrice] = useState('');
+    const [pricebeforeDiscount, setpricebeforeDiscount] = useState('');
+    const [buyingPrice, setBuyingPrice] = useState('');
     const [quantity, setQuantity] = useState('');
     const [quantityLimit, setQuantityLimit] = useState('');
-    const [buyingPrice,setBuyingPrice] = useState('');
-    const [discount,setDiscount] = useState('');
-    const [description,setDescription] = useState('');
+    const [discount, setDiscount] = useState('');
+    const [priceAfterDiscount, setPriceAfterDiscount] = useState('');
+    const [description, setDescription] = useState('');
     const [displayItem, setDisplayItem] = useState(true);
     const [image, setImage] = useState(null);
     const [error, setError] = useState(null);
@@ -35,21 +36,43 @@ const InventoryHome = () => {
         fetchCategories();
     }, []); // empty dependency array to run this effect only once
 
-    //form validation function
+    // Calculate price after discount 
+    useEffect(() => {
+        if (pricebeforeDiscount && discount) {
+            const discountedPrice = parseFloat(pricebeforeDiscount) - (parseFloat(pricebeforeDiscount) * parseFloat(discount) / 100);
+            setPriceAfterDiscount(discountedPrice.toFixed(2));
+        }
+    }, [pricebeforeDiscount, discount]);
+
+    // Form validation function
     const validateForm = () => {
-        if (!name || !category || !price || !buyingPrice || !quantity || !quantityLimit || !discount || !description || !image) {
+        // Function to validate numeric input 
+        const validateNumberInput = (value) => {
+            const parts = value.split('.');
+            if (parts.length > 2 || (parts[1] && parts[1].length > 2)) {
+                return false;
+            }
+            return true;
+        }
+
+        if (!validateNumberInput(pricebeforeDiscount) || !validateNumberInput(buyingPrice) || !validateNumberInput(quantity) 
+        || !validateNumberInput(quantityLimit) || !validateNumberInput(discount)) {
+            setError('Please enter valid values with up to 2 decimal places');
+            return false;
+        }
+
+        if (!name || !category || !pricebeforeDiscount || !buyingPrice || !quantity || !quantityLimit || !discount || !description || !image) {
             setError('Please fill in all fields.');
             return false;
         }
-    
-        // Check if selling price is greater than buying price
-        if (parseFloat(price) <= parseFloat(buyingPrice)) {
-            setError('Selling price must be greater than buying price.');
+
+        if (parseFloat(priceAfterDiscount) <= parseFloat(buyingPrice)) {
+            setError('Price after discount must be greater than buying price.');
             return false;
         }
-    
         return true;
     }
+
 
     const handleInventoryFrom = async (e) => {
         e.preventDefault();
@@ -61,11 +84,12 @@ const InventoryHome = () => {
         const formData = new FormData();
         formData.append('name', name);
         formData.append('category', category);
-        formData.append('price', price);
+        formData.append('price', priceAfterDiscount);
+        formData.append('pricebeforeDiscount', pricebeforeDiscount); 
         formData.append('buyingPrice', buyingPrice);
         formData.append('discount', discount);
         formData.append('quantity', quantity);
-        formData.append('quantityLimit',quantityLimit);
+        formData.append('quantityLimit', quantityLimit);
         formData.append('description', description);
         formData.append('image', image);
         formData.append('displayItem', displayItem);
@@ -86,14 +110,15 @@ const InventoryHome = () => {
                 navigate(`/inventory`);
             }
 
+            // Clear form fields
             setName('');
-            setCategory(''); 
-            setPrice('');
+            setCategory('');
+            setBuyingPrice('');
+            setpricebeforeDiscount('');
             setQuantity('');
             setQuantityLimit('');
             setImage(null);
             setError(null);
-            setBuyingPrice('');
             setDiscount('');
             setDescription('');
             setDisplayItem(true);
@@ -135,8 +160,8 @@ const InventoryHome = () => {
                     <TextField
                         type="number"
                         label="Selling Price"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                        value={pricebeforeDiscount}
+                        onChange={(e) => setpricebeforeDiscount(e.target.value)}
                         fullWidth
                         required
                     />
@@ -179,6 +204,15 @@ const InventoryHome = () => {
                         onChange={(e) => setDiscount(e.target.value)}
                         fullWidth
                         required
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField
+                        type="number"
+                        label="Price after discount"
+                        value={priceAfterDiscount}
+                        fullWidth
+                        disabled
                     />
                 </Grid>
                 <Grid item xs={12}>

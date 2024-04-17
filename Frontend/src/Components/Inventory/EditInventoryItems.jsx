@@ -9,10 +9,11 @@ const EditInventoryItems = ({ product }) => {
   // initialise state variables with existing values
   const [name, setName] = useState(product.name);
   const [category, setCategory] = useState(product.category);
-  const [price, setPrice] = useState(product.price);
+  const [pricebeforeDiscount, setPricebeforeDiscount] = useState(product.pricebeforeDiscount); 
   const [quantity, setQuantity] = useState(product.quantity);
   const [quantityLimit, setQuantityLimit] = useState(product.quantityLimit);
   const [buyingPrice, setBuyingPrice] = useState(product.buyingPrice);
+  const [priceAfterDiscount, setPriceAfterDiscount] = useState(product.price);
   const [discount, setDiscount] = useState(product.discount);
   const [description, setDescription] = useState(product.description);
   const [displayItem, setDisplayItem] = useState(product.displayItem);
@@ -35,15 +36,51 @@ const EditInventoryItems = ({ product }) => {
     fetchCategories();
   }, []);
 
+  // form validation function
+  const validateForm = () => {
+    // function to validate numeric input with up to 2 decimal places
+    const validateNumberInput = (value) => {
+
+      const stringValue = String(value);
+    
+      const parts = stringValue.split('.');
+      if (parts.length > 2 || (parts[1] && parts[1].length > 2)) {
+        return false;
+      }
+      return true;
+    }
+
+    // validate numeric inputs
+    if (!validateNumberInput(pricebeforeDiscount) || !validateNumberInput(buyingPrice) || !validateNumberInput(quantity) 
+    || !validateNumberInput(quantityLimit) || !validateNumberInput(discount)) {
+      setError('Please enter valid values with up to 2 decimal places');
+      setLoading(false);
+      return;
+    }
+  };
+
+  // calculate price after discount 
+  useEffect(() => {
+    if (pricebeforeDiscount && discount) {
+        const discountedPrice = parseFloat(pricebeforeDiscount) - (parseFloat(pricebeforeDiscount) * parseFloat(discount) / 100);
+        setPriceAfterDiscount(discountedPrice.toFixed(2));
+    }
+  }, [pricebeforeDiscount, discount]);
+
   const handleInventoryEdit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    if (!validateForm()) {
+      return;
+  }
 
     // construct form data
     const formData = new FormData();
     formData.append('name', name);
     formData.append('category', category);
-    formData.append('price', price);
+    formData.append('price', priceAfterDiscount);
+    formData.append('pricebeforeDiscount', pricebeforeDiscount); 
     formData.append('quantity', quantity);
     formData.append('quantityLimit', quantityLimit);
     formData.append('buyingPrice', buyingPrice);
@@ -108,9 +145,9 @@ const EditInventoryItems = ({ product }) => {
           <Grid item xs={6}>
             <TextField
               type="number"
-              label="Unit Price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              label="Selling Price"
+              value={pricebeforeDiscount}
+              onChange={(e) => setPricebeforeDiscount(e.target.value)}
               fullWidth
               required
             />
@@ -148,20 +185,28 @@ const EditInventoryItems = ({ product }) => {
           <Grid item xs={6}>
             <TextField
               type="number"
-              label="Discount"
+              label="Discount %"
               value={discount}
               onChange={(e) => setDiscount(e.target.value)}
               fullWidth
               required
             />
           </Grid>
+          <Grid item xs={6}>
+              <TextField
+                type="number"
+                label="Price after discount"
+                value={priceAfterDiscount}
+                fullWidth
+                disabled
+              />
+          </Grid>
           <Grid item xs={12}>
             <TextareaAutosize
               rowsMin={3}
-              label="Description"
+              placeholder="Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              fullWidth
               style={{ width: '100%' }}
             />
           </Grid>

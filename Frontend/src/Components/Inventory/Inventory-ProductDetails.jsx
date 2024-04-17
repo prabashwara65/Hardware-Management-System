@@ -3,14 +3,13 @@ import formatNumber from 'format-number';
 
 const ProductDetails = ({ Inventory }) => {
     // Define options for formatting
-    const options = { round: 2 };
+    const options = { round: 2, padRight: 2, padLeft: 0, thousand: ',', decimal: '.' };
 
-    // Format price with three digit comma
-    const formattedPrice = formatNumber(options)(Inventory.price);
+    // Format price with comma and two decimal places
+    const formattedPrice = formatNumber(options)(parseFloat(Inventory.pricebeforeDiscount));
 
-    // Calculate discounted price
-    const discountedPrice = Inventory.price - (Inventory.price * (Inventory.discount / 100));
-    const formattedDiscountedPrice = formatNumber(options)(discountedPrice);
+    // Format discounted price with comma and two decimal places
+    const formattedDiscountedPrice = formatNumber(options)(parseFloat(Inventory.price));
 
     return ( 
         <div className="productDetails">
