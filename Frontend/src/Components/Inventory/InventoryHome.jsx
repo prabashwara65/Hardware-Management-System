@@ -216,11 +216,13 @@ const InventoryHome = () => {
             </div>
             <div className="topicline">
                 <table>
-                    <th className='topic-photo'></th>
-                    <th className='topic-name'>Name</th>
-                    <th className='topic-price'>Price (Rs)</th>
-                    <th className='topic-disPrice'>Discount Price</th>
-                    <th className='tpoic-quantity'>Quantity</th>
+                    <tr>
+                        <th className='topic-photo'></th>
+                        <th className='topic-name'>Name</th>
+                        <th className='topic-price'>Price (Rs)</th>
+                        <th className='topic-disPrice'>Discount Price</th>
+                        <th className='tpoic-quantity'>Quantity</th>
+                    </tr>
                 </table>
             </div>
             {records.map((Inventory) => (
