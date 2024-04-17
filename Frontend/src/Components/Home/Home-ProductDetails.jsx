@@ -10,7 +10,7 @@ const HomeProductDetails = ({Inventory}) => {
     const formattedPrice = formatNumber(options)(parseFloat(Inventory.price));
     return ( 
         <div className={homeCss.homeProductDetails}>
-            <Link to={ `http://localhost:5173/cusSelectedItem/${Inventory._id}`}>
+            <Link to={ `http://localhost:5173/cusOrderSelectedItem/${Inventory._id}`}>
                 <div className={homeCss.productPicture}><img src={`http://localhost:8000/images/`+Inventory.img_URL} alt="Product" /></div>
                 <br></br>
                 <div><strong>{Inventory.name}</strong></div>
