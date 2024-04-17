@@ -57,15 +57,7 @@ const UpdateItemForm = ({ isOpen, onClose, selectedItem }) => {
           minWidth: "300px",
         }}
       >
-        <h2
-          style={{
-            textDecoration: "underline",
-            fontSize: "25px",
-            marginBottom: "15px",
-          }}
-        >
-          Update Item
-        </h2>
+        <h2>Update Item</h2>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -122,27 +114,10 @@ const UpdateItemForm = ({ isOpen, onClose, selectedItem }) => {
             </Grid>
           </Grid>
           <div style={{ marginTop: "20px" }}>
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              style={{
-                marginBottom: "8px",
-                backgroundColor: "#1a759f",
-                fontWeight: "bold",
-              }}
-            >
+            <Button variant="contained" color="primary" type="submit">
               Update
             </Button>
-            <Button
-              variant="outlined"
-              onClick={onClose}
-              style={{
-                backgroundColor: "#ffffff",
-                color: "#ef476f",
-                fontWeight: "bold",
-              }}
-            >
+            <Button variant="contained" color="secondary" onClick={onClose}>
               Cancel
             </Button>
           </div>

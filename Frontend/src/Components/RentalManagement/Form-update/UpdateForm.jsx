@@ -55,18 +55,10 @@ const UpdateForm = ({ isOpen, onClose, item, onSave }) => {
             padding: "20px",
             borderRadius: "8px",
             boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-            width: "500px",
+            width: "400px",
           }}
         >
-          <h2
-            style={{
-              textDecoration: "underline",
-              fontSize: "25px",
-              marginBottom: "10px",
-            }}
-          >
-            Update Form
-          </h2>
+          <h2>Update Form</h2>
           <form>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -147,25 +139,12 @@ const UpdateForm = ({ isOpen, onClose, item, onSave }) => {
             <div style={{ marginTop: "20px" }}>
               <Button
                 variant="contained"
+                color="primary"
                 onClick={handleUpdate}
-                style={{
-                  marginBottom: "5px",
-                  backgroundColor: "#1a759f",
-                  fontWeight: "bold",
-                }}
               >
                 Update
               </Button>
-              <Button
-                variant="outlined"
-                onClick={onClose}
-                style={{
-                  marginBottom: "5px",
-                  backgroundColor: "#ffffff",
-                  color: "#ef476f",
-                  fontWeight: "bold",
-                }}
-              >
+              <Button variant="contained" color="secondary" onClick={onClose}>
                 Cancel
               </Button>
             </div>

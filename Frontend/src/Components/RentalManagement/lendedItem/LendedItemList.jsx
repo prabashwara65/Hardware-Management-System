@@ -4,7 +4,6 @@ import UpdateForm from "../Form-update/UpdateForm";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import axios from "axios";
-import SendIcon from "@mui/icons-material/Send";
 
 const LendedItemList = () => {
   document.title = "Rented Items";
@@ -79,16 +78,7 @@ const LendedItemList = () => {
 
   return (
     <div>
-      <h2
-        style={{
-          textDecoration: "underline",
-          fontSize: "30px",
-          marginTop: "10px",
-          marginBottom: "15px",
-        }}
-      >
-        Rented Items List
-      </h2>
+      <h2>Rented Items List</h2>
 
       {Array.isArray(lendedItems) &&
         lendedItems.map((item) => (
@@ -115,17 +105,7 @@ const LendedItemList = () => {
       )}
 
       <Link to="/rentalService">
-        <Button
-          variant="contained"
-          color="primary"
-          style={{
-            marginTop: "5px",
-            backgroundColor: "#354f52",
-            fontWeight: "bold",
-            borderRadius: "0px",
-          }}
-          endIcon={<SendIcon />}
-        >
+        <Button variant="contained" color="primary">
           Go to Item List
         </Button>
       </Link>

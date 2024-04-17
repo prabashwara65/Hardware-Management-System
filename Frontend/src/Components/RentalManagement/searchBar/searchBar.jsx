@@ -23,13 +23,7 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <>
-      <div
-        className="searchBar"
-        style={{
-          border: "0.1px solid #ccc",
-          borderRadius: "5px",
-        }}
-      >
+      <div className="searchBar">
         <div className="search-container">
           <Paper
             component="form"

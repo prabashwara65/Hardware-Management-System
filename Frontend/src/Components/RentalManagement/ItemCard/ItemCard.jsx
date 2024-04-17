@@ -63,7 +63,7 @@ function ItemCard({ item, onLendClick, onUpdateItemClick }) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {item.itemName}
+          {item.itemName} {/* Update to use item.itemName */}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {item.description}
@@ -75,25 +75,25 @@ function ItemCard({ item, onLendClick, onUpdateItemClick }) {
           One Day Price: {item.oneDayPrice}
         </Typography>
       </CardContent>
-      <CardContent sx={{ textAlign: "right", backgroundColor: "#f8f9fa" }}>
+      <CardContent sx={{ textAlign: "right" }}>
         <Button
           variant="contained"
           className="availButton"
-          sx={{ marginLeft: "0", margin: "4px", backgroundColor: "#1a759f" }}
+          sx={{ marginLeft: "0", margin: "4px" }}
           onClick={handleUpdateClick}
         >
           Update Item
         </Button>
         <Button
           variant="contained"
-          sx={{ marginLeft: "0", margin: "4px", backgroundColor: "#1a759f" }}
+          sx={{ marginLeft: "0", margin: "4px" }}
           onClick={handleLendClick}
         >
           Rent
         </Button>
         <Button
           variant="contained"
-          sx={{ marginLeft: "0", margin: "4px", backgroundColor: "#1a759f" }}
+          sx={{ marginLeft: "0", margin: "4px" }}
           onClick={handleDeleteClick}
         >
           Remove Item
