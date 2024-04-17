@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Card, CardContent, Typography, Button, Modal } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
 
 const ReservedItemsList = () => {
   document.title = "Reserved Items";
@@ -97,16 +96,7 @@ const ReservedItemsList = () => {
 
   return (
     <>
-      <h2
-        style={{
-          textDecoration: "underline",
-          fontSize: "30px",
-          marginTop: "10px",
-          marginBottom: "15px",
-        }}
-      >
-        Reserved Items List
-      </h2>
+      <h2>Reserved Items List</h2>
       {reservedItems.map((item) => (
         <div
           style={{
@@ -141,38 +131,30 @@ const ReservedItemsList = () => {
               <Typography variant="body1">
                 Total Price: {item.totalPay}
               </Typography>
-              <div
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handleRent(item._id)}
                 style={{
-                  marginTop: "20px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  backgroundColor: "black",
+                  width: "48%",
+                  margin: "2px",
                 }}
               >
-                <Button
-                  variant="outlined"
-                  onClick={() => handleRemove(item._id)}
-                  style={{
-                    backgroundColor: "",
-                    color: "#ef476f",
-                    fontWeight: "bold",
-                    marginRight: "8px",
-                  }}
-                >
-                  Remove
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleRent(item._id)}
-                  style={{
-                    backgroundColor: "#1a759f",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Rent
-                </Button>
-              </div>
+                Rent
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => handleRemove(item._id)}
+                style={{
+                  backgroundColor: "",
+                  width: "50%",
+                  margin: "2px",
+                }}
+              >
+                Remove
+              </Button>
             </CardContent>
           </Card>
         </div>
@@ -195,14 +177,7 @@ const ReservedItemsList = () => {
             minWidth: "300px",
           }}
         >
-          <h2
-            style={{
-              fontSize: "25px",
-              marginBottom: "10px",
-            }}
-          >
-            Rent Confirmation
-          </h2>
+          <h2 id="rent-confirmation-modal">Rent Confirmation</h2>
           <p id="rent-confirmation-description">
             Are you sure you want to rent this item?
           </p>
@@ -210,23 +185,14 @@ const ReservedItemsList = () => {
             variant="contained"
             color="primary"
             onClick={handleConfirmRent}
-            style={{
-              marginBottom: "5px",
-              backgroundColor: "#1a759f",
-              fontWeight: "bold",
-            }}
+            style={{ marginRight: "10px" }}
           >
             Yes
           </Button>
           <Button
-            variant="outlined"
+            variant="contained"
+            color="secondary"
             onClick={handleCancelRent}
-            style={{
-              marginBottom: "5px",
-              backgroundColor: "#ffffff",
-              color: "#ef476f",
-              fontWeight: "bold",
-            }}
           >
             No
           </Button>
@@ -250,14 +216,7 @@ const ReservedItemsList = () => {
             minWidth: "300px",
           }}
         >
-          <h2
-            style={{
-              fontSize: "25px",
-              marginBottom: "10px",
-            }}
-          >
-            Remove Confirmation
-          </h2>
+          <h2 id="remove-confirmation-modal">Remove Confirmation</h2>
           <p id="remove-confirmation-description">
             Are you sure you want to remove this item?
           </p>
@@ -265,23 +224,14 @@ const ReservedItemsList = () => {
             variant="contained"
             color="primary"
             onClick={handleConfirmRemove}
-            style={{
-              marginBottom: "5px",
-              backgroundColor: "#1a759f",
-              fontWeight: "bold",
-            }}
+            style={{ marginRight: "10px" }}
           >
             Yes
           </Button>
           <Button
-            variant="outlined"
+            variant="contained"
+            color="secondary"
             onClick={handleCancelRemove}
-            style={{
-              marginBottom: "5px",
-              backgroundColor: "#ffffff",
-              color: "#ef476f",
-              fontWeight: "bold",
-            }}
           >
             No
           </Button>
@@ -289,17 +239,7 @@ const ReservedItemsList = () => {
       </Modal>
 
       <Link to="/rentalService">
-        <Button
-          variant="contained"
-          color="primary"
-          style={{
-            marginTop: "5px",
-            backgroundColor: "#354f52",
-            fontWeight: "bold",
-            borderRadius: "0px",
-          }}
-          endIcon={<SendIcon />}
-        >
+        <Button variant="contained" color="primary">
           Go to Item List
         </Button>
       </Link>

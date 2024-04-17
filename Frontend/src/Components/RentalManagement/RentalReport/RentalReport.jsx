@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import SendIcon from "@mui/icons-material/Send";
 
 import {
   Table,
@@ -73,18 +72,7 @@ function RentalReport() {
 
   return (
     <div>
-      <h1
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          textDecoration: "underline",
-          fontSize: "25px",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}
-      >
-        Rental Report
-      </h1>
+      <h1>Rental Report</h1>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -169,33 +157,13 @@ function RentalReport() {
         </Table>
       </TableContainer>
 
-      <h2 style={{ marginTop: "10px", fontSize: "30px" }}>
-        Total Income - Rs. {totalIncome}.00
-      </h2>
+      <h2>Total Income - Rs. {totalIncome}.00</h2>
       <CardActions>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={goItemList}
-          style={{
-            marginTop: "5px",
-            backgroundColor: "#354f52",
-            fontWeight: "bold",
-          }}
-          endIcon={<SendIcon />}
-        >
+        <Button variant="contained" color="primary" onClick={goItemList}>
           Go to Item List
         </Button>
 
-        <Button
-          variant="contained"
-          onClick={printPage}
-          style={{
-            marginTop: "5px",
-            backgroundColor: "#1a759f",
-            fontWeight: "bold",
-          }}
-        >
+        <Button variant="contained" onClick={printPage}>
           Print Report
         </Button>
       </CardActions>

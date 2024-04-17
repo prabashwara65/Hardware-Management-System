@@ -103,39 +103,20 @@ function RentalManagement() {
             <SearchBar onSearch={handleSearch} />
           </div>
 
-          <div
-            className="button-container"
-            style={{
-              border: "2px solid #ccc",
-              padding: "5px",
-              borderRadius: "5px",
-              backgroundColor: "#e9ecef",
-            }}
-          >
-            <Link style={{ marginLeft: "0", margin: "10px" }}>
-              <Button
-                variant="contained"
-                style={{
-                  backgroundColor: "#013a63",
-                  fontWeight: "bold",
-                  width: "",
-                }}
-                onClick={handleAddItemClick}
-              >
-                Add New Item
+          <div className="button-container">
+            <Link to="/lendedItems" style={{ marginLeft: "0", margin: "10px" }}>
+              <Button variant="contained" color="primary">
+                View Rented Items
               </Button>
             </Link>
 
-            <Link to="/lendedItems" style={{ marginLeft: "0", margin: "10px" }}>
+            <Link style={{ marginLeft: "0", margin: "10px" }}>
               <Button
                 variant="contained"
-                style={{
-                  backgroundColor: "#013a63",
-                  fontWeight: "bold",
-                  width: "",
-                }}
+                color="primary"
+                onClick={handleAddItemClick}
               >
-                View Rented Items
+                Add New Item
               </Button>
             </Link>
 
@@ -143,16 +124,8 @@ function RentalManagement() {
               style={{ marginLeft: "0", margin: "10px" }}
               to="/reserved-items"
             >
-              <Button
-                variant="contained"
-                color="primary"
-                style={{
-                  backgroundColor: "#013a63",
-                  fontWeight: "bold",
-                  width: "",
-                }}
-              >
-                View reserved Items
+              <Button variant="contained" color="primary">
+                View reserved
               </Button>
             </Link>
 
@@ -160,15 +133,7 @@ function RentalManagement() {
               style={{ marginLeft: "0", margin: "10px" }}
               to="/rentalReport"
             >
-              <Button
-                variant="contained"
-                color="primary"
-                style={{
-                  backgroundColor: "#013a63",
-                  fontWeight: "bold",
-                  width: "",
-                }}
-              >
+              <Button variant="contained" color="primary">
                 Invoice
               </Button>
             </Link>
