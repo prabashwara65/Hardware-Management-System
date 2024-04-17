@@ -16,8 +16,20 @@ const feedbackRoutes = require('./routes/productFeedback');
 const productCategoryRoutes = require('./routes/productCategories');
 
 
-const supplyManagementRoutes = require('./routes/SupplyManagementRoutes/SupplyManagementRoutes')
-const supplierManagementRoutes = require('./routes/SupplyManagementRoutes/SupplierManagementRoutes')
+const lowStockNotifications = require('./routes/SupplyManagementRoutes/NotificationsRoutes');
+const supplierManagementRoutes = require('./routes/SupplyManagementRoutes/SupplierManagementRoutes');
+const purchaseOrderRoutes = require('./routes/SupplyManagementRoutes/PurchaseOrdersRoutes');
+
+const CreatevehicleRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/CreateVehicleRoute');
+const VehicleViewRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/VehicleViewRoute');
+const GetVehicleRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/GetVehicleRoutes');
+const VehicleUpdateDeleteRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/UpdateAndDeleteRoutes');
+const VehicleAvailabilityRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/VehicleAvailabilityRoutes');
+const ViewDeliveryRoute = require('./routes/DeliveryManagementRoutes/DeliveryRoutes/ViewDeliveryRoute');
+const CreateVehicleRoute = require('./routes/DeliveryManagementRoutes/DeliveryRoutes/CreateDeliveryRoutes');
+const GetDeliveryRoutes = require('./routes/DeliveryManagementRoutes/DeliveryRoutes/GetDeliveryRoute');
+const DeliveryUpdateDeleteRoutes = require('./routes/DeliveryManagementRoutes/DeliveryRoutes/UpdateAndDeleteRoutes');
+
 
 
 
@@ -26,7 +38,7 @@ const app = express()
 
 //middleware
 app.use(express.json());
-app.use(cors({
+app.use(cors({ 
     origin: ['http://localhost:5173'],
     methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
     credentials: true
@@ -50,8 +62,10 @@ app.get('/logout', (req, res) => {
 })
 
 //Supply Manager Api's
-app.use('/supply-management/suppliers', supplierManagementRoutes)
-app.use('/supply-management', supplyManagementRoutes)
+app.use('/supply-management/suppliers', supplierManagementRoutes);
+app.use('/supply-management', lowStockNotifications);
+app.use('/supply-management/purchase-orders', purchaseOrderRoutes);
+
 
 
 
@@ -80,6 +94,67 @@ app.use("/reservedItems", reservedItemsRouter);
 app.use('/rentalReport', rentalReportRoutes); 
 
 
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------//
+
+////Prabashwara's API's
+///Vehicle Database
+
+
+//Create Vehicle
+app.use('/CreateVehicle', CreatevehicleRoutes);
+
+//View Vehicles
+app.use('/VehicleView' , VehicleViewRoutes);
+
+//Get Vehicle ID for Update
+app.use('/getVehicle' , GetVehicleRoutes);
+
+//Update  Vehicle data
+app.use('/VehicleUpdateDelete' , VehicleUpdateDeleteRoutes);
+
+// Delete Vehicle data
+app.use('/VehicleDelete' , VehicleViewRoutes);
+
+// Route to update vehicle availability by ID
+app.put('/VehicleUpdateDelete', VehicleAvailabilityRoutes);
+
+
+///DeliveryDatabase
+//Create Delivery
+app.use('/CreateDelivery', CreateVehicleRoute);
+
+//View Delivery
+app.use('/DeliveryView', ViewDeliveryRoute);
+
+//Get Delivery ID for Update
+app.use('/getDelivery', GetDeliveryRoutes);
+
+//Delivery Update  
+app.use('/DeliveryUpdateDelete', DeliveryUpdateDeleteRoutes);
+
+//Get Delivery ID for Delete
+app.use('/DeliveryDelete', DeliveryUpdateDeleteRoutes);
+
+
+
+// //Get Delivery ID for Delete
+// app.delete('/DeliveryDelete/:id', (req, res) => {
+//     const id = req.params.id;
+//     DeliveryModel.findByIdAndDelete({_id: id})
+//         .then(deletedDelivery => {
+//             res.json(deletedDelivery); // Send the deleted delivery as JSON response
+//         })
+//         .catch(err => {
+//             res.status(500).json({ error: err.message }); // Send error response if there's an error
+//         });
+// });
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------//
+
+
+
 //Database connection
 mongoose.connect(process.env.MONGODB_URL)
     .then(() => {
@@ -91,4 +166,3 @@ mongoose.connect(process.env.MONGODB_URL)
     .catch((error) => {
         console.log(error)
     })
-
