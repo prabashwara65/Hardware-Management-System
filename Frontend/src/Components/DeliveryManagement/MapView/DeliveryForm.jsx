@@ -89,24 +89,34 @@ const FormSide = ({ ShippingAddressCopy ,handleFetchData, sampleData, deliveryCo
   };
 
   const showOrderData = () => {
-    console.log("Order Data button clicked"); // Add this line for debugging
+    console.log("Order Data button clicked"); // this line for debugging
     // Sample shipping address data
     const sampleShippingAddresses = [
       {
         id: 1,
-        name: 'John Doe',
-        address: '123 Main St, City, Country',
+        OrderId: '#7645374820',
+        name: 'Gayan Kulathunga',
+        address: '1st lane, Yasorapura , Attidiya , Dehiwala',
         phone: '+1234567890'
       },
       {
         id: 2,
-        name: 'Jane Smith',
+        OrderId: '#0836457309',
+        name: 'Nishadi Ganegoda',
         address: '456 Elm St, Town, Country',
         phone: '+0987654321'
       },
       {
         id: 3,
-        name: 'Alice Johnson',
+        OrderId: '#6486726459',
+        name: 'Kasuni Thisarika ',
+        address: '789 Oak St, Village, Country',
+        phone: '+1122334455'
+      },
+      {
+        id: 4,
+        OrderId: '#8647638298',
+        name: 'Deshan Thranga ',
         address: '789 Oak St, Village, Country',
         phone: '+1122334455'
       }
@@ -129,7 +139,9 @@ const FormSide = ({ ShippingAddressCopy ,handleFetchData, sampleData, deliveryCo
             label="Shipping Address"
             variant="standard"
             value={ShippingAddressCopy}
-            onChange={(e) => setShippingAddress(e.target.value)} />
+            onChange={(e) => setShippingAddress(e.target.value)} 
+            required
+            />
 
           <TextField
             select
@@ -181,8 +193,9 @@ const FormSide = ({ ShippingAddressCopy ,handleFetchData, sampleData, deliveryCo
                 <Card>
                   <CardContent>
                     <Typography variant="h6">{address.name}</Typography>
-                    <Typography>{address.address}</Typography>
-                    <Typography>{address.phone}</Typography>
+                    <Typography>Order ID - {address.OrderId}</Typography>
+                    <Typography>Order Address -{address.address}</Typography>
+                    <Typography>Phone -{address.phone}</Typography>
                   </CardContent>
                 </Card>
               </Grid>
