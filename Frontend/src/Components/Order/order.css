@@ -10,47 +10,13 @@ body {
   font-family: "Poppins";
 }
 
-.pagination {
-  display: flex;
-  list-style: none;
-  padding: 0;
-  margin: 5px 580px;
-}
 
-.page-item {
-  margin: 0 5px;
-}
 
-.page-link {
-  text-decoration: none;
-  padding: 5px 10px;
-  background-color: #f0f0f0;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-.page-link:hover {
-  background-color: #e0e0e0;
-}
-
-.active .page-link {
-  background-color: #007bff;
-  color: #fff;
-  border-color: #007bff;
-}
 
 /* searchbar style */
 
-.searchbar{
-  display: flex;
-  margin: 10px 0;
-  border-bottom: #333 solid;
-}
 
-.searchbox{
-  margin: auto;
-}
+
 
 /* HomePage */
 .cusHomeView{
@@ -78,11 +44,11 @@ body {
   text-decoration: none; 
   color: inherit;
 }
-.selectedProduct {
+.selectedOrderProduct {
     margin: 20px;
   }
   
-  .detailsBox {
+  .OrderdetailsBox {
     display: flex;
     align-items: center;
     border: 1px solid #ccc;
@@ -105,7 +71,7 @@ body {
     background-color: #f0f0f0; /* Placeholder color */
   }
   
-  .productDetails {
+  .productOrderDetails {
     flex: 2;
     margin-top: 25px;
     margin-bottom: 50px;
@@ -266,4 +232,10 @@ body {
 
 .Total{
   font-size: 20px;
+}
+
+@media print {
+  .generate-report-btn {
+    display: none;
+  }
 }
