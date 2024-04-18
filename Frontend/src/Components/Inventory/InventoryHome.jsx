@@ -214,8 +214,8 @@ const InventoryHome = () => {
                 <Button className='add-buttons' onClick={handleAddCategoryDialogOpen} variant="contained" color="primary">Add New Category</Button>
                 <Button className='add-buttons' onClick={handleAddProductDialogOpen} variant="contained" color="primary">Add New Product</Button>
             </div>
-            <div className="topicline">
-                <table>
+            <table className="topicline">
+                <tbody>
                     <tr>
                         <th className='topic-photo'></th>
                         <th className='topic-name'>Name</th>
@@ -223,8 +223,8 @@ const InventoryHome = () => {
                         <th className='topic-disPrice'>Discount Price</th>
                         <th className='tpoic-quantity'>Quantity</th>
                     </tr>
-                </table>
-            </div>
+                </tbody>
+            </table>
             {records.map((Inventory) => (
                 <ProductDetails key={Inventory._id} Inventory={Inventory}/>
             ))}
