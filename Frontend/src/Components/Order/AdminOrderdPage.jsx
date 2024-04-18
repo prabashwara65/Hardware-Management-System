@@ -65,55 +65,7 @@ const OrderPage = () => {
         fetchOrders();
     };
 
-    // return (
-    //     <div>
-    //         <h2 className="OrderH2"><strong>Order Details</strong></h2>
-            
-    //         {loading ? (
-    //             <p>Loading...</p>
-    //         ) : orders.length === 0 ? (
-    //             <p>No orders available</p>
-    //         ) : (
-    //             <div className="Order">
-    //                 {orders.map((order, index) => (
-    //                     <div key={index}>
-    //                         <h3>Order {index + 1}</h3>
-    //                         <p className="Total">Total Price: {order.totalPrice}</p>
-    //                         <table className="cart-table-head" >  
-    //                             <thead>  
-    //                                 <tr>                                   
-    //                                     <th className='Product-h'>Product</th>
-    //                                     <th className='Quantity-h'>Quantity</th>
-    //                                     <th className='Price-h'>Price</th>
-    //                                 </tr>
-    //                             </thead> 
-    //                         </table>
-    //                         {/* </table> */}
-    //                         {order.carts.map((cart, cartIndex) => (
-    //                             <div key={cartIndex}>                      
-    //                                 <table className="cart-table-body">
-    //                                     <thead> 
-    //                                     {cart.cartItems.map((item, itemIndex) => (
-    //                                             <tr key={itemIndex}>
-    //                                                 <td className='Product-b'>
-    //                                                     <img src={`http://localhost:8000/images/${item.product.img_URL}`} alt={item.product.name} style={{ width: '50px', height: '50px' }} />
-    //                                                     {item.product ? item.product.name : 'Product Name Not Available'}
-    //                                                 </td>
-    //                                                 <td className='Quantity-b'>{item.quantity}</td>
-    //                                                 <td className='Price-b'>{item.price}</td>
-    //                                             </tr> 
-    //                                         ))}    
-    //                                     </thead>
-    //                                 </table>
-    //                             </div>
-    //                         ))}
-    //                         <hr className="bold-hr"/>
-    //                     </div>
-    //                 ))}
-    //             </div>
-    //         )}<button className="generate-report-btn" onClick={generateReport}>Generate Report</button>
-    //     </div>
-    // );
+    
     return (
         <div>
             <h2 className="OrderH2"><strong>Order Details</strong></h2>
