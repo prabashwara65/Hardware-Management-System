@@ -122,6 +122,15 @@ header a {
 } */
 
 /* home page */
+.invhome {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+}
+
+.invMain{
+  margin: auto;
+}
 .productDetails td {
   background: #fff;
   border-radius: 4px;
