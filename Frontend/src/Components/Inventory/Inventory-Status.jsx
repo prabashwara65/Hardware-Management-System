@@ -5,12 +5,14 @@ import formatNumber from 'format-number';
 import './InventoryStyles.css';
 
 const Status = (props) => {
+    
     const totalValue = props.totalvalue;
     const totalproducts = props.totalProducts;
     const totalOutOfproducts = props.outOfStock;
     const totalCategories = props.totalCategories;
     
-    const options = { round: 2 };
+    // Define options for formatting
+  const options = { round: 2, padRight: 2, padLeft: 0, thousand: ',', decimal: '.' };
 
     return ( 
         <header>
