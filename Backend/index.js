@@ -1,3 +1,4 @@
+//index.js
 require('dotenv').config()
 
 const express = require('express')
@@ -12,11 +13,16 @@ const registerRouter = require('./routes/LoginRegisterDashboard/registerRouter')
 const authRoutes = require('./routes/LoginRegisterDashboard/authRoutes');
 const authDashboard = require('./routes/LoginRegisterDashboard/authDashboard');
 const inventoryRoutes = require('./routes/inventory');
+const orderRoutes = require('./routes/order');
+const cartRoutes = require('./routes/cart')
+const deliveryInfoRoutes = require('./routes/deliveryInfo')
 const feedbackRoutes = require('./routes/productFeedback');
+const productCategoryRoutes = require('./routes/productCategories');
 
 
-const supplyManagementRoutes = require('./routes/SupplyManagementRoutes/SupplyManagementRoutes')
-const supplierManagementRoutes = require('./routes/SupplyManagementRoutes/SupplierManagementRoutes')
+const lowStockNotifications = require('./routes/SupplyManagementRoutes/NotificationsRoutes');
+const supplierManagementRoutes = require('./routes/SupplyManagementRoutes/SupplierManagementRoutes');
+const purchaseOrderRoutes = require('./routes/SupplyManagementRoutes/PurchaseOrdersRoutes');
 
 const CreatevehicleRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/CreateVehicleRoute');
 const VehicleViewRoutes = require('./routes/DeliveryManagementRoutes/VehicleRoutes/VehicleViewRoute');
@@ -31,12 +37,14 @@ const DeliveryUpdateDeleteRoutes = require('./routes/DeliveryManagementRoutes/De
 
 
 
+const { copyInventoryToOrderItems } = require('./controllers/orderController');
+
 const app = express()
 
 
 //middleware
 app.use(express.json());
-app.use(cors({
+app.use(cors({ 
     origin: ['http://localhost:5173'],
     methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
     credentials: true
@@ -49,9 +57,15 @@ app.use('/register', registerRouter);
 app.use('/', authRoutes);
 app.use('/dashboard', authDashboard);
 
-//Binura's Api
+//Inventory Manager's Api
 app.use('/inventory', inventoryRoutes);
 app.use('/feedback',feedbackRoutes);
+app.use('/categories',productCategoryRoutes);
+
+//Navishka's API
+app.use('/order', orderRoutes); // Add order routes
+app.use('/cart',cartRoutes)
+app.use('/deliveryinfo', deliveryInfoRoutes);
 
 app.get('/logout', (req, res) => {
     res.clearCookie('token');
@@ -59,8 +73,10 @@ app.get('/logout', (req, res) => {
 })
 
 //Supply Manager Api's
-app.use('/supply-management/suppliers', supplierManagementRoutes)
-app.use('/supply-management', supplyManagementRoutes)
+app.use('/supply-management/suppliers', supplierManagementRoutes);
+app.use('/supply-management', lowStockNotifications);
+app.use('/supply-management/purchase-orders', purchaseOrderRoutes);
+
 
 
 
@@ -153,6 +169,7 @@ app.use('/DeliveryDelete', DeliveryUpdateDeleteRoutes);
 //Database connection
 mongoose.connect(process.env.MONGODB_URL)
     .then(() => {
+        
         //Server setup
         app.listen(process.env.PORT, () => {
             console.log('Connected to db and listening to port ', process.env.PORT)
@@ -161,4 +178,3 @@ mongoose.connect(process.env.MONGODB_URL)
     .catch((error) => {
         console.log(error)
     })
-
