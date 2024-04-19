@@ -57,6 +57,7 @@ function App() {
             zIndex: 1,
             height: 48,
             width: 48,
+            
             bgcolor: 'transparent',
             '&:hover': {
               bgcolor: 'transparent',
